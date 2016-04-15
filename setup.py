@@ -5,7 +5,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.1'
+VERSION = __import__('cruditor').__version__
 
 
 if sys.argv[-1] == 'publish':
@@ -44,6 +44,7 @@ test_requirements = [
     'tox-pyenv',
     'mock',
     'factory-boy',
+    'pydocstyle',
     'pytest',
     'pytest-cov',
     'pytest-flakes',
@@ -72,6 +73,7 @@ setup(
     ],
     extras_require={
         'tests': test_requirements,
+        'docs': ['sphinx>=1.4,<1.5'],
     },
     classifiers=[
         'Development Status :: 4 - Beta',
