@@ -3,12 +3,10 @@ sudo: false
 
 env:
   - TOXENV=py27-django18
-  - TOXENV=py33-django18
   - TOXENV=py34-django18
-  - TOXENV=pypy-django18
   - TOXENV=py27-django19
   - TOXENV=py34-django19
-  - TOXENV=pypy-django19
+  # - TOXENV=py35-django19
 
 install:
   - pip install tox
