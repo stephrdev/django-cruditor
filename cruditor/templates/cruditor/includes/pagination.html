@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load django_tables2 %}
+
+{% if table.page %}
+	{% with table.page.paginator.count as total %}
+	{% with table.page.object_list|length as count %}
+		<div class="row">
+		{% block pagination %}
+			<div class="col-xs-12 col-sm-8">
+			<ul class="pagination">
+				{% if table.page.has_previous %}
+					{% block pagination.previous %}
+						<li><a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}">Previous</a></li>
+					{% endblock pagination.previous %}
+				{% else %}
+				<li class="disabled"><span>{% trans 'Previous' %}</span></li>
+				{% endif %}
+
+				{% block pagination.current %}
+				<li class="active"><span>{% blocktrans with table.page.number as current and table.paginator.num_pages as total %}Page {{ current }} of {{ total }}{% endblocktrans %}</span></li>
+				{% endblock pagination.current %}
+
+				{% if table.page.has_next %}
+					{% block pagination.next %}
+						<li><a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}">Next</a></li>
+					{% endblock pagination.next %}
+				{% else %}
+				<li class="disabled"><span>{% trans 'Next' %}</span></li>
+				{% endif %}
+			</ul>
+			</div>
+			{% block pagination.cardinality %}
+			<div class="hidden-xs col-sm-4 text-right">
+					{{ total }} {% if total == 1 %}{{ table.data.verbose_name }}{% else %}{{ table.data.verbose_name_plural }}{% endif %}
+				</div>
+			{% endblock pagination.cardinality %}
+		{% endblock pagination %}
+		</div>
+	{% endwith %}
+	{% endwith %}
+{% endif %}

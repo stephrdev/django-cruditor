@@ -1,0 +1,22 @@
+{% extends 'cruditor/base.html' %}
+{% load i18n %}
+{% load floppyforms %}
+
+
+{% block body_class %}login{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block container %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h3 class="serif text-center">{% trans 'You have been logged out.' %}</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

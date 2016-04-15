@@ -1,0 +1,13 @@
+{% extends 'cruditor/forms/row_default_field.html' %}
+{% load floppyforms %}
+
+
+{% block label %}{% endblock %}
+
+{% block field %}
+	<label for="{{ field|id }}" class="checkbox-inline">
+		{{ block.super }}
+	</label>
+{% endblock %}
+
+{% block widget %}{{ block.super }} {{ label }}{% endblock %}

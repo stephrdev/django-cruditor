@@ -1,0 +1,6 @@
+docs/_build
+dist/*
+build/*
+.coverage
+.tox
+__pycache__

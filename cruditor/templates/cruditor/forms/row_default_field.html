@@ -1,0 +1,17 @@
+{% load floppyforms %}
+
+
+{% block label %}
+	{% if field|id %}<label class="control-label" for="{{ field|id }}">{% endif %}
+	{{ label }}
+	{% if field.field.required %} <span class="required">*</span>{% endif %}
+	{% if label|last not in ".:!?" %}:{% endif %}
+	{% if field|id %}</label>{% endif %}
+{% endblock %}
+
+{% block field %}
+	{% block widget %}{% formfield field %}{% endblock %}
+	{% block errors %}{% include 'cruditor/forms/errors.html' with errors=field.errors %}{% endblock %}
+	{% block help_text %}{% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}{% endblock %}
+	{% block hidden_fields %}{% for field in hidden_fields %}{{ field.as_hidden }}{% endfor %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% if "class" in attrs %}
+	{% for name, value in attrs.items %} {{ name }}{% if name == "class" %}="{% if type != 'checkbox' %}form-control {% endif %}{{ value }}"{% else %}{% if value != True %}="{{ value }}"{% endif %}{% endif %}{% endfor %}
+{% else %}
+	{% for name, value in attrs.items %} {{ name }}{% if value != True %}="{{ value }}"{% endif %}{% endfor %}{% if type != 'checkbox' %} class="form-control "{% endif %}
+{% endif %}

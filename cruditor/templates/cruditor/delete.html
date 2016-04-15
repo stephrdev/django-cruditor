@@ -1,0 +1,10 @@
+{% extends 'cruditor/form.html' %}
+{% load i18n %}
+{% load floppyforms %}
+
+
+{% block form_actions %}
+	<div class="form-actions text-right">
+		<button class="btn btn-danger" type="submit">{% trans 'Delete' %}</button>
+	</div>
+{% endblock %}

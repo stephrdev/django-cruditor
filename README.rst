@@ -1,5 +1,5 @@
 django-cruditor
-====================
+===============
 
 .. image:: https://badge.fury.io/py/django-cruditor.png
     :target: http://badge.fury.io/py/django-cruditor
@@ -15,9 +15,9 @@ django-cruditor
 
 
 What is django-cruditor
-----------------------------
+-----------------------
 
-`django-cruditor` is a bootstrap-based CRUD-Editor
+`django-cruditor` is a set of generic class based views with Bootstrap templates.
 
 
 Quick start
@@ -35,3 +35,14 @@ Add some stuff  to your Django settings
         # some other apps
         'cruditor',
     )
+
+
+Contribute
+----------
+
+To contribute, you can use `pip install -e .[tests]` to install all required
+development packages. To run the tests, just use
+
+.. code-block:: shell
+
+    $ tox

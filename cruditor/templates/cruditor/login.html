@@ -1,0 +1,28 @@
+{% extends 'cruditor/base.html' %}
+{% load i18n %}
+{% load floppyforms %}
+
+
+{% block body_class %}login{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block container %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h2 class="serif text-center">{{ cruditor.constants.menu_title }}</h2>
+						<form action="{{ app_path }}" method="post" role="form">
+							{% csrf_token %}
+							<input type="hidden" name="{{ next_field }}" value="{{ next_value }}" />
+							{% form form using 'cruditor/forms/layout.html' %}
+							<button class="btn btn-primary" type="submit">{% trans 'Login' %}</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

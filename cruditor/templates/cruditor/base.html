@@ -1,0 +1,121 @@
+{% load i18n %}
+{% load static from staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{{ cruditor.title }}</title>
+
+		<link rel="stylesheet" href="{% static 'cruditor/css/bootstrap.css' %}" />
+		<link rel="stylesheet" href="{% static 'cruditor/css/styles.css' %}" />
+		<link rel="stylesheet" href="{% static 'cruditor/css/jquery-ui.css' %}" />
+
+		<script src="{% static 'cruditor/js/jquery/jquery.js' %}"></script>
+		<script src="{% static 'cruditor/js/jquery-ui/jquery-ui.js' %}"></script>
+		<script src="{% static 'cruditor/js/bootstrap/bootstrap.js' %}"></script>
+		<script src="{% static 'cruditor/js/bootstrap-datepicker/moment-with-locales.js' %}"></script>
+		<script src="{% static 'cruditor/js/bootstrap-datepicker/bootstrap-datepicker.js' %}"></script>
+		<script src="{% static 'cruditor/js/jquery-formset/jquery.formset.js' %}"></script>
+
+		<script>window.django = window.django || {}; window.django.jQuery = window.jQuery</script>
+
+		{% block extrahead %}
+			{% include cruditor.constants.extrahead_template_name %}
+		{% endblock %}
+	</head>
+	<body class="{% block body_class %}{% endblock %}">
+		{% block navigation %}
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">{% trans 'Toggle navigation' %}</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					{% block brand %}
+						<a class="navbar-brand" href="{{ cruditor.constants.index_url }}">{{ cruditor.constants.menu_title }}</a>
+					{% endblock %}
+				</div>
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						{% block menu %}
+							{% include cruditor.constants.menu_template_name %}
+						{% endblock %}
+					</ul>
+					{% if request.user.is_authenticated %}
+						<div class="navbar-right">
+							<p class="navbar-text">{% trans 'Signed in as' %} {{ request.user.get_full_name|default:request.user }}</p>
+							<ul class="nav navbar-nav">
+								{% if cruditor.constants.change_password_url %}
+									<li><a href="{{ cruditor.constants.change_password_url }}">{% trans 'Change password' %}</a></li>
+								{% endif %}
+								<li><a href="{{ cruditor.constants.logout_url }}">{% trans 'Logout' %}</a></li>
+							</ul>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</nav>
+		{% endblock %}
+
+		{% block container %}
+			<div class="container">
+				{% block breadcrumb %}
+				<ol class="breadcrumb">
+					{% for node in cruditor.breadcrumb %}
+						{% if not forloop.last %}
+							<li>
+								{% if node.url %}
+									<a href="{{ node.url }}">{{ node.title }}</a>
+								{% else %}
+									{{ node.title }}
+								{% endif %}
+							</li>
+						{% else %}
+							<li class="active">{{ node.title }}</li>
+						{% endif %}
+					{% endfor %}
+				</ol>
+				{% endblock %}
+
+				{% block messages %}
+					{% if messages %}
+					<div class="messages" id="messages">
+						{% for message in messages %}
+						<div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}" data-dismiss="alert">
+							<a class="close" data-dismiss="alert" href="#">&times;</a>
+							{{ message }}
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+				{% endblock %}
+
+				{% block title %}
+					<div class="cruditor-title">
+						{% block title_buttons %}{% endblock %}
+						<h2 class="serif">{{ cruditor.title }}</h2>
+					</div>
+				{% endblock %}
+
+				{% block content %}
+				{% endblock %}
+			</div>
+		{% endblock %}
+
+		<script>
+			if ($('<input>', {type: 'date', value: 'invalid'}).val() === 'invalid') {
+				$('input[type=date]').datetimepicker({format: 'YYYY-MM-DD'});
+			};
+		</script>
+
+		{% block extrabody %}
+		{% endblock %}
+	</body>
+</html>

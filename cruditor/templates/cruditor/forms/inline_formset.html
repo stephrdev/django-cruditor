@@ -1,0 +1,56 @@
+{% load i18n %}
+
+
+<div class="{{ formset.prefix }}-container">
+	{{ formset.management_form }}
+	{% for form in formset %}
+		<div id="{{ form.prefix }}" class="{{ formset.prefix }} panel panel-{{ form.errors|yesno:'danger,default' }}">
+			<div class="panel-heading{% if form.instance.pk %} existing{% endif %}">
+				{% if form.instance.pk %}{{ form.instance }}{% else %}{% trans 'New' %}{% endif %}
+			</div>
+			<div class="panel-body">
+				{% for error in form.non_field_errors %}
+					<div class="alert alert-danger">
+						{{ error }}
+					</div>
+				{% endfor %}
+
+				{{ form.id }}
+
+				{% block fields %}
+				{% endblock %}
+
+				{% if formset.can_delete %}
+					<div class="{{ formset.prefix }}-delete-container pull-right">
+						{{ form.DELETE }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	{% endfor %}
+	<div class="{{ formset.prefix }}-add-container"></div>
+
+	{% block formset_js %}
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('form div.{{ formset.prefix }}').formset({
+					prefix: '{{ formset.prefix }}',
+					addContainer: '.{{ formset.prefix }}-add-container',
+					addText: '{% trans "Add another" %}',
+					addExtraCssClass: 'btn btn-default',
+					deleteContainer: '.{{ formset.prefix }}-delete-container',
+					deleteText: '{% trans "Remove" %}',
+					deleteConfirmText: '{% trans "Are you sure? Item will be removed after saving." %}',
+					deleteExtraCssClass: 'btn btn-danger',
+					added: function(row) {
+						row.find('.page-heading').removeClass('existing');
+						{% block formset_js_added %}{% endblock %}
+					},
+					removed: function(row) {
+						{% block formset_js_removed %}{% endblock %}
+					}
+				});
+			});
+		</script>
+	{% endblock %}
+</div>

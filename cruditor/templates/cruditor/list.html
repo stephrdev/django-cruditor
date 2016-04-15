@@ -1,0 +1,28 @@
+{% extends 'cruditor/base.html' %}
+{% load i18n %}
+{% load floppyforms %}
+{% load render_table from django_tables2 %}
+
+
+{% block content %}
+	<div class="row">
+	{% if filter_form %}
+		<div class="col-xs-12 col col-sm-9">
+			{% render_table table 'cruditor/includes/table.html' %}
+		</div>
+		<div class="col-sm-3 hidden-xs">
+			<h3>{% trans 'Filters' %}</h3>
+			<form action="." method="get">
+				<input type="hidden" name="{{ table.prefixed_order_by_field }}" value="{{ table.order_by }}" />
+				<input type="hidden" name="{{ table.prefixed_per_page_field }}" value="{{ table.paginator.per_page }}" />
+				{% form filter_form using 'cruditor/forms/layout.html' %}
+				<button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
+			</form>
+		</div>
+	{% else %}
+		<div class="col-xs-12">
+			{% render_table table 'cruditor/includes/table.html' %}
+		</div>
+	{% endif %}
+	</div>
+{% endblock %}

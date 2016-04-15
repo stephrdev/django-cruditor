@@ -1,0 +1,78 @@
+{% extends 'cruditor/base.html' %}
+{% load static from staticfiles %}
+{% load floppyforms %}
+{% load i18n %}
+
+
+{% block extrahead %}
+	{{ block.super }}
+	{{ form.media.css }}
+{% endblock %}
+
+{% block formconfig %}{% endblock %}
+
+{% block content %}
+	<form action="." method="post" enctype="multipart/form-data" novalidate{% block form_attributes %}{% endblock %}>
+		{% csrf_token %}
+
+		{% if form.errors or formset_errors %}
+		<div class="alert alert-danger">
+			{% trans 'Please correct the errors below.' %}
+		</div>
+		{% endif %}
+
+		{% for error in form.non_field_errors %}
+			<div class="alert alert-danger">
+				{{ error }}
+			</div>
+		{% endfor %}
+		{% for error in form|hidden_field_errors %}
+			<div class="alert alert-danger">
+				{{ error }}
+			</div>
+		{% endfor %}
+		{% for field in form.hidden_fields %}{% formfield field %}{% endfor %}
+
+		{% block form_panels %}
+			{% form form using %}
+				{% formconfig row using 'cruditor/forms/row.html' %}
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-12">
+								{% block base_form_fields %}
+									{% for field in form.visible_fields %}
+										{% formrow field %}
+									{% endfor %}
+								{% endblock %}
+								{% block extra_base_form_fields %}{% endblock %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{% block extra_form_panels %}
+				{% endblock %}
+			{% endform %}
+		{% endblock %}
+
+		{% block form_actions %}
+		<div class="row form-actions">
+			<div class="col-xs-4 text-left">
+				{% block delete_button %}
+					{% if object_delete_url %}
+						<a class="btn btn-danger" href="{{ object_delete_url }}">{% trans 'Delete' %}</a>
+					{% endif %}
+				{% endblock %}
+			</div>
+			<div class="col-xs-8 text-right">
+				<button class="btn btn-primary" type="submit" name="save">{% trans 'Save' %}</button>
+			</div>
+		</div>
+		{% endblock %}
+	</form>
+{% endblock %}
+
+{% block extrabody %}
+	{{ form.media.js }}
+{% endblock %}

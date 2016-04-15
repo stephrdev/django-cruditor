@@ -1,0 +1,25 @@
+{% load floppyforms %}
+
+
+{% block row %}
+	{% formconfig field using 'cruditor/forms/input.html' for 'TextInput' %}
+	{% formconfig field using 'cruditor/forms/select.html' for 'Select' %}
+	{% formconfig field using 'cruditor/forms/radio_select.html' for 'RadioSelect' %}
+	{% formconfig field using 'cruditor/forms/checkbox_select.html' for 'CheckboxSelectMultiple' %}
+	{% formconfig field using 'cruditor/forms/select.html' for 'CruditorSelectMultiple' %}
+	{% formconfig field using 'cruditor/forms/textarea.html' for 'Textarea' %}
+
+	{% for field in fields %}
+		<div class="form-group{% if field.css_classes %} {{ field.css_classes }}{% endif %}{% if field.errors %} has-error{% endif %}">
+		{% with label=label|default:field.label help_text=help_text|default:field.help_text input_type=field.field.widget.input_type %}
+			{% block field %}
+				{% if input_type == 'checkbox' %}
+					{% include 'cruditor/forms/row_checkbox_field.html' %}
+				{% else %}
+					{% include 'cruditor/forms/row_default_field.html' %}
+				{% endif %}
+			{% endblock %}
+		{% endwith %}
+		</div>
+	{% endfor %}
+{% endblock %}
