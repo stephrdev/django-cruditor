@@ -2,3 +2,4 @@ include README.rst LICENSE.rst setup.cfg
 recursive-include cruditor/locale *
 recursive-include cruditor/templates *
 recursive-include cruditor/static *
+recursive-exclude cruditor .DS_Store
