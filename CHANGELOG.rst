@@ -1,7 +1,7 @@
 Changelog
 =========
 
-TDB
----
+0.1.0
+-----
 
-* Initial release.
+* Initial release without many docs but an example project.
