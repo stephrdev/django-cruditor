@@ -11,8 +11,8 @@ from .forms import LoginForm
 class CruditorMixin(object):
     menu_title = 'CRUDitor'
     index_url = '#'
-    change_password_url = '#'
     logout_url = '#'
+    change_password_url = None
     menu_template_name = 'cruditor/includes/menu.html'
     extrahead_template_name = 'cruditor/includes/extrahead.html'
     login_template_name = 'cruditor/login.html'
