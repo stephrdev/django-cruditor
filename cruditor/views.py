@@ -142,8 +142,15 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
         return redirect(self.request.path)
 
 
-class CruditorLogoutView(View):
+class CruditorLogoutView(CruditorMixin, View):
     template_name = 'cruditor/logout.html'
 
-    def get(self, request, *args, **kwargs):
-        return logout(request, template_name=self.template_name)
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        return logout(
+            request,
+            template_name=self.template_name,
+            extra_context={
+                'cruditor': self.get_cruditor_context(alternative_title='Logout')
+            },
+        )
