@@ -18,6 +18,9 @@ What is django-cruditor
 -----------------------
 
 `django-cruditor` is a set of generic class based views with Bootstrap templates.
+Together with `django-tables2`, `django-filter` and `django-floppyforms` this
+module provides you some easy to use Django views to build your customized
+CRUD interface.
 
 
 Quick start
@@ -27,14 +30,19 @@ To install `django-cruditor` just use your preferred Python package installer::
 
     $ pip install django-cruditor
 
-Add some stuff  to your Django settings
+Add the `django-cruditor` and its dependencies to to your Django settings
 
 .. code-block:: python
 
     INSTALLED_APPS = (
         # some other apps
+        'floppyforms',
+        'django_tables2',
         'cruditor',
     )
+
+Please refer to the examples to see how it works. More documentation will be
+added soon.
 
 
 Contribute
@@ -46,3 +54,6 @@ development packages. To run the tests, just use
 .. code-block:: shell
 
     $ tox
+
+If you don't know where to start, have a look at the `TODO` file in this
+repository.
