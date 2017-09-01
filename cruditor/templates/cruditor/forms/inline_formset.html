@@ -20,11 +20,13 @@
 				{% block fields %}
 				{% endblock %}
 
-				{% if formset.can_delete %}
-					<div class="{{ formset.prefix }}-delete-container pull-right">
-						{{ form.DELETE }}
-					</div>
-				{% endif %}
+				{% block delete_button %}
+					{% if formset.can_delete %}
+						<div class="{{ formset.prefix }}-delete-container pull-right">
+							{{ form.DELETE }}
+						</div>
+					{% endif %}
+				{% endblock %}
 			</div>
 		</div>
 	{% endfor %}
