@@ -17,15 +17,21 @@
 
 				{{ form.id }}
 
-				{% block fields %}
-				{% endblock %}
+				{% block form %}
+					{% form form using %}
+						{% formconfig row using 'cruditor/forms/row.html' %}
 
-				{% block delete_button %}
-					{% if formset.can_delete %}
-						<div class="{{ formset.prefix }}-delete-container pull-right">
-							{{ form.DELETE }}
-						</div>
-					{% endif %}
+						{% block fields %}
+						{% endblock %}
+
+						{% block delete_button %}
+							{% if formset.can_delete %}
+								<div class="{{ formset.prefix }}-delete-container pull-right">
+									{{ form.DELETE }}
+								</div>
+							{% endif %}
+						{% endblock %}
+					{% endform %}
 				{% endblock %}
 			</div>
 		</div>

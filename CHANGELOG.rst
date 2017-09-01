@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.2
+-----
+
+* Add floppyforms form tag to inline formset template.
+
 0.1.1
 -----
 
