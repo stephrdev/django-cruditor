@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 11:54+0200\n"
-"PO-Revision-Date: 2016-03-07 13:06+0100\n"
+"POT-Creation-Date: 2017-09-01 12:36+0200\n"
+"PO-Revision-Date: 2017-09-01 12:35+0200\n"
 "Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: filters.py:12
 msgid "Any choice"
@@ -42,7 +42,7 @@ msgstr "Kein Zugriff"
 msgid "Permission to access requested item denied"
 msgstr "Zugriff auf die angeforderte Seite verweigert"
 
-#: templates/cruditor/403.html:15 templates/cruditor/404.html.py:15
+#: templates/cruditor/403.html:15 templates/cruditor/404.html:15
 msgid "Take me to the index page"
 msgstr "Zurück zur Übersicht"
 
@@ -54,24 +54,24 @@ msgstr "Nicht gefunden"
 msgid "Requested item not found"
 msgstr "Seite nicht gefunden"
 
-#: templates/cruditor/base.html:36
+#: templates/cruditor/base.html:40
 msgid "Toggle navigation"
 msgstr "Navigation anzeigen"
 
-#: templates/cruditor/base.html:53
+#: templates/cruditor/base.html:58
 msgid "Signed in as"
 msgstr "Angemeldet als"
 
-#: templates/cruditor/base.html:56 templates/cruditor/change-password.html:10
+#: templates/cruditor/base.html:61 templates/cruditor/change-password.html:10
 #: views.py:130
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: templates/cruditor/base.html:58
+#: templates/cruditor/base.html:63
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/cruditor/delete.html:8 templates/cruditor/form.html.py:64
+#: templates/cruditor/delete.html:8 templates/cruditor/form.html:64
 msgid "Delete"
 msgstr "Löschen"
 
@@ -83,21 +83,21 @@ msgstr "Bitte korrigieren Sie die angezeigten Fehler"
 msgid "Save"
 msgstr "Speichern"
 
-#: templates/cruditor/forms/inline_formset.html:9
+#: templates/cruditor/forms/inline_formset.html:10
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
-#: templates/cruditor/forms/inline_formset.html:39
+#: templates/cruditor/forms/inline_formset.html:48
 msgid "Add another"
-msgstr ""
+msgstr "Hinzufügen"
 
-#: templates/cruditor/forms/inline_formset.html:42
+#: templates/cruditor/forms/inline_formset.html:51
 msgid "Remove"
-msgstr ""
+msgstr "Entfernen"
 
-#: templates/cruditor/forms/inline_formset.html:43
+#: templates/cruditor/forms/inline_formset.html:52
 msgid "Are you sure? Item will be removed after saving."
-msgstr ""
+msgstr "Sind Sie sicher? Der Datensatz wird nach dem Speichern gelöscht."
 
 #: templates/cruditor/includes/pagination.html:16
 msgid "Previous"
