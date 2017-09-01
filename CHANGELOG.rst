@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.1
+-----
+
+* Added some useful template blocks.
+
 0.1.0
 -----
 
