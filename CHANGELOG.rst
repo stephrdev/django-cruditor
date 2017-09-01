@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.3
+-----
+
+* Add missing floppyforms load tag.
+
 0.1.2
 -----
 
