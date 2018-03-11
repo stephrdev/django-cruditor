@@ -1,59 +1,52 @@
 django-cruditor
 ===============
 
-.. image:: https://badge.fury.io/py/django-cruditor.png
-    :target: http://badge.fury.io/py/django-cruditor
+.. image:: https://img.shields.io/pypi/v/django-cruditor.svg
+   :target: https://pypi.python.org/pypi/django-cruditor
+   :alt: Latest Version
 
-.. image:: https://travis-ci.org/moccu/django-cruditor.svg?branch=master
-    :target: https://travis-ci.org/moccu/django-cruditor
-
-.. image:: https://coveralls.io/repos/moccu/django-cruditor/badge.svg
-    :target: https://coveralls.io/r/moccu/django-cruditor
+.. image:: https://codecov.io/gh/moccu/django-cruditor/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/moccu/django-cruditor
+   :alt: Coverage Status
 
 .. image:: https://readthedocs.org/projects/django-cruditor/badge/?version=latest
-    :target: https://readthedocs.org/projects/django-cruditor/?badge=latest
+   :target: https://django-cruditor.readthedocs.io/en/stable/?badge=latest
+   :alt: Documentation Status
+
+.. image:: https://travis-ci.org/moccu/django-cruditor.svg?branch=master
+   :target: https://travis-ci.org/moccu/django-cruditor
+
+Usage
+-----
+
+Please refer to the `Documentation <https://django-cruditor.readthedocs.io/>`_ to
+learn how to use ``django-cruditor``. Cruditor is a set of generic class based views
+with UIKit styled templates. Together with django-tables2, django-filter and
+django-tapeforms this package provides you some easy to use Django views to build
+your customized CRUD interface.
 
 
-What is django-cruditor
+Requirements
+------------
+
+django-cruditor supports Python 3 only and requires at least Django 1.11.
+Optional dependencies are django-tapeforms, django-tables2 and django-filter.
+
+
+Prepare for development
 -----------------------
 
-`django-cruditor` is a set of generic class based views with Bootstrap templates.
-Together with `django-tables2`, `django-filter` and `django-floppyforms` this
-module provides you some easy to use Django views to build your customized
-CRUD interface.
-
-
-Quick start
------------
-
-To install `django-cruditor` just use your preferred Python package installer::
-
-    $ pip install django-cruditor
-
-Add the `django-cruditor` and its dependencies to to your Django settings
-
-.. code-block:: python
-
-    INSTALLED_APPS = (
-        # some other apps
-        'floppyforms',
-        'django_tables2',
-        'cruditor',
-    )
-
-Please refer to the examples to see how it works. More documentation will be
-added soon.
-
-
-Contribute
-----------
-
-To contribute, you can use `pip install -e .[tests]` to install all required
-development packages. To run the tests, just use
+A Python 3.6 interpreter is required in addition to pipenv.
 
 .. code-block:: shell
 
-    $ tox
+    $ pipenv install --python 3.6
+    $ pipenv shell
+    $ pip install -e .
 
-If you don't know where to start, have a look at the `TODO` file in this
-repository.
+
+Now you're ready to start the example project to experiment with cruditor.
+
+.. code-block:: shell
+
+    $ pipenv run python examples/manage.py runserver

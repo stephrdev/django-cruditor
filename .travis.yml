@@ -1,20 +1,20 @@
 language: python
-sudo: false
+
+python:
+  - "3.6"
+  - "3.7-dev"
 
 env:
-  - TOXENV=py27-django18
-  - TOXENV=py34-django18
-  - TOXENV=py27-django19
-  - TOXENV=py34-django19
-  # - TOXENV=py35-django19
+  - DEPS="Django>=1.11,<1.12"
+  - DEPS="Django>=2.0,<2.1"
 
 install:
-  - pip install tox
+  - pip install pipenv codecov
+  - pipenv install --dev
+  - pipenv run pip install -e .
+  - pipenv run pip install $DEPS
 
-script:
-  - tox
+script: pipenv run py.test --cov
 
 after_success:
-  - pip install coverage coveralls
-  - coverage report
-  - coveralls
+  - codecov
