@@ -1,3 +1,8 @@
+import os
+
+
+DEBUG = True
+
 SECRET_KEY = 'testing'
 
 DATABASES = {
@@ -7,16 +12,24 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS = [
-    'django.contrib.contenttypes',
+INSTALLED_APPS = (
     'django.contrib.auth',
-    'django.contrib.admin',
-    'django.contrib.staticfiles',
+    'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
     'cruditor',
-]
+    'django_tables2',
+    'django_filters',
+    'tapeforms',
+)
 
-# We really don't rely on the urlconf but we need to set a path anyway.
-ROOT_URLCONF = 'django.contrib.staticfiles.urls'
-
-STATIC_URL = '/static/'
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [os.path.join(os.path.dirname(__file__), 'templates')],
+    'APP_DIRS': True,
+    'OPTIONS': {
+        'debug': True
+    }
+}]

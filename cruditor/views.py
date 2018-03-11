@@ -12,6 +12,7 @@ from django.views.generic.detail import SingleObjectMixin
 from .forms import ChangePasswordForm, DeleteConfirmForm
 from .mixins import CruditorMixin, FormViewMixin
 
+
 try:
     import django_tables2 as tables
 except ImportError:

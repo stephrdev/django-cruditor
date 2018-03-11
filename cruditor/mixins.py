@@ -3,7 +3,6 @@ from django.contrib.auth.views import REDIRECT_FIELD_NAME, login
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
 
 from .forms import LoginForm
