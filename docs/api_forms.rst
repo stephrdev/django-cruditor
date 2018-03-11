@@ -1,5 +1,5 @@
-Form reference
-==============
+Forms
+=====
 
 .. automodule:: cruditor.forms
     :members:
