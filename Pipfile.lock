@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "40c7c1dce10cda70f4bc8b7cd2bee29b99ab32fa26e25fd686b4ae26d36aef95"
+            "sha256": "a32614258915e4b17e657b05029c96e41d034845210b8453db49104ea02bf472"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -38,10 +38,10 @@
         },
         "django-tapeforms": {
             "hashes": [
-                "sha256:44428d1ae6512ddaa7cf32d343960270cf6b422573de6bbd96242fa75851e314",
-                "sha256:71bc7fd7ea32873e6b9bff22b80aee04e992ca80e270c92d33a0a15870510882"
+                "sha256:0c88e5740d14dc23275b62b0445bbe974af03cd8edb0d95660628b7284ae70fd",
+                "sha256:fd07e6a9af69c22800e49489c979f2fc6fa5d1bbc475b8b28b0a86050211e780"
             ],
-            "version": "==0.0.1"
+            "version": "==0.0.2"
         }
     },
     "develop": {

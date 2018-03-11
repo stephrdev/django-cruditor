@@ -1,0 +1,6 @@
+.uk-alert-info {
+	@extend .uk-alert-primary;
+}
+.uk-alert-error {
+	@extend .uk-alert-danger;
+}
