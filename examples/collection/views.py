@@ -30,7 +30,7 @@ class PersonFilterView(PersonListView):
 
 
 class PersonAddView(PersonViewMixin, CruditorAddView):
-    success_url = reverse_lazy('collection:lits')
+    success_url = reverse_lazy('collection:list')
     form_class = PersonForm
 
 

@@ -36,8 +36,6 @@ INSTALLED_APPS = [
     'tapeforms',
 
     'store.apps.StoreConfig',
-
-    'minimal.apps.MinimalConfig',
 ]
 
 MIDDLEWARE = [
