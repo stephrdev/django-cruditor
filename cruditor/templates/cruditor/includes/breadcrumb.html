@@ -1,0 +1,15 @@
+<ul class="uk-breadcrumb">
+	{% for node in cruditor.breadcrumb %}
+		{% if not forloop.last %}
+			<li{% if not node.url %} class="uk-disabled"{% endif %}>
+				{% if node.url %}
+					<a href="{{ node.url }}">{{ node.title }}</a>
+				{% else %}
+					<span>{{ node.title }}</span>
+				{% endif %}
+			</li>
+		{% else %}
+			<li><span>{{ node.title }}</span></li>
+		{% endif %}
+	{% endfor %}
+</ul>

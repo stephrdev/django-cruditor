@@ -1,0 +1,7 @@
+{% if cruditor.titlebuttons %}
+	<div class="uk-button-group">
+		{% for button in cruditor.titlebuttons %}
+			<a href="{{ button.url }}" class="uk-button uk-button-{{ button.button_class|default:'default' }}">{{ button.label }}</a>
+		{% endfor %}
+	</div>
+{% endif %}

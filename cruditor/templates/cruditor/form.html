@@ -1,7 +1,6 @@
 {% extends 'cruditor/base.html' %}
-{% load static from staticfiles %}
-{% load floppyforms %}
 {% load i18n %}
+{% load tapeforms %}
 
 
 {% block extrahead %}
@@ -9,70 +8,52 @@
 	{{ form.media.css }}
 {% endblock %}
 
-{% block formconfig %}{% endblock %}
 
 {% block content %}
+<div class="cruditor-form">
 	<form action="." method="post" enctype="multipart/form-data" novalidate{% block form_attributes %}{% endblock %}>
 		{% csrf_token %}
 
 		{% if form.errors or formset_errors %}
-		<div class="alert alert-danger">
-			{% trans 'Please correct the errors below.' %}
-		</div>
+			<div class="uk-alert uk-alert-error">
+				{% trans 'Please correct the errors below.' %}
+			</div>
 		{% endif %}
 
-		{% for error in form.non_field_errors %}
-			<div class="alert alert-danger">
-				{{ error }}
-			</div>
-		{% endfor %}
-		{% for error in form|hidden_field_errors %}
-			<div class="alert alert-danger">
-				{{ error }}
-			</div>
-		{% endfor %}
-		{% for field in form.hidden_fields %}{% formfield field %}{% endfor %}
+		{% block form %}
+			{% form form %}
+		{% endblock %}
 
-		{% block form_panels %}
-			{% form form using %}
-				{% formconfig row using 'cruditor/forms/row.html' %}
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-sm-12">
-								{% block base_form_fields %}
-									{% for field in form.visible_fields %}
-										{% formrow field %}
-									{% endfor %}
-								{% endblock %}
-								{% block extra_base_form_fields %}{% endblock %}
-							</div>
-						</div>
-					</div>
-				</div>
-
-				{% block extra_form_panels %}
-				{% endblock %}
-			{% endform %}
+		{% block form_extra %}
 		{% endblock %}
 
 		{% block form_actions %}
-		<div class="row form-actions">
-			<div class="col-xs-4 text-left">
-				{% block delete_button %}
-					{% if object_delete_url %}
-						<a class="btn btn-danger" href="{{ object_delete_url }}">{% trans 'Delete' %}</a>
-					{% endif %}
-				{% endblock %}
+			<div class="uk-grid-small uk-flex form-actions" uk-grid>
+				<div class="uk-width-4-5">
+					{% block form_actions_left %}
+						{% if object_delete_url %}
+							<a class="uk-button uk-button-danger" href="{{ object_delete_url }}">{% trans 'Delete' %}</a>
+						{% endif %}
+					{% endblock %}
+				</div>
+				<div class="uk-width-1-5">
+					<div class="uk-align-right">
+					{% block form_actions_right %}
+						<button class="uk-button uk-button-primary" type="submit" name="save">
+							{% trans 'Save form' as default_form_save_button_label %}
+							{{ form_save_button_label|default:default_form_save_button_label }}
+						</button>
+					{% endblock %}
+					</div>
+				</div>
 			</div>
-			<div class="col-xs-8 text-right">
-				<button class="btn btn-primary" type="submit" name="save">{% trans 'Save' %}</button>
-			</div>
-		</div>
 		{% endblock %}
 	</form>
+</div>
 {% endblock %}
 
+
 {% block extrabody %}
+	{{ block.super }}
 	{{ form.media.js }}
 {% endblock %}

@@ -2,18 +2,19 @@
 {% load i18n %}
 
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block container %}
-	<div class="container">
-		<div class="page-header">
-			<h1>
-				<i class="glyphicon glyphicon-alert"></i> {% trans 'Not found' %}
-				<small>{% trans 'Requested item not found' %}</small>
-			</h1>
-		</div>
-		<p>
-			<a href="{{ cruditor.constants.index_url }}" class="btn btn-primary btn-lg">
+<div class="uk-align-center">
+	<div class="uk-card uk-card-large uk-card-default uk-card-body">
+		<h1 class="uk-card-title">{% trans 'Not found' %}</h1>
+		<p>{% trans 'The requested item could not be found' %}</p>
+		<p class="uk-align-right">
+			<a href="{{ cruditor.constants.index_url }}" class="uk-button uk-button-primary">
 				{% trans 'Take me to the index page' %}
 			</a>
 		</p>
 	</div>
+</div>
 {% endblock %}

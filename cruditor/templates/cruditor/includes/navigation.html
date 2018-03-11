@@ -1,0 +1,31 @@
+{% load i18n %}
+
+
+<div class="uk-navbar-container cruditor-navigation" uk-navbar>
+	<div class="uk-navbar-left">
+		{% block brand %}
+			<a class="uk-navbar-item uk-logo" href="{{ cruditor.constants.index_url }}">{{ cruditor.constants.menu_title }}</a>
+		{% endblock %}
+		{% block menu %}
+			{% include cruditor.constants.menu_template_name %}
+		{% endblock %}
+	</div>
+	{% block menu_right %}
+		{% if request.user.is_authenticated %}
+			<div class="uk-navbar-right">
+				 <div class="uk-navbar-item">
+					<div>
+						{% trans 'Signed in as' %}
+						{{ request.user.get_full_name|default:request.user }}
+					</div>
+				</div>
+				<ul class="uk-navbar-nav">
+					{% if cruditor.constants.change_password_url %}
+						<li><a href="{{ cruditor.constants.change_password_url }}">{% trans 'Change password' %}</a></li>
+					{% endif %}
+					<li><a href="{{ cruditor.constants.logout_url }}">{% trans 'Logout' %}</a></li>
+				</ul>
+			</div>
+		{% endif %}
+	{% endblock %}
+</div>
