@@ -5,6 +5,7 @@ from django.urls import reverse, reverse_lazy
 from examples.mixins import ExamplesMixin
 from store.models import Person
 
+from .filters import PersonFilter
 from .forms import PersonForm
 from .tables import PersonTable
 
@@ -22,6 +23,10 @@ class PersonListView(PersonViewMixin, CruditorListView):
 
     def get_titlebuttons(self):
         return [{'url': reverse('collection:add'), 'label': 'Add person'}]
+
+
+class PersonFilterView(PersonListView):
+    filter_class = PersonFilter
 
 
 class PersonAddView(PersonViewMixin, CruditorAddView):
