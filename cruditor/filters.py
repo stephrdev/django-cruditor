@@ -11,7 +11,7 @@ class AnyChoiceFilter(ChoiceFilter):
     def __init__(self, *args, **kwargs):
         empty_label = kwargs.pop('empty_label', ugettext('Any choice'))
         super().__init__(*args, **kwargs)
-        self.extra['choices'] = [('', empty_label)] + list(self.extra['choices'])
+        self.extra['empty_label'] = empty_label
 
 
 class MultiFieldFilter(CharFilter):
