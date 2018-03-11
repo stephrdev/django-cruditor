@@ -78,7 +78,9 @@ class CruditorListView(CruditorMixin, TemplateView):
         return self.get_queryset()
 
     def get_table(self, filtered_qs):
-        qs = getattr(filtered_qs, 'qs', filtered_qs).distinct()
+        qs = getattr(filtered_qs, 'qs', filtered_qs)
+        if hasattr(qs, 'distinct'):
+            qs = qs.distinct()
         table = self.get_table_class()(qs, **self.get_table_kwargs())
         tables.RequestConfig(self.request).configure(table)
         return table
