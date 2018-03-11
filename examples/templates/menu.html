@@ -1,0 +1,12 @@
+<ul class="uk-navbar-nav">
+	<li><a href="{% url 'minimal:demo' %}">Minimal demo</a></li>
+	<li>
+		<a href="#">Collection</a>
+		<div class="uk-navbar-dropdown">
+			<ul class="uk-nav uk-navbar-dropdown-nav">
+				<li><a href="{% url 'collection:list' %}">Person list</a></li>
+				<li><a href="{% url 'collection:add' %}">Add new Person</a></li>
+			</ul>
+		</div>
+	</li>
+</ul>

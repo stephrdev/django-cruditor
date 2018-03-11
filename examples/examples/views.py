@@ -1,6 +1,13 @@
+from cruditor.mixins import CruditorMixin
 from cruditor.views import Cruditor403View, Cruditor404View, CruditorChangePasswordView, CruditorLogoutView
+from django.views.generic import TemplateView
 
 from .mixins import ExamplesMixin
+
+
+class HomeView(ExamplesMixin, CruditorMixin, TemplateView):
+    title = 'Welcome!'
+    template_name = 'home.html'
 
 
 class LogoutView(ExamplesMixin, CruditorLogoutView):

@@ -19,6 +19,11 @@ class CollectionViewMixin(object):
         else:
             return super().get_title()
 
+    def get_breadcrumb_title(self):
+        if issubclass(self.__class__, CruditorDeleteView):
+            return ugettext('Delete')
+        return super().get_breadcrumb_title()
+
     def get_breadcrumb(self):
         breadcrumb = super().get_breadcrumb()
 
@@ -43,7 +48,7 @@ class CollectionViewMixin(object):
 
     def collection_include_detail_crumb(self):
         return (
-            self.include_list_crumb() and
+            self.collection_include_list_crumb() and
             not issubclass(self.__class__, (CruditorAddView, CruditorChangeView))
         )
 
@@ -54,7 +59,7 @@ class CollectionViewMixin(object):
         return reverse(self.collection_list_urlname)
 
     def get_collection_detail_title(self):
-        return self.object.name
+        return str(self.object)
 
     def get_collection_detail_url(self):
         return reverse(self.collection_detail_urlname, args=(self.object.pk,))

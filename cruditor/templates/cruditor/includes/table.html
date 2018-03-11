@@ -48,11 +48,10 @@
 							</tr>
 						{% endblock %}
 					{% empty %}
-						{% if table.empty_text %}
-							{% block table.tbody.empty_text %}
-								<tr><td colspan="{{ table.columns|length }}">{{ table.empty_text }}</td></tr>
-							{% endblock %}
-						{% endif %}
+						{% block table.tbody.empty_text %}
+							{% trans 'No data available.' as default_table_empty_text %}
+							<tr><td colspan="{{ table.columns|length }}">{{ table.empty_text|default:default_table_empty_text }}</td></tr>
+						{% endblock %}
 					{% endfor %}
 				</tbody>
 			{% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from cruditor.forms import CruditorTapeformMixin
 
-from .models import Person
+from store.models import Person
 
 
 class PersonForm(CruditorTapeformMixin, forms.ModelForm):
@@ -10,7 +10,3 @@ class PersonForm(CruditorTapeformMixin, forms.ModelForm):
     class Meta:
         model = Person
         fields = '__all__'
-        widgets = {
-            'stars': forms.RadioSelect,
-            'birthdate': forms.SelectDateWidget,
-        }
