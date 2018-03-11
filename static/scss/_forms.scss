@@ -20,6 +20,11 @@ form {
 			color: $form-danger-color;
 			list-style-type: none;
 		}
+
+		.help-text {
+			margin-top: 0.2em;
+			font-size: $form-small-font-size;
+		}
 	}
 
 	.form-widget-radioselect .uk-form-controls label {
