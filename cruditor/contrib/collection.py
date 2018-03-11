@@ -1,3 +1,4 @@
+import django_tables2 as tables
 from django.urls import reverse
 from django.utils.translation import ugettext
 
@@ -42,6 +43,27 @@ class CollectionViewMixin(object):
                 'url': self.get_collection_detail_url(),
             })
         return breadcrumb
+
+    def get_table_class(self):
+        if self.table_class:
+            return self.table_class
+
+        if not hasattr(self, '_table_class'):
+            class CollectionTable(tables.Table):
+                item = tables.LinkColumn(
+                    self.collection_detail_urlname,
+                    args=(tables.A('pk'),),
+                    verbose_name=self.model._meta.verbose_name,
+                    text=lambda obj: str(obj),
+                    accessor=tables.A('pk')
+                )
+
+                class Meta:
+                    model = self.model
+                    fields = ('item',)
+            self._table_class = CollectionTable
+
+        return self._table_class
 
     def collection_include_list_crumb(self):
         return not issubclass(self.__class__, CruditorListView)
