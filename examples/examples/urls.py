@@ -17,4 +17,5 @@ urlpatterns = [
 
     path('minimal/', include('minimal.urls')),
     path('collection/', include('collection.urls')),
+    path('remote/', include('remote.urls')),
 ]
