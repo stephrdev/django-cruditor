@@ -19,7 +19,6 @@ class PersonViewMixin(ExamplesMixin, CollectionViewMixin):
 
 class PersonListView(PersonViewMixin, CruditorListView):
     title = 'Persons'
-    table_class = PersonTable
 
     def get_titlebuttons(self):
         return [{'url': reverse('collection:add'), 'label': 'Add person'}]
@@ -27,6 +26,7 @@ class PersonListView(PersonViewMixin, CruditorListView):
 
 class PersonFilterView(PersonListView):
     filter_class = PersonFilter
+    table_class = PersonTable
 
 
 class PersonAddView(PersonViewMixin, CruditorAddView):
