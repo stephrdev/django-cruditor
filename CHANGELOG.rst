@@ -6,6 +6,7 @@ Changelog
 
 * Many bugfixes and small improvements
 * Add CollectionMixin
+* Add ``get_titlebuttons`` helper to add additional buttons to Cruditor views
 * Refactor templates to use UIKit instead of Bootstrap 3
 * Introduce build process for Javascript and CSS files
 

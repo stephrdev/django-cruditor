@@ -10,7 +10,7 @@ class AnyChoiceFilter(ChoiceFilter):
 
     def __init__(self, *args, **kwargs):
         empty_label = kwargs.pop('empty_label', ugettext('Any choice'))
-        super(AnyChoiceFilter, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.extra['choices'] = [('', empty_label)] + list(self.extra['choices'])
 
 
@@ -33,7 +33,7 @@ class MultiFieldFilter(CharFilter):
     """
 
     def __init__(self, fields, *args, **kwargs):
-        super(MultiFieldFilter, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields = fields
         self.lookup_type = 'icontains'
         self.lookup_types = [

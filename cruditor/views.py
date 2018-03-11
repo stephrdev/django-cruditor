@@ -1,17 +1,21 @@
-import django_tables2 as tables
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import logout
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic import CreateView, FormView, TemplateView, UpdateView, View
 from django.views.generic.detail import SingleObjectMixin
 
 from .forms import ChangePasswordForm, DeleteConfirmForm
-from .mixins import CruditorMixin, FormsetViewMixin
+from .mixins import CruditorMixin, FormViewMixin
+
+try:
+    import django_tables2 as tables
+except ImportError:
+    tables = None
 
 
 class Cruditor404View(CruditorMixin, TemplateView):
@@ -36,21 +40,21 @@ class CruditorListView(CruditorMixin, TemplateView):
     model = None
     queryset = None
     filter_class = None
-    table_class = tables.Table
+    table_class = None
     template_name = 'cruditor/list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(CruditorListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         filtered_qs = self.get_filtered_queryset()
         context['table'] = self.get_table(filtered_qs)
         context['filter_form'] = filtered_qs.form if self.filter_class else None
-
         return context
 
     def get_queryset(self):
         return self.queryset or self.model._default_manager.all()
 
     def get_table_class(self):
+        assert self.table_class, 'table_class not configured.'
         return self.table_class
 
     def get_table_kwargs(self):
@@ -79,7 +83,7 @@ class CruditorListView(CruditorMixin, TemplateView):
         return table
 
 
-class CruditorAddView(CruditorMixin, FormsetViewMixin, CreateView):
+class CruditorAddView(CruditorMixin, FormViewMixin, CreateView):
     success_message = _('The {model} "{object}" was successfully added.')
     template_name = 'cruditor/form.html'
 
@@ -90,7 +94,7 @@ class CruditorAddView(CruditorMixin, FormsetViewMixin, CreateView):
         return ugettext('Add {0}').format(self.model._meta.verbose_name)
 
 
-class CruditorChangeView(CruditorMixin, FormsetViewMixin, UpdateView):
+class CruditorChangeView(CruditorMixin, FormViewMixin, UpdateView):
     success_message = _('The {model} "{object}" was successfully changed.')
     template_name = 'cruditor/form.html'
 
@@ -101,19 +105,19 @@ class CruditorChangeView(CruditorMixin, FormsetViewMixin, UpdateView):
         return None
 
     def get_context_data(self, **kwargs):
-        return super(CruditorChangeView, self).get_context_data(
+        return super().get_context_data(
             object_delete_url=self.get_delete_url(), **kwargs)
 
 
 class CruditorDeleteView(CruditorMixin, SingleObjectMixin, FormView):
     success_message = _('The {model} "{object}" was successfully deleted.')
-    template_name = 'cruditor/delete.html'
+    template_name = 'cruditor/form.html'
     form_class = DeleteConfirmForm
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        return super(CruditorDeleteView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_title(self):
         return ugettext('Delete: {0}').format(self.object)
@@ -122,16 +126,20 @@ class CruditorDeleteView(CruditorMixin, SingleObjectMixin, FormView):
         self.object.delete()
         messages.success(self.request, self.success_message.format(
             model=self.model._meta.verbose_name, object=self.object))
-        return super(CruditorDeleteView, self).form_valid(form)
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            form_save_button_label=ugettext('Confirm deletion'), **kwargs)
 
 
 class CruditorChangePasswordView(CruditorMixin, FormView):
-    template_name = 'cruditor/change-password.html'
+    template_name = 'cruditor/form.html'
     title = _('Change password')
     form_class = ChangePasswordForm
 
     def get_form_kwargs(self):
-        kwargs = super(CruditorChangePasswordView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
 
@@ -140,6 +148,10 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
         update_session_auth_hash(self.request, form.user)
         messages.success(self.request, ugettext('Password changed successfully.'))
         return redirect(self.request.path)
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            form_save_button_label=ugettext('Set new password'), **kwargs)
 
 
 class CruditorLogoutView(CruditorMixin, View):

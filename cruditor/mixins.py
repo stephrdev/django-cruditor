@@ -3,6 +3,7 @@ from django.contrib.auth.views import REDIRECT_FIELD_NAME, login
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext
 from django.views.decorators.cache import never_cache
 
 from .forms import LoginForm
@@ -16,27 +17,19 @@ class CruditorMixin(object):
     menu_template_name = 'cruditor/includes/menu.html'
     extrahead_template_name = 'cruditor/includes/extrahead.html'
     login_template_name = 'cruditor/login.html'
+    login_form_class = LoginForm
     staff_required = True
     required_permission = None
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_active or (self.staff_required and not request.user.is_staff):
-            login_defaults = {
-                'template_name': self.login_template_name,
-                'authentication_form': LoginForm,
-                'extra_context': {
-                    'app_path': request.get_full_path(),
-                    'next_field': REDIRECT_FIELD_NAME,
-                    'next_value': request.get_full_path(),
-                    'cruditor': self.get_cruditor_context(alternative_title='Login'),
-                },
-            }
-            return login(request, **login_defaults)
+        login_result = self.ensure_logged_in(request, *args, **kwargs)
+        if login_result is not True:
+            return login_result
 
         self.ensure_required_permission()
 
-        return super(CruditorMixin, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_cruditor_context(self, alternative_title=None):
         return {
@@ -44,6 +37,7 @@ class CruditorMixin(object):
             'breadcrumb': self.get_breadcrumb() + [
                 {'title': alternative_title or self.get_breadcrumb_title(), 'url': None}
             ],
+            'titlebuttons': self.get_titlebuttons(),
             'constants': {
                 'menu_title': self.menu_title,
                 'menu_template_name': self.menu_template_name,
@@ -63,6 +57,28 @@ class CruditorMixin(object):
     def get_breadcrumb(self):
         return []
 
+    def get_titlebuttons(self):
+        return None
+
+    def ensure_logged_in(self, request, *args, **kwargs):
+        if (
+            not request.user.is_active or
+            (self.staff_required and not request.user.is_staff)
+        ):
+            login_defaults = {
+                'template_name': self.login_template_name,
+                'authentication_form': self.login_form_class,
+                'extra_context': {
+                    'app_path': request.get_full_path(),
+                    'next_field': REDIRECT_FIELD_NAME,
+                    'next_value': request.get_full_path(),
+                    'cruditor': self.get_cruditor_context(alternative_title='Login'),
+                },
+            }
+            return login(request, **login_defaults)
+
+        return True
+
     def get_required_permission(self):
         return self.required_permission
 
@@ -76,12 +92,12 @@ class CruditorMixin(object):
             raise PermissionDenied
 
     def get_context_data(self, **kwargs):
-        context = super(CruditorMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['cruditor'] = self.get_cruditor_context()
         return context
 
 
-class FormsetViewMixin(object):
+class FormViewMixin(object):
     formset_classes = None
 
     def get_formset_classes(self):
@@ -112,13 +128,16 @@ class FormsetViewMixin(object):
         else:
             return self.form_invalid(form, **formsets)
 
-    def form_valid(self, form, **formsets):
+    def save_form(self, form, **formsets):
         self.object = form.save()
 
         self.formset_objects = {}
         for formset_name, formset in formsets.items():
             formset.instance = self.object
             self.formset_objects[formset_name] = formset.save()
+
+    def form_valid(self, form, **formsets):
+        self.save_form(form, **formsets)
 
         messages.success(self.request, self.success_message.format(
             model=self.model._meta.verbose_name, object=self.object))
