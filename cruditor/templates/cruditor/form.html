@@ -29,14 +29,14 @@
 
 		{% block form_actions %}
 			<div class="uk-grid-small uk-flex form-actions" uk-grid>
-				<div class="uk-width-4-5">
+				<div class="uk-width-3-5">
 					{% block form_actions_left %}
 						{% if object_delete_url %}
 							<a class="uk-button uk-button-danger" href="{{ object_delete_url }}">{% trans 'Delete' %}</a>
 						{% endif %}
 					{% endblock %}
 				</div>
-				<div class="uk-width-1-5">
+				<div class="uk-width-2-5">
 					<div class="uk-align-right">
 					{% block form_actions_right %}
 						<button class="uk-button uk-button-primary" type="submit" name="save">
