@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (
-    PersonAddView, PersonChangeView, PersonFilterView, PersonDeleteView, PersonListView)
+    PersonAddView, PersonChangeView, PersonDeleteView, PersonFilterView, PersonListView)
 
 
 app_name = 'collection'

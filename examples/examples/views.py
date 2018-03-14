@@ -1,6 +1,8 @@
-from cruditor.mixins import CruditorMixin
-from cruditor.views import Cruditor403View, Cruditor404View, CruditorChangePasswordView, CruditorLogoutView
 from django.views.generic import TemplateView
+
+from cruditor.mixins import CruditorMixin
+from cruditor.views import (
+    Cruditor403View, Cruditor404View, CruditorChangePasswordView, CruditorLogoutView)
 
 from .mixins import ExamplesMixin
 

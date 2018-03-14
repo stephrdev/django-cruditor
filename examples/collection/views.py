@@ -1,8 +1,8 @@
+from django.urls import reverse, reverse_lazy
+
 from cruditor.contrib.collection import CollectionViewMixin
 from cruditor.views import (
     CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView)
-from django.urls import reverse, reverse_lazy
-
 from examples.mixins import ExamplesMixin
 from store.models import Person
 

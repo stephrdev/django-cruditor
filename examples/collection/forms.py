@@ -1,6 +1,6 @@
 from django import forms
-from cruditor.forms import CruditorTapeformMixin
 
+from cruditor.forms import CruditorTapeformMixin
 from store.models import Person
 
 

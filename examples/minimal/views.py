@@ -1,6 +1,6 @@
-from cruditor.mixins import CruditorMixin
 from django.views.generic import TemplateView
 
+from cruditor.mixins import CruditorMixin
 from examples.mixins import ExamplesMixin
 
 
