@@ -1,5 +1,6 @@
 from cruditor.contrib.collection import CollectionViewMixin
-from cruditor.views import CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView
+from cruditor.views import (
+    CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView)
 from django.urls import reverse, reverse_lazy
 
 from examples.mixins import ExamplesMixin
@@ -42,4 +43,4 @@ class PersonChangeView(PersonViewMixin, CruditorChangeView):
 
 
 class PersonDeleteView(PersonViewMixin, CruditorDeleteView):
-    pass
+    success_url = reverse_lazy('collection:list')
