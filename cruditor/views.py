@@ -52,7 +52,13 @@ class CruditorListView(CruditorMixin, TemplateView):
         return context
 
     def get_queryset(self):
-        return self.queryset or self.model._default_manager.all()
+        if self.queryset is not None:
+            return self.queryset
+
+        if getattr(self, 'model', None):
+            return self.model._default_manager.all()
+
+        return []
 
     def get_table_class(self):
         assert self.table_class, 'table_class not configured.'
@@ -94,7 +100,7 @@ class CruditorAddView(CruditorMixin, FormViewMixin, CreateView):
         return None
 
     def get_title(self):
-        return ugettext('Add {0}').format(self.model._meta.verbose_name)
+        return ugettext('Add {0}').format(self.get_model_verbose_name())
 
 
 class CruditorChangeView(CruditorMixin, FormViewMixin, UpdateView):
@@ -128,7 +134,7 @@ class CruditorDeleteView(CruditorMixin, SingleObjectMixin, FormView):
     def form_valid(self, form):
         self.object.delete()
         messages.success(self.request, self.success_message.format(
-            model=self.model._meta.verbose_name, object=self.object))
+            model=self.get_model_verbose_name(), object=self.object))
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

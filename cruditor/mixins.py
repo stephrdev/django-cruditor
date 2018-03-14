@@ -19,6 +19,7 @@ class CruditorMixin(object):
     login_form_class = LoginForm
     staff_required = True
     required_permission = None
+    model_verbose_name = None
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
@@ -58,6 +59,13 @@ class CruditorMixin(object):
 
     def get_titlebuttons(self):
         return None
+
+    def get_model_verbose_name(self):
+        if self.model_verbose_name:
+            return self.model_verbose_name
+        if getattr(self, 'model', None):
+            return self.model._meta.verbose_name
+        return 'Item'
 
     def ensure_logged_in(self, request, *args, **kwargs):
         if (
@@ -139,7 +147,7 @@ class FormViewMixin(object):
         self.save_form(form, **formsets)
 
         messages.success(self.request, self.success_message.format(
-            model=self.model._meta.verbose_name, object=self.object))
+            model=self.get_model_verbose_name(), object=self.object))
 
         return redirect(self.get_success_url())
 

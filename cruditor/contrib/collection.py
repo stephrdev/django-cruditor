@@ -11,14 +11,9 @@ class CollectionViewMixin(object):
     collection_detail_urlname = None
 
     def get_title(self):
-        if issubclass(self.__class__, CruditorChangeView):
-            return ugettext('Change: {0}').format(self.object)
-        elif issubclass(self.__class__, CruditorDeleteView):
-            return ugettext('Delete: {0}').format(self.object)
-        elif issubclass(self.__class__, CruditorAddView):
-            return ugettext('Add {0}').format(self.model._meta.verbose_name)
-        else:
-            return super().get_title()
+        if issubclass(self.__class__, CruditorListView):
+            return self.collection_list_title
+        return super().get_title()
 
     def get_breadcrumb_title(self):
         if issubclass(self.__class__, CruditorDeleteView):
@@ -53,14 +48,11 @@ class CollectionViewMixin(object):
                 item = tables.LinkColumn(
                     self.collection_detail_urlname,
                     args=(tables.A('pk'),),
-                    verbose_name=self.model._meta.verbose_name,
+                    verbose_name=self.get_model_verbose_name(),
                     text=lambda obj: str(obj),
                     accessor=tables.A('pk')
                 )
 
-                class Meta:
-                    model = self.model
-                    fields = ('item',)
             self._table_class = CollectionTable
 
         return self._table_class
