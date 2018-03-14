@@ -9,11 +9,12 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 year = datetime.datetime.now().strftime("%Y")
 
+sys.path.insert(0, os.path.abspath('..'))
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
 import django
 django.setup()
 
-sys.path.insert(0, os.path.abspath('..'))
 
 extensions = [
     'sphinx.ext.autodoc',
