@@ -69,7 +69,7 @@ module.exports = function(env, argv) {
 			],
 			resolve: {
 				alias: {
-					uikit: path.join(__dirname, 'node_modules/uikit/src/scss')
+					bootstrap: path.join(__dirname, 'node_modules/bootstrap/scss')
 				}
 			}
 		}

@@ -1,0 +1,12 @@
+.cruditor-login {
+	@extend .row;
+	@extend .align-items-center;
+
+	height: 100vh;
+
+	> div {
+		@extend .col-auto;
+		@extend .ml-auto;
+		@extend .mr-auto;
+	}
+}
