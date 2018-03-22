@@ -5,8 +5,15 @@ from store.models import Person
 
 
 class PersonForm(CruditorTapeformMixin, forms.ModelForm):
-    reminder = forms.SplitDateTimeField(label='Next reminder')
+    reminder = forms.SplitDateTimeField(
+        label='Next reminder', help_text='Some help for you')
 
     class Meta:
         model = Person
         fields = '__all__'
+
+    def clean(self):
+        if not self.cleaned_data.get('last_name', ''):
+            raise forms.ValidationError('Please provide a last name too.')
+
+        return self.cleaned_data

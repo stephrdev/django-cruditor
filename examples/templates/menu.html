@@ -1,22 +1,22 @@
-<ul class="uk-navbar-nav">
-	<li><a href="{% url 'minimal:demo' %}">Minimal demo</a></li>
-	<li>
-		<a href="#">Collection</a>
-		<div class="uk-navbar-dropdown">
-			<ul class="uk-nav uk-navbar-dropdown-nav">
-				<li><a href="{% url 'collection:list' %}">Person list</a></li>
-				<li><a href="{% url 'collection:filter' %}">Filter persons</a></li>
-				<li><a href="{% url 'collection:add' %}">Add new person</a></li>
-			</ul>
+<ul class="navbar-nav mr-auto">
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'minimal:demo' %}">Minimal demo</a>
+	</li>
+
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Collection</a>
+		<div class="dropdown-menu">
+			<a class="dropdown-item" href="{% url 'collection:list' %}">Person list</a>
+			<a class="dropdown-item" href="{% url 'collection:filter' %}">Filter persons</a>
+			<a class="dropdown-item" href="{% url 'collection:add' %}">Add new person</a>
 		</div>
 	</li>
-	<li>
-		<a href="#">Remote Data</a>
-		<div class="uk-navbar-dropdown">
-			<ul class="uk-nav uk-navbar-dropdown-nav">
-				<li><a href="{% url 'remote:list' %}">Show pets</a></li>
-				<li><a href="{% url 'remote:add' %}">Add new pet</a></li>
-			</ul>
+
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Remote Data</a>
+		<div class="dropdown-menu">
+			<a class="dropdown-item" href="{% url 'remote:list' %}">Show pets</a>
+			<a class="dropdown-item" href="{% url 'remote:add' %}">Add new pet</a>
 		</div>
 	</li>
 </ul>

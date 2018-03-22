@@ -36,6 +36,7 @@ class PersonAddView(PersonViewMixin, CruditorAddView):
 
 
 class PersonChangeView(PersonViewMixin, CruditorChangeView):
+    success_url = reverse_lazy('collection:list')
     form_class = PersonForm
 
     def get_delete_url(self):
