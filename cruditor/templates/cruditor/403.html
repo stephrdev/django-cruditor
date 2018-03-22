@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block container %}
-<div class="uk-align-center">
-	<div class="uk-card uk-card-large uk-card-default uk-card-body">
-		<h1 class="uk-card-title">{% trans 'No access' %}</h1>
-		<p>{% trans 'Permission to access requested item denied' %}</p>
-		<p class="uk-align-right">
-			<a href="{{ cruditor.constants.index_url }}" class="uk-button uk-button-primary">
+<div class="jumbotron">
+		<h1 class="display-4">{% trans 'No access' %}</h1>
+		<p class="lead">{% trans 'Permission to access requested item denied' %}</p>
+		<hr class="my-4">
+		<p class="text-right">
+			<a href="{{ cruditor.constants.index_url }}" class="btn btn-primary">
 				{% trans 'Take me to the index page' %}
 			</a>
 		</p>

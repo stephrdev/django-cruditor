@@ -7,21 +7,25 @@
 {% block breadcrumb %}{% endblock %}
 
 {% block container %}
-<div class="uk-position-center">
-	<div class="uk-card uk-card-default uk-card-body">
-		<h1 class="uk-card-title">{{ cruditor.constants.menu_title }}</h1>
-		{% block content %}
-			<form action="{{ app_path }}" method="post">
-				{% csrf_token %}
-				<input type="hidden" name="{{ next_field }}" value="{{ next_value }}" />
-				{% form form %}
-				{% block form_actions %}
-					<div class="uk-align-right">
-						<button class="uk-button uk-button-primary" type="submit" name="login">{% trans 'Login' %}</button>
-					</div>
-				{% endblock %}
-			</form>
-		{% endblock %}
+<div class="cruditor-login">
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">{{ cruditor.constants.menu_title }}</h1>
+			<hr class="my-4" />
+
+			{% block content %}
+				<form action="{{ app_path }}" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="{{ next_field }}" value="{{ next_value }}" />
+					{% form form %}
+					{% block form_actions %}
+						<div class="text-right">
+							<button class="btn btn-primary" type="submit" name="login">{% trans 'Login' %}</button>
+						</div>
+					{% endblock %}
+				</form>
+			{% endblock %}
+		</div>
 	</div>
 </div>
 {% endblock %}

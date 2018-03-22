@@ -5,32 +5,39 @@
 {% with table.page.paginator.count as total %}
 {% with table.page.object_list|length as count %}
 {% block pagination %}
-	<ul class="uk-pagination">
-		{% if table.page.has_previous %}
+	<nav aria-label="Pagination">
+		<ul class="pagination">
 			{% block pagination.previous %}
-				<li>
-					<a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}" title="{% trans 'Previous page' %}"><span uk-pagination-previous></span></a>
-				</li>
+				{% if table.page.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}" title="{% trans 'Previous page' %}">{% trans 'Previous' %}</a>
+					</li>
+				{% else %}
+					<li class="page-item disabled">
+						<a class="page-link" href="#" tabindex="-1" title="{% trans 'Previous page' %}">{% trans 'Previous' %}</a>
+					</li>
+				{% endif %}
 			{% endblock %}
-		{% endif %}
 
-		{% if table.page.has_previous or table.page.has_next %}
 			{% block pagination.cardinality %}
-				<li class="uk-active"><span>
-					{% blocktrans with table.page.number as current and table.paginator.num_pages as total %}Page {{ current }} of {{ total }}{% endblocktrans %}
-					</span></li>
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">{% blocktrans with table.page.number as current and table.paginator.num_pages as total %}Page {{ current }} of {{ total }}{% endblocktrans %}</a>
 				</li>
 			{% endblock %}
-		{% endif %}
 
-		{% if table.page.has_next %}
 			{% block pagination.next %}
-				<li class="next">
-					<a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}" title="{% trans 'Next page' %}"><span uk-pagination-next></span></a>
-				</li>
+				{% if table.page.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="{% querystring table.prefixed_page_field=table.page.next_page_number %}" title="{% trans 'Next page' %}">{% trans 'Next' %}</a>
+					</li>
+				{% else %}
+					<li class="page-item disabled">
+						<a class="page-link" href="#" tabindex="-1" title="{% trans 'Next page' %}">{% trans 'Next' %}</a>
+					</li>
+				{% endif %}
 			{% endblock %}
-		{% endif %}
-	</ul>
+		</ul>
+	</nav>
 {% endblock %}
 {% endwith %}
 {% endwith %}

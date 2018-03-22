@@ -15,7 +15,7 @@
 		{% csrf_token %}
 
 		{% if form.errors or formset_errors %}
-			<div class="uk-alert uk-alert-error">
+			<div class="alert alert-error">
 				{% trans 'Please correct the errors below.' %}
 			</div>
 		{% endif %}
@@ -28,23 +28,21 @@
 		{% endblock %}
 
 		{% block form_actions %}
-			<div class="uk-grid-small uk-flex form-actions" uk-grid>
-				<div class="uk-width-3-5">
+			<div class="row form-actions">
+				<div class="col-auto mr-auto">
 					{% block form_actions_left %}
 						{% if object_delete_url %}
-							<a class="uk-button uk-button-danger" href="{{ object_delete_url }}">{% trans 'Delete' %}</a>
+							<a class="btn btn-danger" href="{{ object_delete_url }}">{% trans 'Delete' %}</a>
 						{% endif %}
 					{% endblock %}
 				</div>
-				<div class="uk-width-2-5">
-					<div class="uk-align-right">
+				<div class="col-auto">
 					{% block form_actions_right %}
-						<button class="uk-button uk-button-primary" type="submit" name="save">
+						<button class="btn btn-primary" type="submit" name="save">
 							{% trans 'Save form' as default_form_save_button_label %}
 							{{ form_save_button_label|default:default_form_save_button_label }}
 						</button>
 					{% endblock %}
-					</div>
 				</div>
 			</div>
 		{% endblock %}

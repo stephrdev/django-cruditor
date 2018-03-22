@@ -1,9 +1,0 @@
-{% with columns=widget.subwidgets|length %}
-<div class="uk-grid-small" uk-grid>
-{% for widget in widget.subwidgets %}
-	<div class="uk-width-1-{{ columns }}@s">
-		{% include widget.template_name %}
-	</div>
-{% endfor %}
-</div>
-{% endwith %}

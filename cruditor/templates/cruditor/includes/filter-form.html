@@ -2,10 +2,10 @@
 {% load tapeforms %}
 
 
-<h3>{% trans 'Filters' %}</h3>
+<h4>{% trans 'Filters' %}</h4>
 <form action="." method="get">
 	<input type="hidden" name="{{ table.prefixed_order_by_field }}" value="{{ table.order_by }}" />
 	<input type="hidden" name="{{ table.prefixed_per_page_field }}" value="{{ table.paginator.per_page }}" />
 	{% form filter_form %}
-	<button class="uk-button uk-button-primary" type="submit">{% trans 'Filter' %}</button>
+	<button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
 </form>

@@ -4,11 +4,11 @@
 
 {% block content %}
 	{% if filter_form %}
-		<div class="uk-grid-small uk-flex" uk-grid>
-			<div class="uk-width-1-5@m uk-flex-last@m">
+		<div class="row d-flex">
+			<div class="col-lg-3 order-lg-1">
 				{% include 'cruditor/includes/filter-form.html' %}
 			</div>
-			<div class="uk-width-4-5@m">
+			<div class="col-lg-9 order-lg-0">
 				{% render_table table 'cruditor/includes/table.html' %}
 			</div>
 		</div>

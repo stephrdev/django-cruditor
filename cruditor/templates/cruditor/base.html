@@ -25,7 +25,7 @@
 			{% include 'cruditor/includes/navigation.html' %}
 		{% endblock %}
 
-		<div class="uk-container">
+		<div class="container">
 			{% block breadcrumb %}
 				{% include 'cruditor/includes/breadcrumb.html' %}
 			{% endblock %}
@@ -36,11 +36,15 @@
 
 			{% block container %}
 				{% block title %}
-					<div class="cruditor-title">
-						{% block title_buttons %}
-							{% include 'cruditor/includes/titlebuttons.html' %}
-						{% endblock %}
-						<h2>{{ cruditor.title }}</h2>
+					<div class="cruditor-title row">
+						<div class="col-auto mr-auto">
+							<h2>{{ cruditor.title }}</h2>
+						</div>
+						<div class="col-auto">
+							{% block title_buttons %}
+								{% include 'cruditor/includes/titlebuttons.html' %}
+							{% endblock %}
+						</div>
 					</div>
 				{% endblock %}
 
