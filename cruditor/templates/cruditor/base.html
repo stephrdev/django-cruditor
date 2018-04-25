@@ -12,10 +12,6 @@
 			<link rel="stylesheet" href="{% static 'cruditor/css/cruditor.css' %}" />
 		{% endblock %}
 
-		{% block scripts %}
-			<script src="{% static 'cruditor/js/cruditor.js' %}"></script>
-		{% endblock %}
-
 		{% block extrahead %}
 			{% include cruditor.constants.extrahead_template_name %}
 		{% endblock %}
@@ -52,6 +48,10 @@
 				{% endblock %}
 			{% endblock %}
 		</div>
+
+		{% block scripts %}
+			<script src="{% static 'cruditor/js/cruditor.js' %}" async defer></script>
+		{% endblock %}
 
 		{% block extrabody %}
 		{% endblock %}

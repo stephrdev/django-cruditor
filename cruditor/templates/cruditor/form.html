@@ -27,6 +27,12 @@
 		{% block form_extra %}
 		{% endblock %}
 
+		{% block formsets %}
+			{% for formset in formsets.values %}
+				{% include 'cruditor/forms/inline-formset.html' %}
+			{% endfor %}
+		{% endblock %}
+
 		{% block form_actions %}
 			<div class="row form-actions">
 				<div class="col-auto mr-auto">

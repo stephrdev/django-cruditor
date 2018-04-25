@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.contrib import messages
 from django.contrib.auth.views import REDIRECT_FIELD_NAME, login
 from django.core.exceptions import PermissionDenied
@@ -113,19 +115,21 @@ class FormViewMixin(object):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
 
+        formsets = OrderedDict([(
+            formset_name,
+            formset_class(instance=self.object)
+        ) for formset_name, formset_class in self.get_formset_classes().items()])
+
         return self.render_to_response(self.get_context_data(
             form=self.get_form(self.get_form_class()),
-            **dict([(
-                formset_name,
-                formset_class(instance=self.object)
-            ) for formset_name, formset_class in self.get_formset_classes().items()])
+            formsets=formsets,
         ))
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
 
         form = self.get_form(self.get_form_class())
-        formsets = dict([(
+        formsets = OrderedDict([(
             formset_name,
             formset_class(request.POST, files=request.FILES, instance=self.object)
         ) for formset_name, formset_class in self.get_formset_classes().items()])
@@ -154,6 +158,6 @@ class FormViewMixin(object):
     def form_invalid(self, form, **formsets):
         return self.render_to_response(self.get_context_data(
             form=form,
+            formsets=formsets,
             formset_errors=True,
-            **formsets
         ))
