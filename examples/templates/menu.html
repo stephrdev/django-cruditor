@@ -13,6 +13,14 @@
 	</li>
 
 	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Formset</a>
+		<div class="dropdown-menu">
+			<a class="dropdown-item" href="{% url 'formset:list' %}">Person list</a>
+			<a class="dropdown-item" href="{% url 'formset:add' %}">Add new person</a>
+		</div>
+	</li>
+
+	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Remote Data</a>
 		<div class="dropdown-menu">
 			<a class="dropdown-item" href="{% url 'remote:list' %}">Show pets</a>

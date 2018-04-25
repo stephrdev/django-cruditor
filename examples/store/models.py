@@ -23,3 +23,19 @@ class Person(models.Model):
         if self.last_name:
             return '{} {}'.format(self.first_name, self.last_name)
         return self.first_name
+
+
+class RelatedPerson(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    first_name = models.CharField('First name', max_length=64)
+    last_name = models.CharField('Last name', max_length=64, blank=True)
+
+    is_child = models.BooleanField('Is child')
+
+    class Meta:
+        verbose_name = 'Related person'
+        verbose_name_plural = 'Related persons'
+
+    def __str__(self):
+        return '{} ({})'.format(self.first_name, self.person)

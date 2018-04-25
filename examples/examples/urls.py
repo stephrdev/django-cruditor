@@ -17,5 +17,6 @@ urlpatterns = [
 
     path('minimal/', include('minimal.urls')),
     path('collection/', include('collection.urls')),
+    path('formset/', include('formset.urls')),
     path('remote/', include('remote.urls')),
 ]
