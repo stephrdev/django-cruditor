@@ -11,15 +11,27 @@ class CruditorTapeformMixin(BootstrapTapeformMixin):
 
 
 class CruditorFormsetMixin(object):
+    """
+    Helper mixin to provide some additional configuration to the javascript part
+    of Cruditor's formset support, mainly translations but also all other stuff
+    which might be needed.
+    """
     js_formset_options = None
 
     def add_fields(self, form, index):
+        """
+        Overwritten method to make sure the DELETE marker field is hidden in output.
+        """
         super().add_fields(form, index)
 
         if DELETION_FIELD_NAME in form.fields:
             form.fields[DELETION_FIELD_NAME].widget = forms.HiddenInput()
 
     def get_js_formset_options(self):
+        """
+        This method builds the options dict for the javascript part. Some defaults
+        are merged with `js_formset_options` property.
+        """
         options = {
             'prefix': self.prefix,
             'add-button-label': ugettext('Add another'),
@@ -33,9 +45,19 @@ class CruditorFormsetMixin(object):
 
 
 class CruditorFormsetFormMixin(CruditorTapeformMixin):
+    """
+    Helper mixin for forms in a formset
+    """
 
     def visible_fields(self):
-        return [field for field in super().visible_fields() if field.name != 'DELETE']
+        """
+        This method is overwritten to  make sure that the DELETE marker field
+        is not considered when returning the list of visible fields.
+        """
+        return [
+            field for field in super().visible_fields()
+            if field.name != DELETION_FIELD_NAME
+        ]
 
 
 class LoginForm(CruditorTapeformMixin, AuthenticationForm):
