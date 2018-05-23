@@ -7,6 +7,10 @@ from django_filters import CharFilter, ChoiceFilter
 
 
 class AnyChoiceFilter(ChoiceFilter):
+    """
+    Extended ChoiceFilter which adds an "any" choice to the choices from the
+    field / provided options by setting a empty_label on the generated form field.
+    """
 
     def __init__(self, *args, **kwargs):
         empty_label = kwargs.pop('empty_label', ugettext('Any choice'))
@@ -28,6 +32,10 @@ class MultiFieldFilter(CharFilter):
             class Meta:
                 model = User
                 fields = ['search']
+
+    The filter supports filtering in different modes (icontains, istartswith,
+    iexact, and search). icontains is the default mode, use ^, = and @ for the
+    other modes.
 
     Based on https://gist.github.com/nkryptic/4727865
     """

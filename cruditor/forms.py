@@ -7,6 +7,9 @@ from tapeforms.contrib.bootstrap import BootstrapTapeformMixin
 
 
 class CruditorTapeformMixin(BootstrapTapeformMixin):
+    """
+    Cruditor mixin for all forms (relies on django-tapeforms).
+    """
     pass
 
 
@@ -61,13 +64,22 @@ class CruditorFormsetFormMixin(CruditorTapeformMixin):
 
 
 class LoginForm(CruditorTapeformMixin, AuthenticationForm):
+    """
+    Tapeform-enabled version of the Django AuthenticationForm.
+    """
     pass
 
 
 class ChangePasswordForm(CruditorTapeformMixin, SetPasswordForm):
+    """
+    Tapeform-enabled version of the Django SetPasswordForm.
+    """
     pass
 
 
 class DeleteConfirmForm(CruditorTapeformMixin, forms.Form):
+    """
+    Cruditor form for delete confirmations. Used in CruditorDeleteView.
+    """
     confirm = forms.BooleanField(
         label=_('Are you sure you want to delete this item?'), required=True)
