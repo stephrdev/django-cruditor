@@ -49,7 +49,8 @@ class CruditorFormsetMixin(object):
 
 class CruditorFormsetFormMixin(CruditorTapeformMixin):
     """
-    Helper mixin for forms in a formset
+    Helper mixin for forms in a formset, used together with Cruditor-enabled
+    formsets.
     """
 
     def visible_fields(self):
