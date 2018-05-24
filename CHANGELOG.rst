@@ -9,6 +9,7 @@ Changelog
 * Add ``get_titlebuttons`` helper to add additional buttons to Cruditor views
 * Refactor templates to use UIKit instead of Bootstrap 3
 * Introduce build process for Javascript and CSS files
+* Add support for formsets, including Javascript for the user interface
 
 
 0.1.4
