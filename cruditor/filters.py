@@ -18,7 +18,7 @@ class AnyChoiceFilter(ChoiceFilter):
         self.extra['empty_label'] = empty_label
 
 
-class MultiFieldFilter(CharFilter):
+class MultiCharFilter(CharFilter):
     """
     This filter performs an OR query on the defined fields from a
     single entered value.
@@ -26,29 +26,29 @@ class MultiFieldFilter(CharFilter):
     The following will work similar to the default UserAdmin search::
 
         class UserFilterSet(FilterSet):
-            search = MultiFieldFilter([
-                'username', 'first_name', 'last_name', 'email'])
+            search = MultiCharFilter([
+                'username', 'first_name', 'last_name', '^email'])
 
             class Meta:
                 model = User
                 fields = ['search']
 
     The filter supports filtering in different modes (icontains, istartswith,
-    iexact, and search). icontains is the default mode, use ^, = and @ for the
-    other modes.
+    iexact, and search). icontains is the default mode, use ^, = and @ in the
+    list of fields for the other modes.
 
-    Based on https://gist.github.com/nkryptic/4727865
+    Based on some ideas from https://gist.github.com/nkryptic/4727865
     """
+    default_lookup_type = 'icontains'
+    lookup_types = [
+        ('^', 'istartswith'),
+        ('=', 'iexact'),
+        ('@', 'search'),
+    ]
 
     def __init__(self, fields, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.fields = fields
-        self.lookup_type = 'icontains'
-        self.lookup_types = [
-            ('^', 'istartswith'),
-            ('=', 'iexact'),
-            ('@', 'search'),
-        ]
+        super().__init__(*args, **kwargs)
 
     def filter(self, qs, value):
         if not self.fields or not value:
@@ -63,4 +63,4 @@ class MultiFieldFilter(CharFilter):
         for key, lookup_type in self.lookup_types:
             if field_name.startswith(key):
                 return '{0}__{1}'.format(field_name[len(key):], lookup_type)
-        return '{0}__{1}'.format(field_name, self.lookup_type)
+        return '{0}__{1}'.format(field_name, self.default_lookup_type)

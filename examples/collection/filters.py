@@ -1,13 +1,13 @@
 import django_filters
 from django import forms
 
-from cruditor.filters import AnyChoiceFilter, MultiFieldFilter
+from cruditor.filters import AnyChoiceFilter, MultiCharFilter
 from cruditor.forms import CruditorTapeformMixin
 from store.models import Person
 
 
 class PersonFilter(django_filters.FilterSet):
-    search = MultiFieldFilter(
+    search = MultiCharFilter(
         ('first_name', 'last_name'), label='Search', help_text=(
             'Search for first or last name.'))
     country = AnyChoiceFilter(
