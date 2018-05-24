@@ -5,6 +5,9 @@ DEBUG = True
 
 SECRET_KEY = 'testing'
 
+USE_TZ = True
+TIME_ZONE = 'UTC'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -23,6 +26,8 @@ INSTALLED_APPS = (
     'django_tables2',
     'django_filters',
     'tapeforms',
+
+    'examples.store',
 )
 
 TEMPLATES = [{
