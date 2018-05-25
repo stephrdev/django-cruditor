@@ -1,4 +1,4 @@
-from django.urls import path
+from django.conf.urls import url
 
 from .views import (
     PersonAddView, PersonChangeView, PersonDeleteView, PersonFilterView, PersonListView)
@@ -6,9 +6,9 @@ from .views import (
 
 app_name = 'collection'
 urlpatterns = [
-    path('', PersonListView.as_view(), name='list'),
-    path('filter/', PersonFilterView.as_view(), name='filter'),
-    path('add/', PersonAddView.as_view(), name='add'),
-    path('<int:pk>/', PersonChangeView.as_view(), name='change'),
-    path('<int:pk>/delete/', PersonDeleteView.as_view(), name='delete'),
+    url('^$', PersonListView.as_view(), name='list'),
+    url('^filter/$', PersonFilterView.as_view(), name='filter'),
+    url('^add/$', PersonAddView.as_view(), name='add'),
+    url('^(?P<pk>\d+)/$', PersonChangeView.as_view(), name='change'),
+    url('^(?P<pk>\d+)/delete/$', PersonDeleteView.as_view(), name='delete'),
 ]

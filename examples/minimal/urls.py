@@ -1,9 +1,9 @@
-from django.urls import path
+from django.conf.urls import url
 
 from .views import DemoView
 
 
 app_name = 'minimal'
 urlpatterns = [
-    path('', DemoView.as_view(), name='demo'),
+    url('^$', DemoView.as_view(), name='demo'),
 ]

@@ -1,11 +1,11 @@
-from django.urls import path
+from django.conf.urls import url
 
 from .views import PersonAddView, PersonChangeView, PersonListView
 
 
 app_name = 'formset'
 urlpatterns = [
-    path('', PersonListView.as_view(), name='list'),
-    path('add/', PersonAddView.as_view(), name='add'),
-    path('<int:pk>/', PersonChangeView.as_view(), name='change'),
+    url('^$', PersonListView.as_view(), name='list'),
+    url('^add/$', PersonAddView.as_view(), name='add'),
+    url('^(?P<pk>\d+)/$', PersonChangeView.as_view(), name='change'),
 ]
