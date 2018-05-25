@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.0.0 - TBD
------------
+1.0.0 - 2018-05-25
+------------------
 
 * Many bugfixes and small improvements
 * Add CollectionMixin
