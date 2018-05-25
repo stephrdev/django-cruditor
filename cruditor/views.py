@@ -17,6 +17,8 @@ from .mixins import CruditorMixin, FormViewMixin
 try:
     import django_tables2 as tables
 except ImportError:
+    # We don't want to break if django-tables2 is not available. Users would have
+    # to overwrite the get_table method if they don't want to use django-tables2.
     tables = None
 
 
