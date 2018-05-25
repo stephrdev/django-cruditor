@@ -2,7 +2,7 @@ import django_tables2 as tables
 from django.urls import reverse
 from django.utils.translation import ugettext
 
-from ..views import CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView
+from .views import CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView
 
 
 class CollectionViewMixin(object):
@@ -46,9 +46,6 @@ class CollectionViewMixin(object):
             * detail view element when the ``collection_include_detail_crumb`` method is true.
         """
         breadcrumb = super().get_breadcrumb()
-
-        if not hasattr(self, 'object'):
-            return breadcrumb
 
         if self.collection_include_list_crumb():
             breadcrumb.append({
@@ -98,6 +95,7 @@ class CollectionViewMixin(object):
         """
         return (
             self.collection_include_list_crumb() and
+            hasattr(self, 'object') and
             not issubclass(self.__class__, (CruditorAddView, CruditorChangeView))
         )
 

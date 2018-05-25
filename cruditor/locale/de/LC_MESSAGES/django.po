@@ -18,17 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.8\n"
 
-#: contrib/collection.py:14 views.py:103
+#: collection.py:14 views.py:103
 #, python-brace-format
 msgid "Change: {0}"
 msgstr "{0} ändern"
 
-#: contrib/collection.py:16 views.py:124
+#: collection.py:16 views.py:124
 #, python-brace-format
 msgid "Delete: {0}"
 msgstr "{0} löschen"
 
-#: contrib/collection.py:18 views.py:95
+#: collection.py:18 views.py:95
 #, python-brace-format
 msgid "Add {0}"
 msgstr "{0} hinzufügen"
