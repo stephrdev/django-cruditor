@@ -18,7 +18,7 @@ docs:
 	@echo open docs/_build/html/index.html
 
 runserver:
-	pipenv run python examples/manage.py runserver
+	pipenv run examples/manage.py runserver
 
 release:
 	@echo About to release ${VERSION}; read

@@ -4,7 +4,7 @@ from django.forms.models import inlineformset_factory
 
 from cruditor.forms import (
     CruditorFormsetFormMixin, CruditorFormsetMixin, CruditorTapeformMixin)
-from store.models import Person, RelatedPerson
+from examples.store.models import Person, RelatedPerson
 
 
 class PersonForm(CruditorTapeformMixin, forms.ModelForm):

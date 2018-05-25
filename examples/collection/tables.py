@@ -1,7 +1,7 @@
 import django_tables2 as tables
 from django_tables2.utils import A
 
-from store.models import Person
+from examples.store.models import Person
 
 
 class PersonTable(tables.Table):

@@ -15,8 +15,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
 
-    path('minimal/', include('minimal.urls')),
-    path('collection/', include('collection.urls')),
-    path('formset/', include('formset.urls')),
-    path('remote/', include('remote.urls')),
+    path('minimal/', include('examples.minimal.urls')),
+    path('collection/', include('examples.collection.urls')),
+    path('formset/', include('examples.formset.urls')),
+    path('remote/', include('examples.remote.urls')),
 ]

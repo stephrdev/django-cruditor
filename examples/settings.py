@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django_filters',
     'tapeforms',
 
-    'store.apps.StoreConfig',
+    'examples.store.apps.StoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +51,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.path.dirname(__file__), '..', 'templates')],
+        'DIRS': [os.path.join(os.path.dirname(__file__), 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': True,

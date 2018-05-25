@@ -1,7 +1,7 @@
 from django import forms
 
 from cruditor.forms import CruditorTapeformMixin
-from store.models import Person
+from examples.store.models import Person
 
 
 class PersonForm(CruditorTapeformMixin, forms.ModelForm):

@@ -3,7 +3,7 @@ from django import forms
 
 from cruditor.filters import AnyChoiceFilter, MultiCharFilter
 from cruditor.forms import CruditorTapeformMixin
-from store.models import Person
+from examples.store.models import Person
 
 
 class PersonFilter(django_filters.FilterSet):
