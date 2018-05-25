@@ -10,23 +10,23 @@
     "watch": "webpack"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.1"
+    "popper.js": "^1.14.3"
   },
   "devDependencies": {
-    "autoprefixer": "^8.1.0",
-    "css-loader": "^0.28.9",
+    "autoprefixer": "^8.5.1",
+    "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
-    "eslint": "^4.18.1",
+    "eslint": "^4.19.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-loader": "^0.5.5",
-    "node-sass": "^4.7.2",
-    "postcss-loader": "^2.1.1",
+    "node-sass": "^4.9.0",
+    "postcss-loader": "^2.1.5",
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.7",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4",
     "webpack-merge": "^4.1.2"
   }
 }
