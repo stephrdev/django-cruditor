@@ -8,6 +8,8 @@ SECRET_KEY = 'testing'
 USE_TZ = True
 TIME_ZONE = 'UTC'
 
+ROOT_URLCONF = 'examples.urls'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
