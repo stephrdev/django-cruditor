@@ -24,7 +24,7 @@ setup(
     },
     author='Stephan Jaekel',
     author_email='steph@rdev.info',
-    packages=find_packages(exclude=['examples', 'docs', 'tests', 'tests.*']),
+    packages=find_packages(exclude=['tests', 'tests.*', 'examples', 'examples.*']),
     install_requires=[],
     include_package_data=True,
     keywords='django views',
