@@ -23,6 +23,6 @@ runserver:
 release:
 	@echo About to release ${VERSION}; read
 	pipenv run python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	pipenv run python setup.py bdist_wheel upload
 	git tag -a "${VERSION}" -m "Version ${VERSION}" && git push --follow-tags
 
