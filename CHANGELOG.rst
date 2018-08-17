@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.0 - 2018-08-17
+------------------
+
+* Add support for Django 2.1
+* Use auth class based views for login an logout instead of function based views.
+
+
 1.0.0 - 2018-05-25
 ------------------
 
