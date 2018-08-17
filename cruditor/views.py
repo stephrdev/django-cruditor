@@ -1,13 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.views import logout
+from django.contrib.auth.views import LogoutView
 from django.core.exceptions import ImproperlyConfigured
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
-from django.views.generic import CreateView, FormView, TemplateView, UpdateView, View
+from django.views.generic import CreateView, FormView, TemplateView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
 
 from .forms import ChangePasswordForm, DeleteConfirmForm
@@ -317,7 +317,7 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
             form_save_button_label=ugettext('Set new password'), **kwargs)
 
 
-class CruditorLogoutView(CruditorMixin, View):
+class CruditorLogoutView(CruditorMixin, LogoutView):
     """
     View to log out the current user. After logging out, a info is displayed.
     """
@@ -325,15 +325,8 @@ class CruditorLogoutView(CruditorMixin, View):
     #: Template used to display the info that the user was logged out.
     template_name = 'cruditor/logout.html'
 
-    @method_decorator(never_cache)
-    def dispatch(self, request, *args, **kwargs):
-        """
-        Logout the user and provide a proper cruditor template context.
-        """
-        return logout(
-            request,
-            template_name=self.template_name,
-            extra_context={
-                'cruditor': self.get_cruditor_context(alternative_title='Logout')
-            },
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            cruditor=self.get_cruditor_context(alternative_title='Logout'),
+            **kwargs
         )

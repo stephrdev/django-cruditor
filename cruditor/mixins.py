@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 from django.contrib import messages
-from django.contrib.auth.views import REDIRECT_FIELD_NAME, login
+from django.contrib.auth.views import REDIRECT_FIELD_NAME, LoginView
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
@@ -164,17 +164,18 @@ class CruditorMixin(object):
         By default, renders the Django login view using a Cruditor optimized
         template using the ``login_form_class`` as Form.
         """
-        login_defaults = {
-            'template_name': self.login_template_name,
-            'authentication_form': self.login_form_class,
-            'extra_context': {
+        return LoginView.as_view(
+            template_name=self.login_template_name,
+            redirect_field_name=REDIRECT_FIELD_NAME,
+            form_class=self.login_form_class,
+            redirect_authenticated_user=False,
+            extra_context={
                 'app_path': request.get_full_path(),
                 'next_field': REDIRECT_FIELD_NAME,
                 'next_value': request.get_full_path(),
                 'cruditor': self.get_cruditor_context(alternative_title='Login'),
             },
-        }
-        return login(request, **login_defaults)
+        )(request)
 
     def get_required_permission(self):
         """
