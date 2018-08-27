@@ -1,10 +1,6 @@
 form {
 	.form-group {
 		&.has-errors {
-			.form-control {
-				@extend .is-invalid;
-			}
-
 			label {
 				@extend .text-danger;
 			}
