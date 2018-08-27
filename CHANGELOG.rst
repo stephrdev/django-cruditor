@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.1.1 - 2018-08-27
+------------------
+
+* Remove local style fix for invalid form inputs, fixed in upstream django-tapeforms
+
+
 1.1.0 - 2018-08-17
 ------------------
 
