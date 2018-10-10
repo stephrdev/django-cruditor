@@ -88,7 +88,7 @@ class FormsetForm {
 		var
 			idLookup = new RegExp(this.formset.options.prefix + '-(\\d+|__prefix__)-'),
 			idReplacement = this.formset.options.prefix + '-' + newIndex + '-'
-        ;
+		;
 
 		['for', 'id', 'name'].forEach(field => {
 			if (element.hasAttribute(field)) {
@@ -127,8 +127,7 @@ class FormsetForm {
 
 	deleteHandler(event) {
 		var
-			deleteInput = this.element.querySelector('input[type=hidden][id$="-DELETE"]'),
-			forms
+			deleteInput = this.element.querySelector('input[type=hidden][id$="-DELETE"]')
 		;
 
 		event.preventDefault();
@@ -159,7 +158,7 @@ class FormsetForm {
 class Formset {
 
 	constructor(element, options) {
-		this.element = element
+		this.element = element;
 		this.options = Object.assign({}, DEFAULT_OPTIONS, options);
 
 		this.validateOptions();
@@ -179,7 +178,7 @@ class Formset {
 
 	validateOptions() {
 		if (!this.options.prefix) {
-			throw 'Prefix missing for formset.';
+			throw new Error('Prefix missing for formset.');
 		}
 		return true;
 	}
@@ -189,9 +188,8 @@ class Formset {
 	}
 
 	initializeForms() {
-		var formInstance;
-		this.getFormElements().forEach((form, i) => {
-			formInstance = new FormsetForm(this, form)
+		this.getFormElements().forEach((form) => {
+			var formInstance = new FormsetForm(this, form);
 			if (form.style.display !== 'none' && formInstance.hasChildElements) {
 				formInstance.addDeleteButton();
 			}
@@ -229,7 +227,7 @@ class Formset {
 		}
 
 		template.querySelectorAll(FORM_CHILD_ELEMENT_SELECTOR).forEach(element => {
-			var elementType = element.getAttribute('type')
+			var elementType = element.getAttribute('type');
 			if (['checkbox', 'radio'].some(type => type === elementType)) {
 				element.removeAttribute('checked');
 			} else {
@@ -242,10 +240,10 @@ class Formset {
 
 	ensureAddButtonVisibility() {
 		var
-			maxFormsValue = parseInt(this.maxFormsInput.getAttribute('value')) || 0,
+			maxFormsValue = parseInt(this.maxFormsInput.getAttribute('value'), 10) || 0,
 			totalFormsValue = this.getFormElements().filter(
 				form => form.style.display !== 'none').length,
-			visible = (maxFormsValue == 0 || (maxFormsValue - totalFormsValue > 0))
+			visible = (maxFormsValue === 0 || (maxFormsValue - totalFormsValue > 0))
 		;
 
 		if (visible) {
@@ -286,7 +284,7 @@ class Formset {
 		event.preventDefault();
 
 		var newForm = new FormsetForm(this, this.formTemplate.cloneNode(true));
-		newForm.addDeleteButton()
+		newForm.addDeleteButton();
 
 		this.element.insertBefore(newForm.element, this.getFormElements().pop().nextSibling);
 		this.updateFormIndexes();
@@ -300,4 +298,4 @@ class Formset {
 }
 
 
-export { Formset, FormsetInitializer };
+export {Formset, FormsetInitializer};
