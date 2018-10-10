@@ -10,11 +10,13 @@
     "watch": "webpack"
   },
   "dependencies": {
+    "babel-eslint": "^10.0.1",
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3"
   },
   "devDependencies": {
+    "@moccu/eslint-config": "^0.1.0",
     "autoprefixer": "^8.5.1",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
