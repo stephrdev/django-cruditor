@@ -33,12 +33,6 @@ module.exports = function(env, argv) {
 					options: {minimize: false}
 				}]
 			}
-			// resolve: {
-			// 	modules: [
-			// 		path.resolve(__dirname, 'static', 'js', 'src'),
-			// 		path.resolve(__dirname, 'node_modules')
-			// 	]
-			// }
 		},
 		STYLESHEET = {
 			entry: {'cruditor': './static/scss/cruditor.scss'},
