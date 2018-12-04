@@ -15,10 +15,11 @@ install:
   - if [ $DEPS ]; then pipenv run pip install -e .; fi
   - if [ $DEPS ]; then pipenv run pip install $DEPS; fi
   - if [ $NODE ]; then pip install nodeenv && nodeenv --node=11.3.0 env; fi
+  - if [ $NODE ]; then . ./env/bin/activate && npm install; fi
 
 script:
   - if [ $DEPS ]; then pipenv run py.test --cov; fi
-  - if [ $NODE ]; then . ./env/bin/activate && npm run $NODE; fi
+  - if [ $NODE ]; then npm run $NODE; fi
 
 after_success:
   - codecov
