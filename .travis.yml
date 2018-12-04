@@ -10,15 +10,15 @@ env:
   - NODE="validate"
 
 install:
-  - test $DEPS && pip install pipenv codecov
-  - test $DEPS && pipenv install --dev
-  - test $DEPS && pipenv run pip install -e .
-  - test $DEPS && pipenv run pip install $DEPS
-  - test $NODE && pip install nodeenv && nodeenv --node=11.3.0 env
+  - if [ $DEPS ]; then pip install pipenv codecov; fi
+  - if [ $DEPS ]; then pipenv install --dev; fi
+  - if [ $DEPS ]; then pipenv run pip install -e .; fi
+  - if [ $DEPS ]; then pipenv run pip install $DEPS; fi
+  - if [ $NODE ]; then pip install nodeenv && nodeenv --node=11.3.0 env; fi
 
 script:
-  - test $DEPS && pipenv run py.test --cov
-  - test $NDOE && . ./env/bin/activate && npm run $NODE
+  - if [ $DEPS ]; then pipenv run py.test --cov; fi
+  - if [ $NODE ]; then . ./env/bin/activate && npm run $NODE; fi
 
 after_success:
   - codecov
