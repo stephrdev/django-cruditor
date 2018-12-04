@@ -7,14 +7,18 @@ env:
   - DEPS="Django>=1.11,<1.12"
   - DEPS="Django>=2.0,<2.1"
   - DEPS="Django>=2.1,<2.2"
+  - NODE="validate"
 
 install:
-  - pip install pipenv codecov
-  - pipenv install --dev
-  - pipenv run pip install -e .
-  - pipenv run pip install $DEPS
+  - test $DEPS && pip install pipenv codecov
+  - test $DEPS && pipenv install --dev
+  - test $DEPS && pipenv run pip install -e .
+  - test $DEPS && pipenv run pip install $DEPS
+  - test $NODE && pip install nodeenv && nodeenv --node=11.3.0 env
 
-script: pipenv run py.test --cov
+script:
+  - test $DEPS && pipenv run py.test --cov
+  - test $NDOE && . ./env/bin/activate && npm run $NODE
 
 after_success:
   - codecov
