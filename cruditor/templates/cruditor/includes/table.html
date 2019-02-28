@@ -10,10 +10,10 @@
 	{% endblock %}
 	{% block table %}
 		<div class="cruditor-table">
-			<table class="table"{% if table.attrs %} {{ table.attrs.as_html }}{% endif %}>
+			<table {% render_attrs table.attrs class="table" %}>
 			{% block table.thead %}
 				{% if table.show_header %}
-					<thead class="thead-light">
+					<thead {% render_attrs table.attrs.thead class="thead-light" %}>
 						<tr>
 							{% for column in table.columns %}
 								{% if column.orderable %}
