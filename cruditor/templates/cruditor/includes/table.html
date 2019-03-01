@@ -26,7 +26,7 @@
 			{% endif %}
 		{% endblock %}
 		{% block table.tbody %}
-			<tbody>
+			<tbody{% if table.attrs.tbody %} {{ table.attrs.tbody.as_html }}{% endif %}>
 				{% for row in table.page.object_list|default:table.rows %}
 					{% block table.tbody.row %}
 						<tr {{ row.attrs.as_html }}>
@@ -55,7 +55,7 @@
 		{% endblock %}
 		{% block table.tfoot %}
 			{% if table.has_footer %}
-				<tfoot>
+				<tfoot{% if table.attrs.tfoot %} {{ table.attrs.tfoot.as_html }}{% endif %}>
 					<tr>
 						{% for column in table.columns %}
 							<td {{ column.attrs.tf.as_html }}>{{ column.footer }}</td>
