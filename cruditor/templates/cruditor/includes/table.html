@@ -25,17 +25,6 @@
 				</thead>
 			{% endif %}
 		{% endblock %}
-		{% block table.tfoot %}
-			{% if table.has_footer %}
-				<tfoot>
-					<tr>
-						{% for column in table.columns %}
-							<td {{ column.attrs.tf.as_html }}>{{ column.footer }}</td>
-						{% endfor %}
-					</tr>
-				</tfoot>
-			{% endif %}
-		{% endblock %}
 		{% block table.tbody %}
 			<tbody>
 				{% for row in table.page.object_list|default:table.rows %}
@@ -63,6 +52,17 @@
 					{% endblock %}
 				{% endfor %}
 			</tbody>
+		{% endblock %}
+		{% block table.tfoot %}
+			{% if table.has_footer %}
+				<tfoot>
+					<tr>
+						{% for column in table.columns %}
+							<td {{ column.attrs.tf.as_html }}>{{ column.footer }}</td>
+						{% endfor %}
+					</tr>
+				</tfoot>
+			{% endif %}
 		{% endblock %}
 		</table>
 	{% endblock %}
