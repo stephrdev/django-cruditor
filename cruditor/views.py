@@ -87,7 +87,7 @@ class CruditorListView(CruditorMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         filtered_qs = self.get_filtered_queryset()
         context['table'] = self.get_table(filtered_qs)
-        context['filter_form'] = filtered_qs.form if self.filter_class else None
+        context['filter_form'] = filtered_qs.form if hasattr(filtered_qs, 'form') else None
         return context
 
     def get_queryset(self):
@@ -142,8 +142,9 @@ class CruditorListView(CruditorMixin, TemplateView):
         Filter the base queryset using the django-filters FilterSet if available.
         QuerySet is passed if no ``filter_class`` is defined.
         """
-        if self.filter_class:
-            return self.get_filter_class()(
+        filter_class = self.get_filter_class()
+        if filter_class:
+            return filter_class(
                 self.request.GET,
                 queryset=self.get_queryset(),
                 **self.get_filter_kwargs()
