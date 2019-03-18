@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.2.0 - 2019-03-18
+------------------
+
+* Add French translations
+* Improve templates for tables
+* Fix packaging bug when installed as git checkout
+* Fix filter_class related bug in list views
+
+
 1.1.1 - 2018-08-27
 ------------------
 
