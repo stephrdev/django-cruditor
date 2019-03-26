@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.2.1 - 2019-03-26
+------------------
+
+* Fix a bug when a user is not logged in but get_titlebuttons/get_breadcrumb
+  relies on self.object
+
+
 1.2.0 - 2019-03-18
 ------------------
 
