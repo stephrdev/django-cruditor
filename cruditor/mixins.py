@@ -68,7 +68,7 @@ class CruditorMixin(object):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get_cruditor_context(self, alternative_title=None):
+    def get_cruditor_context(self, alternative_title=None, login_context=False):
         """
         Provides some context for all Cruditor templates to render menu, header,
         breadcrumb and title buttons.
@@ -76,20 +76,28 @@ class CruditorMixin(object):
         The method takes an optional argument ``alternative_title`` to override
         the default title from ``get_title`` method.
         """
+        constants = {
+            'menu_title': self.menu_title,
+            'menu_template_name': self.menu_template_name,
+            'extrahead_template_name': self.extrahead_template_name,
+            'index_url': self.index_url,
+            'logout_url': self.logout_url,
+            'change_password_url': self.change_password_url,
+        }
+
+        if login_context:
+            return {
+                'title': 'Login',
+                'constants': constants
+            }
+
         return {
             'title': alternative_title or self.get_title(),
             'breadcrumb': self.get_breadcrumb() + [
                 {'title': alternative_title or self.get_breadcrumb_title(), 'url': None}
             ],
             'titlebuttons': self.get_titlebuttons(),
-            'constants': {
-                'menu_title': self.menu_title,
-                'menu_template_name': self.menu_template_name,
-                'extrahead_template_name': self.extrahead_template_name,
-                'index_url': self.index_url,
-                'logout_url': self.logout_url,
-                'change_password_url': self.change_password_url,
-            }
+            'constants': constants
         }
 
     def get_title(self):
@@ -173,7 +181,7 @@ class CruditorMixin(object):
                 'app_path': request.get_full_path(),
                 'next_field': REDIRECT_FIELD_NAME,
                 'next_value': request.get_full_path(),
-                'cruditor': self.get_cruditor_context(alternative_title='Login'),
+                'cruditor': self.get_cruditor_context(login_context=True)
             },
         )(request)
 

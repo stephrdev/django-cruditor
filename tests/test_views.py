@@ -25,6 +25,7 @@ class TestBasicView:
         self.request.user = AnonymousUser()
         response = self.view.dispatch(self.request)
         assert response.status_code == 200
+        assert 'breadcrumb' not in response.context_data['cruditor']
         assert response.template_name[0] == DemoView.login_template_name
 
     def test_no_permission(self, admin_user):
