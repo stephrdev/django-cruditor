@@ -7,7 +7,7 @@ demo'ed there.
 * Minimal code one has to write to create a view in the Cruditor context
   (examples/minimal)
 * How to provide a classic List/Add/Change/Delete set of views with nearly
-  no effort (exmaples/collection)
+  no effort (examples/collection)
 * How to provide filters in the list view to find the right objects
   (examples/collection)
 * How to work with data not coming form the Django ORM (examples/remote)
