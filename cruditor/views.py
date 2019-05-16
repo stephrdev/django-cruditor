@@ -2,8 +2,10 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import LogoutView
 from django.core.exceptions import ImproperlyConfigured
+from django.db import models
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
+from django.utils.text import capfirst
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
@@ -232,7 +234,7 @@ class CruditorDeleteView(CruditorMixin, SingleObjectMixin, FormView):
     success_message = _('The {model} "{object}" was successfully deleted.')
 
     #: Template used to render the confirmation form view.
-    template_name = 'cruditor/form.html'
+    template_name = 'cruditor/delete.html'
 
     #: Form class used for the confirmation view.
     form_class = DeleteConfirmForm
@@ -258,11 +260,29 @@ class CruditorDeleteView(CruditorMixin, SingleObjectMixin, FormView):
         """
         self.object.delete()
 
+    def format_linked_objects(self, objects):
+        """
+        Generate a list of strings describing the objects which have a protected
+        relation to the item to delete.
+        """
+        return [
+            ugettext('{model}: {object}').format(
+                model=capfirst(obj.__class__._meta.verbose_name), object=obj
+            )
+            for obj in objects
+        ]
+
     def form_valid(self, form):
         """
-        Call ``perform_delete`` method and show a nice success message.
+        Call ``perform_delete`` method and show a nice success message. If there
+        are protected related objects, an error message is shown instead with
+        the output of ``format_linked_objects``.
         """
-        self.perform_delete(form)
+        try:
+            self.perform_delete(form)
+        except models.ProtectedError as e:
+            return self.render_to_response(self.get_context_data(
+                linked_objects=self.format_linked_objects(e.protected_objects)))
         messages.success(self.request, self.success_message.format(
             model=self.get_model_verbose_name(), object=self.object))
         return super().form_valid(form)

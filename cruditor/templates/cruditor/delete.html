@@ -1,0 +1,25 @@
+{% extends 'cruditor/form.html' %}
+{% load i18n %}
+
+
+{% block form %}
+	{% if linked_objects %}
+		<div class="alert alert-danger">{% trans "Unable to delete this item." %}</div>
+		<p>{% blocktrans %}This item is currently referenced by other objects, and cannot be deleted without jeopardising data integrity. To delete it successfully, first remove references from the following objects, then try again:{% endblocktrans %}</p>
+		<ul>
+			{% for obj in linked_objects %}
+				<li>{{ obj }}</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		{{ block.super }}
+	{% endif %}
+{% endblock %}
+
+
+{% block form_actions %}
+	{# The submit button is removed if there are protected related objects. #}
+	{% if not linked_objects %}
+		{{ block.super }}
+	{% endif %}
+{% endblock %}
