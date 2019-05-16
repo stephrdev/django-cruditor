@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-28 15:00+0100\n"
+"POT-Creation-Date: 2019-05-16 16:34+0000\n"
 "PO-Revision-Date: 2019-02-28 16:41+0100\n"
 "Last-Translator: Jérôme Lebleu <jerome@maroufle.fr>\n"
 "Language-Team: \n"
@@ -67,6 +67,21 @@ msgstr "Introuvable"
 msgid "The requested item could not be found"
 msgstr "L'élément demandé est introuvable."
 
+#: cruditor/templates/cruditor/delete.html:7
+msgid "Unable to delete this item."
+msgstr "Impossible de supprimer cet élément."
+
+#: cruditor/templates/cruditor/delete.html:8
+msgid ""
+"This item is currently referenced by other objects, and cannot be deleted "
+"without jeopardising data integrity. To delete it successfully, first remove "
+"references from the following objects, then try again:"
+msgstr ""
+"Cet élément est actuellement référencé par d'autres objets, et ne "
+"peut être supprimé sans compromettre l'intégrité des données. Pour le "
+"supprimer avec succès, retirez en premier les références depuis les objets "
+"suivants, puis essayez à nouveau :"
+
 #: cruditor/templates/cruditor/form.html:19
 msgid "Please correct the errors below."
 msgstr "Veuillez corriger les erreurs ci-dessous."
@@ -88,7 +103,7 @@ msgid "Signed in as"
 msgstr "Connecté en tant que"
 
 #: cruditor/templates/cruditor/includes/navigation.html:28
-#: cruditor/views.py:287
+#: cruditor/views.py:308
 msgid "Change password"
 msgstr "Modifier le mot de passe"
 
@@ -121,7 +136,7 @@ msgstr "Page suivante"
 msgid "Next"
 msgstr "Suivant"
 
-#: cruditor/templates/cruditor/includes/table.html:62
+#: cruditor/templates/cruditor/includes/table.html:50
 msgid "No data available."
 msgstr "Aucune donnée disponible."
 
@@ -133,44 +148,49 @@ msgstr "Se connecter"
 msgid "You have been logged out."
 msgstr "Vous êtes maintenant connecté."
 
-#: cruditor/views.py:172
+#: cruditor/views.py:175
 #, python-brace-format
 msgid "The {model} \"{object}\" was successfully added."
 msgstr "L'élément {model} « {object} » a été ajouté."
 
-#: cruditor/views.py:188
+#: cruditor/views.py:191
 #, python-brace-format
 msgid "Add {0}"
 msgstr "Ajouter {0}"
 
-#: cruditor/views.py:197
+#: cruditor/views.py:200
 #, python-brace-format
 msgid "The {model} \"{object}\" was successfully changed."
 msgstr "L'élément {model} « {object} » a été modifié."
 
-#: cruditor/views.py:207
+#: cruditor/views.py:210
 #, python-brace-format
 msgid "Change: {0}"
 msgstr "Modification de {0}"
 
-#: cruditor/views.py:231
+#: cruditor/views.py:234
 #, python-brace-format
 msgid "The {model} \"{object}\" was successfully deleted."
 msgstr "L'élément {model} « {object} » a été supprimé."
 
-#: cruditor/views.py:252
+#: cruditor/views.py:255
 #, python-brace-format
 msgid "Delete: {0}"
 msgstr "Suppression de {0}"
 
-#: cruditor/views.py:275
+#: cruditor/views.py:269
+#, python-brace-format
+msgid "{model}: {object}"
+msgstr "{model} : {object}"
+
+#: cruditor/views.py:296
 msgid "Confirm deletion"
 msgstr "Confirmation de la suppression"
 
-#: cruditor/views.py:308
+#: cruditor/views.py:329
 msgid "Password changed successfully."
 msgstr "Le mot de passe a été modifié."
 
-#: cruditor/views.py:317
+#: cruditor/views.py:338
 msgid "Set new password"
 msgstr "Définir un nouveau mot de passe"
