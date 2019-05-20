@@ -26,7 +26,7 @@ class Person(models.Model):
 
 
 class RelatedPerson(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.PROTECT)
 
     first_name = models.CharField('First name', max_length=64)
     last_name = models.CharField('Last name', max_length=64, blank=True)

@@ -253,6 +253,20 @@ class TestDeleteView:
 
         assert Person.objects.exists() is True
 
+    def test_post_protected(self, admin_client):
+        related = RelatedPersonFactory(person=self.person)
+
+        response = admin_client.post(
+            reverse('collection:delete', args=(self.person.pk,)),
+            data={'confirm': '1'}
+        )
+        assert response.status_code == 200
+        assert response.context['linked_objects'] == [
+            'Related person: {}'.format(str(related)),
+        ]
+
+        assert Person.objects.exists() is True
+
 
 @pytest.mark.django_db
 class TestFormsetView:
