@@ -45,3 +45,8 @@ class PersonChangeView(PersonViewMixin, CruditorChangeView):
 
 class PersonDeleteView(PersonViewMixin, CruditorDeleteView):
     success_url = reverse_lazy('collection:list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_save_button_label'] = 'Delete this person'
+        return context
