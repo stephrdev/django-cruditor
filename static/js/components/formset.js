@@ -5,7 +5,7 @@ const
 		addContainer: '.formset-add-container',
 		addButtonCreator: undefined,
 		addButtonLabel: 'Add another',
-		addButtonCssClass: 'btn btn-default',
+		addButtonCssClass: 'btn btn-light',
 		addCallback: undefined,
 		addTitle: 'New item',
 		deleteContainer: '.formset-delete-container',
