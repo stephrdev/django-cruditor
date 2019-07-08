@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.3.0 - UNRELEASED
+1.3.0 - 2019-07-08
 ------------------
 
 * Catch the exception and show an error message when deleting an item with
