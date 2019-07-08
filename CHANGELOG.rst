@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.3.0 - UNRELEASED
+------------------
+
+* Catch the exception and show an error message when deleting an item with
+  protected related objects
+* Remove ``DeleteConfirmForm`` to replace the checkbox by a simple message and
+  make the deletion process lighter
+
+
 1.2.1 - 2019-03-26
 ------------------
 

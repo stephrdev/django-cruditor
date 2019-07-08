@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.forms.formsets import DELETION_FIELD_NAME
 from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
 from tapeforms.contrib.bootstrap import BootstrapTapeformMixin
 
 
@@ -76,11 +75,3 @@ class ChangePasswordForm(CruditorTapeformMixin, SetPasswordForm):
     Tapeform-enabled version of the Django SetPasswordForm.
     """
     pass
-
-
-class DeleteConfirmForm(CruditorTapeformMixin, forms.Form):
-    """
-    Cruditor form for delete confirmations. Used in CruditorDeleteView.
-    """
-    confirm = forms.BooleanField(
-        label=_('Are you sure you want to delete this item?'), required=True)

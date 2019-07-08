@@ -235,37 +235,31 @@ class TestDeleteView:
 
         assert Person.objects.exists() is True
 
-    def test_post_valid(self, admin_client):
+    def test_post(self, admin_client):
         response = admin_client.post(
-            reverse('collection:delete', args=(self.person.pk,)),
-            data={'confirm': '1'}
-        )
+            reverse('collection:delete', args=(self.person.pk,)))
         assert response.status_code == 302
         assert response['Location'] == reverse('collection:list')
 
         assert Person.objects.exists() is False
 
-    def test_post_invalid(self, admin_client):
-        response = admin_client.post(
-            reverse('collection:delete', args=(self.person.pk,)), data={})
-        assert response.status_code == 200
-        assert response.context['form'].is_valid() is False
-
-        assert Person.objects.exists() is True
-
     def test_post_protected(self, admin_client):
         related = RelatedPersonFactory(person=self.person)
 
         response = admin_client.post(
-            reverse('collection:delete', args=(self.person.pk,)),
-            data={'confirm': '1'}
-        )
+            reverse('collection:delete', args=(self.person.pk,)))
         assert response.status_code == 200
         assert response.context['linked_objects'] == [
             'Related person: {}'.format(str(related)),
         ]
 
         assert Person.objects.exists() is True
+
+    def test_custom_button_label(self, admin_client):
+        response = admin_client.get(
+            reverse('collection:delete', args=(self.person.pk,)))
+        assert response.context['form_save_button_label'] == 'Delete this person'
+        assert 'Delete this person' in response.content.decode(response.charset)
 
 
 @pytest.mark.django_db
