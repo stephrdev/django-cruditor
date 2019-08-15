@@ -40,9 +40,16 @@ A Python 3.6 interpreter is required in addition to pipenv.
 
 .. code-block:: shell
 
-    $ pipenv install --python 3.6
+    $ pipenv install --python 3.6 --dev
     $ pipenv shell
     $ pip install -e .
+
+
+Now you can run the tests.
+
+.. code-block:: shell
+
+    $ pipenv run py.test
 
 
 Now you're ready to start the example project to experiment with cruditor.
