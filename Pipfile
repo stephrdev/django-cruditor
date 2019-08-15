@@ -20,7 +20,7 @@ factory-boy = "*"
 
 [packages]
 
-django = "*"
+django = ">=2.2"
 django-tapeforms = "*"
 "django-tables2" = "*"
 django-filter = "*"
