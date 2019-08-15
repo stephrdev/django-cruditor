@@ -5,5 +5,5 @@ from .views import DemoView
 
 app_name = 'minimal'
 urlpatterns = [
-    url('^$', DemoView.as_view(), name='demo'),
+    url(r'^$', DemoView.as_view(), name='demo'),
 ]

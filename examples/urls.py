@@ -9,14 +9,14 @@ handler404 = NotFoundView.as_view()
 
 
 urlpatterns = [
-    url('^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
 
-    url('^$', HomeView.as_view(), name='home'),
-    url('^logout/', LogoutView.as_view(), name='logout'),
-    url('^change-password/', ChangePasswordView.as_view(), name='change-password'),
+    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^logout/', LogoutView.as_view(), name='logout'),
+    url(r'^change-password/', ChangePasswordView.as_view(), name='change-password'),
 
-    url('^minimal/', include('examples.minimal.urls')),
-    url('^collection/', include('examples.collection.urls')),
-    url('^formset/', include('examples.formset.urls')),
-    url('^remote/', include('examples.remote.urls')),
+    url(r'^minimal/', include('examples.minimal.urls')),
+    url(r'^collection/', include('examples.collection.urls')),
+    url(r'^formset/', include('examples.formset.urls')),
+    url(r'^remote/', include('examples.remote.urls')),
 ]
