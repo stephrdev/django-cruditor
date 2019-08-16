@@ -285,9 +285,9 @@ class Formset {
 	}
 
 	addHandler(event) {
-		if(event) {
+		if (event) {
 			event.preventDefault();
-		};
+		}
 
 		if (!this.addAnotherAllowed()) {
 			return false;
