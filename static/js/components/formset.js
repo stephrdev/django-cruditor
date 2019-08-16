@@ -60,7 +60,7 @@ class FormsetInitializer {
 			options.addCallback = window[options.addCallback];
 		}
 		if ('deleteCallback' in options) {
-			options.addCallback = window[options.deleteCallback];
+			options.deleteCallback = window[options.deleteCallback];
 		}
 
 		return options;
