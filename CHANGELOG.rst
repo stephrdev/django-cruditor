@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.3.1 - 2019-08-16
+------------------
+
+* Fix issue with formsets and duplicated DELETE inputs
+* Fix broken delete callback in formset js module
+
+
 1.3.0 - 2019-07-08
 ------------------
 
