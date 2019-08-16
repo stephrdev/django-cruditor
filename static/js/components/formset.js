@@ -238,14 +238,18 @@ class Formset {
 		return template;
 	}
 
-	ensureAddButtonVisibility() {
+	addAnotherAllowed() {
 		var
 			maxFormsValue = parseInt(this.maxFormsInput.getAttribute('value'), 10) || 0,
 			totalFormsValue = this.getFormElements().filter(
 				form => form.style.display !== 'none').length,
 			visible = (maxFormsValue === 0 || (maxFormsValue - totalFormsValue > 0))
 		;
+		return visible;
+	}
 
+	ensureAddButtonVisibility() {
+		var visible = this.addAnotherAllowed();
 		if (visible) {
 			this.addButton.style.display = 'inherit';
 		} else {
@@ -281,7 +285,13 @@ class Formset {
 	}
 
 	addHandler(event) {
-		event.preventDefault();
+		if(event) {
+			event.preventDefault();
+		};
+
+		if (!this.addAnotherAllowed()) {
+			return false;
+		}
 
 		var newForm = new FormsetForm(this, this.formTemplate.cloneNode(true));
 		newForm.addDeleteButton();
