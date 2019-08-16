@@ -10,7 +10,7 @@
     "watch": "webpack"
   },
   "dependencies": {
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.14.3"
