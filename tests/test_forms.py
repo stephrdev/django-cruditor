@@ -34,6 +34,7 @@ def test_formset_form_delete_field_hidden():
     form = DummyFormset().forms[0]
     assert 'DELETE' in list(form.fields)
     assert 'DELETE' not in form.visible_fields()
+    assert 'DELETE' not in form.hidden_fields()
     assert form.fields['DELETE'].widget.is_hidden is True
 
 

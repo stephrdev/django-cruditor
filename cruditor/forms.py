@@ -62,6 +62,17 @@ class CruditorFormsetFormMixin(CruditorTapeformMixin):
             if field.name != DELETION_FIELD_NAME
         ]
 
+    def hidden_fields(self):
+        """
+        This method is overwritten to  make sure that the DELETE marker field
+        is not considered when returning the list of hidden fields.
+        Cruditor template renders the field manually.
+        """
+        return [
+            field for field in super().hidden_fields()
+            if field.name != DELETION_FIELD_NAME
+        ]
+
 
 class LoginForm(CruditorTapeformMixin, AuthenticationForm):
     """
