@@ -285,6 +285,13 @@ class FormViewMixin(object):
             formset.instance = self.object
             self.formset_objects[formset_name] = formset.save()
 
+    def get_success_message(self):
+        """
+        Returns the success message to display when the form is valid.
+        """
+        return self.success_message.format(
+            model=self.get_model_verbose_name(), object=self.object)
+
     def form_valid(self, form, **formsets):
         """
         Saves the data and provides a nice success message, then redirects to the
@@ -292,8 +299,7 @@ class FormViewMixin(object):
         """
         self.save_form(form, **formsets)
 
-        messages.success(self.request, self.success_message.format(
-            model=self.get_model_verbose_name(), object=self.object))
+        messages.success(self.request, self.get_success_message())
 
         return redirect(self.get_success_url())
 

@@ -1,5 +1,7 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.messages import SUCCESS as SUCCESS_LEVEL
+from django.contrib.messages import get_messages
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.urls import reverse
 
@@ -173,6 +175,10 @@ class TestAddView:
         assert response.status_code == 302
         assert response['Location'] == reverse('collection:list')
 
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert messages[0].level == SUCCESS_LEVEL
+
         assert Person.objects.get().first_name == 'John'
 
     def test_post_invalid(self, admin_client):
@@ -210,6 +216,9 @@ class TestChangeView:
         assert response.status_code == 302
         assert response['Location'] == reverse('collection:list')
 
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 0
+
         self.person.refresh_from_db()
         assert self.person.first_name == 'John'
 
@@ -240,6 +249,10 @@ class TestDeleteView:
             reverse('collection:delete', args=(self.person.pk,)))
         assert response.status_code == 302
         assert response['Location'] == reverse('collection:list')
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert messages[0].level == SUCCESS_LEVEL
 
         assert Person.objects.exists() is False
 
