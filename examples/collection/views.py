@@ -42,6 +42,9 @@ class PersonChangeView(PersonViewMixin, CruditorChangeView):
     def get_delete_url(self):
         return reverse('collection:delete', args=(self.object.pk,))
 
+    def get_success_message(self):
+        return None
+
 
 class PersonDeleteView(PersonViewMixin, CruditorDeleteView):
     success_url = reverse_lazy('collection:list')
