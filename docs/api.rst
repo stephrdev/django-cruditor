@@ -9,4 +9,4 @@ API Reference
     api_forms
     api_filters
     api_views
-    api_contrib
+    api_collection
