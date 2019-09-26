@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.4.0 - 2019-09-26
+------------------
+
+* Add method to customize the success message of change form views
+
+
 1.3.2 - 2019-08-16
 ------------------
 
