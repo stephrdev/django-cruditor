@@ -7,8 +7,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.utils.text import capfirst
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic import CreateView, DeleteView, FormView, TemplateView, UpdateView
 
@@ -188,7 +188,7 @@ class CruditorAddView(CruditorMixin, FormViewMixin, CreateView):
         Generate a sane title when adding new items using the
         ``get_model_verbose_name``.
         """
-        return ugettext('Add {0}').format(self.get_model_verbose_name())
+        return gettext('Add {0}').format(self.get_model_verbose_name())
 
 
 class CruditorChangeView(CruditorMixin, FormViewMixin, UpdateView):
@@ -207,7 +207,7 @@ class CruditorChangeView(CruditorMixin, FormViewMixin, UpdateView):
         Generate a sane title when editing an item using the __str__
         representation of a object.
         """
-        return ugettext('Change: {0}').format(self.object)
+        return gettext('Change: {0}').format(self.object)
 
     def get_delete_url(self):
         """
@@ -257,7 +257,7 @@ class CruditorDeleteView(CruditorMixin, DeleteView):
         Generate a sane title when requesting a confirmation to delete an item
         using the __str__ representation of a object.
         """
-        return ugettext('Delete: {0}').format(self.object)
+        return gettext('Delete: {0}').format(self.object)
 
     def perform_delete(self):
         """
@@ -271,7 +271,7 @@ class CruditorDeleteView(CruditorMixin, DeleteView):
         relation to the item to delete.
         """
         return [
-            ugettext('{model}: {object}').format(
+            gettext('{model}: {object}').format(
                 model=capfirst(obj.__class__._meta.verbose_name), object=obj
             )
             for obj in objects
@@ -308,7 +308,7 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
         """
         form.save()
         update_session_auth_hash(self.request, form.user)
-        messages.success(self.request, ugettext('Password changed successfully.'))
+        messages.success(self.request, gettext('Password changed successfully.'))
         return redirect(self.request.path)
 
     def get_context_data(self, **kwargs):
@@ -317,7 +317,7 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
         label for the change password form.
         """
         return super().get_context_data(
-            form_save_button_label=ugettext('Set new password'), **kwargs)
+            form_save_button_label=gettext('Set new password'), **kwargs)
 
 
 class CruditorLogoutView(CruditorMixin, LogoutView):
