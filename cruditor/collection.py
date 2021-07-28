@@ -1,6 +1,6 @@
 import django_tables2 as tables
 from django.urls import reverse
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 
 from .views import CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView
 
@@ -33,7 +33,7 @@ class CollectionViewMixin(object):
         for all other views.
         """
         if issubclass(self.__class__, CruditorDeleteView):
-            return ugettext('Delete')
+            return gettext('Delete')
         return super().get_breadcrumb_title()
 
     def get_breadcrumb(self):

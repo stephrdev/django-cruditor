@@ -2,7 +2,7 @@ import functools
 import operator
 
 from django.db.models import Q
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 from django_filters import CharFilter, ChoiceFilter
 
 
@@ -13,7 +13,7 @@ class AnyChoiceFilter(ChoiceFilter):
     """
 
     def __init__(self, *args, **kwargs):
-        empty_label = kwargs.pop('empty_label', ugettext('Any choice'))
+        empty_label = kwargs.pop('empty_label', gettext('Any choice'))
         super().__init__(*args, **kwargs)
         self.extra['empty_label'] = empty_label
 
