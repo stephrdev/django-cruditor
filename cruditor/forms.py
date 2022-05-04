@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.forms.formsets import DELETION_FIELD_NAME
 from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from tapeforms.contrib.bootstrap import BootstrapTapeformMixin
 
 
@@ -19,6 +20,7 @@ class CruditorFormsetMixin(object):
     which might be needed.
     """
     js_formset_options = None
+    new_item_label = _('New item')
 
     def add_fields(self, form, index):
         """
@@ -37,7 +39,7 @@ class CruditorFormsetMixin(object):
         options = {
             'prefix': self.prefix,
             'add-button-label': gettext('Add another'),
-            'add-title': gettext('New item'),
+            'add-title': self.new_item_label,
             'delete-button-label': gettext('Delete item'),
             'delete-confirm-text': gettext(
                 'Are you sure? Item will be deleted after saving.')

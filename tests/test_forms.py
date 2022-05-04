@@ -29,6 +29,9 @@ class JsOptionsDummyFormset(DummyFormset):
         'add-title': 'New one'
     }
 
+class NewItemLabelDummyFormset(DummyFormset):
+    new_item_label = 'Foo bar'
+
 
 def test_formset_form_delete_field_hidden():
     form = DummyFormset().forms[0]
@@ -59,6 +62,28 @@ def test_formset_js_options_override():
     assert formset.get_js_formset_options() == {
         'add-button-label': 'Add another',
         'add-title': 'New one',
+        'delete-button-label': 'Delete item',
+        'delete-confirm-text': 'Are you sure? Item will be deleted after saving.',
+        'prefix': 'relatedperson_set'
+    }
+
+
+def test_formset_new_item_label():
+    formset = DummyFormset()
+    assert formset.get_js_formset_options() == {
+        'add-button-label': 'Add another',
+        'add-title': 'New item',
+        'delete-button-label': 'Delete item',
+        'delete-confirm-text': 'Are you sure? Item will be deleted after saving.',
+        'prefix': 'relatedperson_set'
+    }
+
+
+def test_formset_new_item_label_override():
+    formset = NewItemLabelDummyFormset()
+    assert formset.get_js_formset_options() == {
+        'add-button-label': 'Add another',
+        'add-title': 'Foo bar',
         'delete-button-label': 'Delete item',
         'delete-confirm-text': 'Are you sure? Item will be deleted after saving.',
         'prefix': 'relatedperson_set'

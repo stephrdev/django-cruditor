@@ -17,7 +17,7 @@
 					{% if form.instance.pk %}
 						{{ form.instance }}
 					{% else %}
-						{% trans 'New item' %}
+						{{ formset.new_item_label|default:"New item" }}
 					{% endif %}
 				</span>
 
