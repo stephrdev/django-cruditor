@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.forms.formsets import DELETION_FIELD_NAME
 from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
 from tapeforms.contrib.bootstrap import BootstrapTapeformMixin
 
 
@@ -20,7 +19,13 @@ class CruditorFormsetMixin(object):
     which might be needed.
     """
     js_formset_options = None
-    new_item_label = _('New item')
+
+    @cached_property
+    def template_context(self):
+        return self.get_template_context()
+
+    def get_template_context(self):
+        return {}
 
     def add_fields(self, form, index):
         """
@@ -39,7 +44,7 @@ class CruditorFormsetMixin(object):
         options = {
             'prefix': self.prefix,
             'add-button-label': gettext('Add another'),
-            'add-title': self.new_item_label,
+            'add-title': gettext('New item'),
             'delete-button-label': gettext('Delete item'),
             'delete-confirm-text': gettext(
                 'Are you sure? Item will be deleted after saving.')
@@ -53,13 +58,6 @@ class CruditorFormsetFormMixin(CruditorTapeformMixin):
     Helper mixin for forms in a formset, used together with Cruditor-enabled
     formsets.
     """
-
-    @cached_property
-    def template_context(self):
-        return self.get_template_context()
-
-    def get_template_context(self):
-        return {}
 
     def visible_fields(self):
         """
