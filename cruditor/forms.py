@@ -54,6 +54,13 @@ class CruditorFormsetFormMixin(CruditorTapeformMixin):
     formsets.
     """
 
+    @cached_property
+    def template_context(self):
+        return self.get_template_context()
+
+    def get_template_context(self):
+        return {}
+
     def visible_fields(self):
         """
         This method is overwritten to  make sure that the DELETE marker field

@@ -29,8 +29,12 @@ class JsOptionsDummyFormset(DummyFormset):
         'add-title': 'New one'
     }
 
-class NewItemLabelDummyFormset(DummyFormset):
-    new_item_label = 'Foo bar'
+class TemplateContextDummyFormset(DummyFormset):
+    def get_template_context(self):
+        context = super().get_template_context()
+        context.update({'foo': 'bar'})
+
+        return context
 
 
 def test_formset_form_delete_field_hidden():
@@ -68,23 +72,11 @@ def test_formset_js_options_override():
     }
 
 
-def test_formset_new_item_label():
+def test_formset_template_context():
     formset = DummyFormset()
-    assert formset.get_js_formset_options() == {
-        'add-button-label': 'Add another',
-        'add-title': 'New item',
-        'delete-button-label': 'Delete item',
-        'delete-confirm-text': 'Are you sure? Item will be deleted after saving.',
-        'prefix': 'relatedperson_set'
-    }
+    assert formset.template_context == {}
 
 
-def test_formset_new_item_label_override():
-    formset = NewItemLabelDummyFormset()
-    assert formset.get_js_formset_options() == {
-        'add-button-label': 'Add another',
-        'add-title': 'Foo bar',
-        'delete-button-label': 'Delete item',
-        'delete-confirm-text': 'Are you sure? Item will be deleted after saving.',
-        'prefix': 'relatedperson_set'
-    }
+def test_formset_template_context_with_content():
+    formset = TemplateContextDummyFormset()
+    assert formset.template_context == {'foo': 'bar'}
