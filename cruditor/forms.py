@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.forms.formsets import DELETION_FIELD_NAME
+from django.utils.functional import cached_property
 from django.utils.translation import gettext
 from tapeforms.contrib.bootstrap import BootstrapTapeformMixin
 
@@ -22,9 +23,19 @@ class CruditorFormsetMixin(object):
 
     @cached_property
     def template_context(self):
+        """
+        Property can be used in templates to add more custom context values.
+        For example the initial "add-title":
+        {{ formset.template_context.new_item_label|default:default_new_item_label }}
+        """
+
         return self.get_template_context()
 
     def get_template_context(self):
+        """
+        This method builds a dict for the template_context property. If it´s not overwritten
+        the default title in the form template is "New item"
+        """
         return {}
 
     def add_fields(self, form, index):
