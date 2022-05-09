@@ -2,7 +2,11 @@ from django.urls import reverse, reverse_lazy
 
 from cruditor.collection import CollectionViewMixin
 from cruditor.views import (
-    CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView)
+    CruditorAddView,
+    CruditorChangeView,
+    CruditorDeleteView,
+    CruditorListView,
+)
 from examples.mixins import ExamplesMixin
 
 from .forms import PetForm
@@ -17,7 +21,6 @@ class PetMixin(ExamplesMixin, CollectionViewMixin):
 
 
 class PetListView(PetMixin, CruditorListView):
-
     def get_titlebuttons(self):
         return [{'url': reverse('remote:add'), 'label': 'Add pet'}]
 

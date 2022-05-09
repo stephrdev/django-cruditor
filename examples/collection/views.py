@@ -2,7 +2,11 @@ from django.urls import reverse, reverse_lazy
 
 from cruditor.collection import CollectionViewMixin
 from cruditor.views import (
-    CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView)
+    CruditorAddView,
+    CruditorChangeView,
+    CruditorDeleteView,
+    CruditorListView,
+)
 from examples.mixins import ExamplesMixin
 from examples.store.models import Person
 

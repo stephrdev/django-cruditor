@@ -5,8 +5,7 @@ from examples.store.models import Person
 
 
 class PersonForm(CruditorTapeformMixin, forms.ModelForm):
-    reminder = forms.SplitDateTimeField(
-        label='Next reminder', help_text='Some help for you')
+    reminder = forms.SplitDateTimeField(label='Next reminder', help_text='Some help for you')
 
     class Meta:
         model = Person

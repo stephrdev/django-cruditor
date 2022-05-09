@@ -147,9 +147,7 @@ class CruditorListView(CruditorMixin, TemplateView):
         filter_class = self.get_filter_class()
         if filter_class:
             return filter_class(
-                self.request.GET,
-                queryset=self.get_queryset(),
-                **self.get_filter_kwargs()
+                self.request.GET, queryset=self.get_queryset(), **self.get_filter_kwargs()
             )
 
         return self.get_queryset()
@@ -221,8 +219,7 @@ class CruditorChangeView(CruditorMixin, FormViewMixin, UpdateView):
         Add the ``object_delete_url`` context variable using ``get_delete_url``.
         Feel free to extend the context further.
         """
-        return super().get_context_data(
-            object_delete_url=self.get_delete_url(), **kwargs)
+        return super().get_context_data(object_delete_url=self.get_delete_url(), **kwargs)
 
 
 class CruditorDeleteView(CruditorMixin, DeleteView):
@@ -246,10 +243,17 @@ class CruditorDeleteView(CruditorMixin, DeleteView):
         try:
             self.perform_delete()
         except models.ProtectedError as e:
-            return self.render_to_response(self.get_context_data(
-                linked_objects=self.format_linked_objects(e.protected_objects)))
-        messages.success(self.request, self.success_message.format(
-            model=self.get_model_verbose_name(), object=self.object))
+            return self.render_to_response(
+                self.get_context_data(
+                    linked_objects=self.format_linked_objects(e.protected_objects)
+                )
+            )
+        messages.success(
+            self.request,
+            self.success_message.format(
+                model=self.get_model_verbose_name(), object=self.object
+            ),
+        )
         return HttpResponseRedirect(self.get_success_url())
 
     def get_title(self):
@@ -317,7 +321,8 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
         label for the change password form.
         """
         return super().get_context_data(
-            form_save_button_label=gettext('Set new password'), **kwargs)
+            form_save_button_label=gettext('Set new password'), **kwargs
+        )
 
 
 class CruditorLogoutView(CruditorMixin, LogoutView):
@@ -330,6 +335,5 @@ class CruditorLogoutView(CruditorMixin, LogoutView):
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(
-            cruditor=self.get_cruditor_context(alternative_title='Logout'),
-            **kwargs
+            cruditor=self.get_cruditor_context(alternative_title='Logout'), **kwargs
         )

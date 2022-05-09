@@ -9,9 +9,12 @@ class DemoView(ExamplesMixin, CruditorMixin, TemplateView):
     template_name = 'minimal/demo.html'
 
     def get_breadcrumb(self):
-        return super().get_breadcrumb() + [{
-            'url': '/',
-            'title': 'Additional breadcrumb'
-        }, {
-            'title': 'Disabled item'
-        }]
+        return super().get_breadcrumb() + [
+            {
+                'url': '/',
+                'title': 'Additional breadcrumb',
+            },
+            {
+                'title': 'Disabled item',
+            },
+        ]

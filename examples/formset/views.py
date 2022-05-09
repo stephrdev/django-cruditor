@@ -19,7 +19,9 @@ class PersonListView(PersonViewMixin, CruditorListView):
     title = 'Persons'
 
     def get_titlebuttons(self):
-        return [{'url': reverse('formset:add'), 'label': 'Add person'}]
+        return [
+            {'url': reverse('formset:add'), 'label': 'Add person'},
+        ]
 
 
 class PersonAddView(PersonViewMixin, CruditorAddView):
@@ -31,5 +33,5 @@ class PersonChangeView(PersonViewMixin, CruditorChangeView):
     success_url = reverse_lazy('formset:list')
     form_class = PersonForm
     formset_classes = {
-        'related_persons': RelatedPersonFormset
+        'related_persons': RelatedPersonFormset,
     }

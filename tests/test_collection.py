@@ -5,8 +5,13 @@ from django.views.generic import DetailView
 from cruditor.mixins import CruditorMixin
 from examples.collection.tables import PersonTable
 from examples.collection.views import (
-    PersonAddView, PersonChangeView, PersonDeleteView, PersonFilterView, PersonListView,
-    PersonViewMixin)
+    PersonAddView,
+    PersonChangeView,
+    PersonDeleteView,
+    PersonFilterView,
+    PersonListView,
+    PersonViewMixin,
+)
 
 from .factories import PersonFactory
 
@@ -16,7 +21,6 @@ class PersonDetailView(PersonViewMixin, CruditorMixin, DetailView):
 
 
 class TestListView:
-
     def test_title(self):
         assert PersonListView().get_title() == 'Persons'
 
@@ -39,7 +43,6 @@ class TestListView:
 
 
 class TestAddView:
-
     def setup(self):
         self.view = PersonAddView()
         self.view.object = None
@@ -53,7 +56,6 @@ class TestAddView:
 
 @pytest.mark.django_db
 class TestChangeView:
-
     def setup(self):
         self.view = PersonChangeView()
         self.view.object = PersonFactory.create(first_name='John')
@@ -70,7 +72,6 @@ class TestChangeView:
 
 @pytest.mark.django_db
 class TestDeleteView:
-
     def setup(self):
         self.view = PersonDeleteView()
         self.view.object = PersonFactory.create(first_name='John')
@@ -84,13 +85,12 @@ class TestDeleteView:
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
             {'title': 'Persons', 'url': '/collection/'},
-            {'title': 'John', 'url': '/collection/{}/'.format(self.view.object.pk)}
+            {'title': 'John', 'url': '/collection/{}/'.format(self.view.object.pk)},
         ]
 
 
 @pytest.mark.django_db
 class TestDetailView:
-
     def setup(self):
         self.view = PersonDetailView()
         self.view.object = PersonFactory.create(first_name='John')
@@ -104,5 +104,5 @@ class TestDetailView:
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
             {'title': 'Persons', 'url': '/collection/'},
-            {'title': 'John', 'url': '/collection/1/'}
+            {'title': 'John', 'url': '/collection/1/'},
         ]

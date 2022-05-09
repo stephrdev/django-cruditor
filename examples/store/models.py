@@ -7,8 +7,7 @@ class Person(models.Model):
     first_name = models.CharField('First name', max_length=64)
     last_name = models.CharField('Last name', max_length=64, blank=True)
 
-    country = models.CharField(
-        'Country', max_length=32, choices=zip(COUNTRIES, COUNTRIES))
+    country = models.CharField('Country', max_length=32, choices=zip(COUNTRIES, COUNTRIES))
 
     birthdate = models.DateField('Birthdate', blank=True, null=True)
     reminder = models.DateTimeField('Next reminder')
