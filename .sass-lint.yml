@@ -1,5 +1,8 @@
 # https://github.com/sasstools/sass-lint/tree/master/docs/rules
 
+files:
+  include: '**/*.scss'
+  ignore: 'node_modules/**/*.scss'
 options:
   formatter: stylish
   merge-default-rules: false
@@ -103,7 +106,7 @@ rules:
   # Rule will enforce that mixins should be written before declarations in a ruleset.
   mixins-before-declarations:
     - 2
-    - exclude: ['grid-break', 'media-retina']
+    - exclude: ['grid-break', 'media-retina', 'background']
 
   # Rule will enforce how deeply a selector can be nested.
   nesting-depth:
@@ -121,7 +124,7 @@ rules:
 
   # Rule will enforce the use of Sass single-line comments and disallow CSS comments.
   # Bang comments (/*! */, will be printed even in minified mode) are still allowed.
-  no-css-comments: 0
+  no-css-comments: 2
 
   # Rule will enforce that @debug statements are not allowed to be used.
   no-debug: 2
@@ -241,7 +244,6 @@ rules:
         - flex-wrap
         - align-self
         - align-content
-        - align-items
         - justify-content
         - order
         - overflow

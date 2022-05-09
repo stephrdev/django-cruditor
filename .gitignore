@@ -5,10 +5,12 @@ dist/
 *.egg
 *.py[cod]
 __pycache__/
-.pytest_cache
-.cache
 *~
 
-node_modules/
-
+.cache
+.coverage
+.pytest_cache
+.eslintcache
 *.sqlite3
+
+node_modules

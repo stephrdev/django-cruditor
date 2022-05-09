@@ -1,0 +1,78 @@
+[tool.poetry]
+name = "django-cruditor"
+version = "1.4.0"
+description = "A set of class based views and mixins to generate CRUD interfaces."
+authors = [
+	"Stephan Jaekel <steph@rdev.info>",
+]
+license = "MIT"
+readme = "README.rst"
+homepage = 'https://github.com/stephrdev/django-cruditor'
+repository = 'https://github.com/stephrdev/django-cruditor'
+classifiers = [
+	"Development Status :: 5 - Production/Stable",
+	"License :: OSI Approved :: MIT License",
+	"Environment :: Web Environment",
+	"Framework :: Django",
+	"Intended Audience :: Developers",
+	"Operating System :: Unix",
+	"Programming Language :: Python",
+	"Programming Language :: Python :: 3",
+]
+packages = [{ include = "cruditor" }]
+include = ["LICENSE.rst"]
+
+[tool.poetry.dependencies]
+python = ">=3.6.2,<4"
+importlib-metadata = {version = "*", python = "<3.8"}
+
+Django = ">=2.2"
+Sphinx = {version = ">=3.5", optional = true}
+django-tapeforms = {version = ">=1.1.0", optional = true}
+django-tables2 = {version = ">=2.4.1", optional = true}
+django-filter = {version = ">=21.1", optional = true}
+
+[tool.poetry.dev-dependencies]
+django-tapeforms = ">=1.1.0"
+django-tables2 = ">=2.4.1"
+django-filter = ">=21.1"
+factory-boy = ">=3.2.1"
+requests = ">=2.27.1"
+pytest = ">=6.2"
+pytest-cov = ">=2.11"
+pytest-django = ">=4.2"
+pytest-flake8 = ">=1.0"
+pytest-isort = ">=2.0"
+pytest-black = ">=0.3"
+pytest-snapshot = ">=0.6"
+coverage = {version = ">=5.5", extras = ["toml"]}
+
+[tool.poetry.extras]
+docs = ["Sphinx", "django-tapeforms", "django-tables2", "django-filter"]
+
+[build-system]
+requires = ["poetry>=1.1"]
+build-backend = "poetry.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "-v --tb=short --nomigrations"
+testpaths = ["cruditor", "tests"]
+flake8-max-line-length = 96
+flake8-ignore = ["E203", "E266", "E501", "W503"]
+flake8-max-complexity = 18
+DJANGO_SETTINGS_MODULE = "tests.settings"
+
+[tool.black]
+line-length = 96
+skip-string-normalization = true
+skip-numeric-underscore-normalization = true
+include = "\\.pyi?$"
+exclude = "/(\\.git|\\.tox|build|dist)/"
+
+[tool.coverage.run]
+branch = true
+source = ["cruditor"]
+omit = ["*/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = ["raise NotImplementedError"]

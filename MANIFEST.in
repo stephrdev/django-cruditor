@@ -1,7 +1,0 @@
-include LICENSE.rst
-recursive-include cruditor/templates *
-recursive-include cruditor/static *
-recursive-include cruditor/locale *
-recursive-exclude examples *
-recursive-exclude tests *
-recursive-exclude * .DS_Store

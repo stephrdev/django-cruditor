@@ -5,16 +5,13 @@ import sys
 
 import os
 
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
 year = datetime.datetime.now().strftime("%Y")
-
-sys.path.insert(0, os.path.abspath('..'))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
 import django
 django.setup()
 
+sys.path.insert(0, os.path.abspath('..'))
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -28,7 +25,7 @@ extensions = [
 def linkcode_resolve(domain, info):
     """Link source code to GitHub."""
     project = 'django-cruditor'
-    github_user = 'moccu'
+    github_user = 'stephrdev'
     head = 'master'
 
     if domain != 'py' or not info['module']:
@@ -90,7 +87,4 @@ inheritance_node_attrs = dict(shape='rect', fontsize=14, fillcolor='gray90',
 
 inheritance_edge_attrs = dict(penwidth=0.75)
 
-if on_rtd:
-    html_theme = 'default'
-else:
-    html_theme = 'sphinx_rtd_theme'
+html_theme = 'default'
