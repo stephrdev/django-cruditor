@@ -5,7 +5,7 @@ from factory import fuzzy
 from examples.store.models import Person, RelatedPerson
 
 
-class PersonFactory(factory.DjangoModelFactory):
+class PersonFactory(factory.django.DjangoModelFactory):
     first_name = factory.Faker('first_name')
     country = fuzzy.FuzzyChoice(Person.COUNTRIES)
     reminder = fuzzy.FuzzyDateTime(timezone.now())
@@ -16,7 +16,7 @@ class PersonFactory(factory.DjangoModelFactory):
         model = Person
 
 
-class RelatedPersonFactory(factory.DjangoModelFactory):
+class RelatedPersonFactory(factory.django.DjangoModelFactory):
     person = factory.SubFactory(PersonFactory)
     first_name = factory.Faker('name')
     is_child = fuzzy.FuzzyChoice((True, False))

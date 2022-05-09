@@ -29,12 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'cruditor',
     'django_tables2',
     'django_filters',
     'tapeforms',
-
     'examples.store.apps.StoreConfig',
 ]
 
@@ -64,6 +62,8 @@ TEMPLATES = [
         },
     },
 ]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 ROOT_URLCONF = 'examples.urls'
 

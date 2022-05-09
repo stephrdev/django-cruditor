@@ -88,16 +88,15 @@ class CruditorMixin(object):
         if login_context:
             return {
                 'title': 'Login',
-                'constants': constants
+                'constants': constants,
             }
 
         return {
             'title': alternative_title or self.get_title(),
-            'breadcrumb': self.get_breadcrumb() + [
-                {'title': alternative_title or self.get_breadcrumb_title(), 'url': None}
-            ],
+            'breadcrumb': self.get_breadcrumb()
+            + [{'title': alternative_title or self.get_breadcrumb_title(), 'url': None}],
             'titlebuttons': self.get_titlebuttons(),
-            'constants': constants
+            'constants': constants,
         }
 
     def get_title(self):
@@ -158,10 +157,7 @@ class CruditorMixin(object):
         If user is logged in, ``True`` is returned.
         If not, ``handle_not_logged_in`` is called.
         """
-        if (
-            not request.user.is_active or
-            (self.staff_required and not request.user.is_staff)
-        ):
+        if not request.user.is_active or (self.staff_required and not request.user.is_staff):
             return self.handle_not_logged_in(request, *args, **kwargs)
 
         return True
@@ -181,7 +177,7 @@ class CruditorMixin(object):
                 'app_path': request.get_full_path(),
                 'next_field': REDIRECT_FIELD_NAME,
                 'next_value': request.get_full_path(),
-                'cruditor': self.get_cruditor_context(login_context=True)
+                'cruditor': self.get_cruditor_context(login_context=True),
             },
         )(request)
 
@@ -225,6 +221,7 @@ class FormViewMixin(object):
     you have to provide a set of formsets as a dict (or OrderedDict if you have
     more than one formset - just to have a defined ordering).
     """
+
     formset_classes = None
 
     def get_formset_classes(self):
@@ -240,15 +237,19 @@ class FormViewMixin(object):
         """
         self.object = self.get_object()
 
-        formsets = OrderedDict([(
-            formset_name,
-            formset_class(instance=self.object)
-        ) for formset_name, formset_class in self.get_formset_classes().items()])
+        formsets = OrderedDict(
+            [
+                (formset_name, formset_class(instance=self.object))
+                for formset_name, formset_class in self.get_formset_classes().items()
+            ]
+        )
 
-        return self.render_to_response(self.get_context_data(
-            form=self.get_form(self.get_form_class()),
-            formsets=formsets,
-        ))
+        return self.render_to_response(
+            self.get_context_data(
+                form=self.get_form(self.get_form_class()),
+                formsets=formsets,
+            )
+        )
 
     def post(self, request, *args, **kwargs):
         """
@@ -263,10 +264,15 @@ class FormViewMixin(object):
         self.object = self.get_object()
 
         form = self.get_form(self.get_form_class())
-        formsets = OrderedDict([(
-            formset_name,
-            formset_class(request.POST, files=request.FILES, instance=self.object)
-        ) for formset_name, formset_class in self.get_formset_classes().items()])
+        formsets = OrderedDict(
+            [
+                (
+                    formset_name,
+                    formset_class(request.POST, files=request.FILES, instance=self.object),
+                )
+                for formset_name, formset_class in self.get_formset_classes().items()
+            ]
+        )
 
         if all([form.is_valid()] + [formset.is_valid() for formset in formsets.values()]):
             return self.form_valid(form, **formsets)
@@ -290,7 +296,8 @@ class FormViewMixin(object):
         Returns the success message to display when the form is valid.
         """
         return self.success_message.format(
-            model=self.get_model_verbose_name(), object=self.object)
+            model=self.get_model_verbose_name(), object=self.object
+        )
 
     def form_valid(self, form, **formsets):
         """
@@ -307,8 +314,10 @@ class FormViewMixin(object):
         """
         Re-render the page with the invalid form and/or formsets.
         """
-        return self.render_to_response(self.get_context_data(
-            form=form,
-            formsets=formsets,
-            formset_errors=True,
-        ))
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+                formsets=formsets,
+                formset_errors=True,
+            )
+        )

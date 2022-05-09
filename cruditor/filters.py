@@ -39,6 +39,7 @@ class MultiCharFilter(CharFilter):
 
     Based on some ideas from https://gist.github.com/nkryptic/4727865
     """
+
     default_lookup_type = 'icontains'
     lookup_types = [
         ('^', 'istartswith'),
@@ -62,5 +63,5 @@ class MultiCharFilter(CharFilter):
     def _get_lookup(self, field_name):
         for key, lookup_type in self.lookup_types:
             if field_name.startswith(key):
-                return '{0}__{1}'.format(field_name[len(key):], lookup_type)
+                return '{0}__{1}'.format(field_name[len(key) :], lookup_type)
         return '{0}__{1}'.format(field_name, self.default_lookup_type)

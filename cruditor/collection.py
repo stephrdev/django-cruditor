@@ -48,16 +48,20 @@ class CollectionViewMixin(object):
         breadcrumb = super().get_breadcrumb()
 
         if self.collection_include_list_crumb():
-            breadcrumb.append({
-                'title': self.get_collection_list_title(),
-                'url': self.get_collection_list_url(),
-            })
+            breadcrumb.append(
+                {
+                    'title': self.get_collection_list_title(),
+                    'url': self.get_collection_list_url(),
+                }
+            )
 
         if self.collection_include_detail_crumb():
-            breadcrumb.append({
-                'title': self.get_collection_detail_title(),
-                'url': self.get_collection_detail_url(),
-            })
+            breadcrumb.append(
+                {
+                    'title': self.get_collection_detail_title(),
+                    'url': self.get_collection_detail_url(),
+                }
+            )
 
         return breadcrumb
 
@@ -70,13 +74,14 @@ class CollectionViewMixin(object):
             return self.table_class
 
         if not hasattr(self, '_table_class'):
+
             class CollectionTable(tables.Table):
                 item = tables.LinkColumn(
                     self.collection_detail_urlname,
                     args=(tables.A('pk'),),
                     verbose_name=self.get_model_verbose_name(),
                     text=lambda obj: str(obj),
-                    accessor=tables.A('pk')
+                    accessor=tables.A('pk'),
                 )
 
             self._table_class = CollectionTable
@@ -94,9 +99,9 @@ class CollectionViewMixin(object):
         If this method returns true, the detail view should be included in the breadcrumb.
         """
         return (
-            self.collection_include_list_crumb() and
-            hasattr(self, 'object') and
-            not issubclass(self.__class__, (CruditorAddView, CruditorChangeView))
+            self.collection_include_list_crumb()
+            and hasattr(self, 'object')
+            and not issubclass(self.__class__, (CruditorAddView, CruditorChangeView))
         )
 
     def get_collection_list_title(self):

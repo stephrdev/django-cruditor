@@ -1,4 +1,0 @@
-Django>=2.0
-django-tapeforms>=0.0.2
-django-tables2
-django-filter

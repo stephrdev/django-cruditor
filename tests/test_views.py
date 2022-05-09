@@ -14,7 +14,6 @@ from .factories import PersonFactory, RelatedPersonFactory
 
 @pytest.mark.django_db
 class TestBasicView:
-
     @pytest.fixture(autouse=True)
     def setup(self, rf, admin_user):
         self.request = rf.get('/')
@@ -51,7 +50,7 @@ class TestBasicView:
             'breadcrumb': [
                 {'title': 'Additional breadcrumb', 'url': '/'},
                 {'title': 'Disabled item'},
-                {'title': 'Demo view', 'url': None}
+                {'title': 'Demo view', 'url': None},
             ],
             'constants': {
                 'change_password_url': '/change-password/',
@@ -59,10 +58,10 @@ class TestBasicView:
                 'index_url': '/',
                 'logout_url': '/logout/',
                 'menu_template_name': 'menu.html',
-                'menu_title': 'Examples Demo'
+                'menu_title': 'Examples Demo',
             },
             'title': 'Demo view',
-            'titlebuttons': None
+            'titlebuttons': None,
         }
 
     def test_title(self):
@@ -94,7 +93,6 @@ def test_forbidden_view(rf):
 
 @pytest.mark.django_db
 class TestListView:
-
     def setup(self):
         self.person1 = PersonFactory.create(approved=True)
         self.person2 = PersonFactory.create(approved=False)
@@ -113,8 +111,7 @@ class TestListView:
         assert not response.context['filter_form'].data
 
     def test_get_with_filter_active(self, admin_client):
-        response = admin_client.get(
-            reverse('collection:filter'), data={'approved': '2'})
+        response = admin_client.get(reverse('collection:filter'), data={'approved': '2'})
         assert response.status_code == 200
         assert response.context['table'].data.data.count() == 1
         assert response.context['filter_form'] is not None
@@ -154,7 +151,6 @@ class TestListView:
 
 @pytest.mark.django_db
 class TestAddView:
-
     def test_get(self, admin_client):
         response = admin_client.get(reverse('collection:add'))
         assert response.status_code == 200
@@ -170,7 +166,7 @@ class TestAddView:
                 'reminder_0': '2018-05-25',
                 'reminder_1': '09:00:00',
                 'stars': '2',
-            }
+            },
         )
         assert response.status_code == 302
         assert response['Location'] == reverse('collection:list')
@@ -191,13 +187,11 @@ class TestAddView:
 
 @pytest.mark.django_db
 class TestChangeView:
-
     def setup(self):
         self.person = PersonFactory.create(first_name='Sally')
 
     def test_get(self, admin_client):
-        response = admin_client.get(
-            reverse('collection:change', args=(self.person.pk,)))
+        response = admin_client.get(reverse('collection:change', args=(self.person.pk,)))
         assert response.status_code == 200
         assert response.context['form'].instance == self.person
 
@@ -211,7 +205,7 @@ class TestChangeView:
                 'reminder_0': '2018-05-25',
                 'reminder_1': '09:00:00',
                 'stars': '2',
-            }
+            },
         )
         assert response.status_code == 302
         assert response['Location'] == reverse('collection:list')
@@ -224,7 +218,8 @@ class TestChangeView:
 
     def test_post_invalid(self, admin_client):
         response = admin_client.post(
-            reverse('collection:change', args=(self.person.pk,)), data={})
+            reverse('collection:change', args=(self.person.pk,)), data={}
+        )
         assert response.status_code == 200
         assert response.context['form'].is_valid() is False
 
@@ -233,20 +228,17 @@ class TestChangeView:
 
 @pytest.mark.django_db
 class TestDeleteView:
-
     def setup(self):
         self.person = PersonFactory.create(first_name='Sally')
 
     def test_get(self, admin_client):
-        response = admin_client.get(
-            reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.get(reverse('collection:delete', args=(self.person.pk,)))
         assert response.status_code == 200
 
         assert Person.objects.exists() is True
 
     def test_post(self, admin_client):
-        response = admin_client.post(
-            reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.post(reverse('collection:delete', args=(self.person.pk,)))
         assert response.status_code == 302
         assert response['Location'] == reverse('collection:list')
 
@@ -259,8 +251,7 @@ class TestDeleteView:
     def test_post_protected(self, admin_client):
         related = RelatedPersonFactory(person=self.person)
 
-        response = admin_client.post(
-            reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.post(reverse('collection:delete', args=(self.person.pk,)))
         assert response.status_code == 200
         assert response.context['linked_objects'] == [
             'Related person: {}'.format(str(related)),
@@ -269,15 +260,13 @@ class TestDeleteView:
         assert Person.objects.exists() is True
 
     def test_custom_button_label(self, admin_client):
-        response = admin_client.get(
-            reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.get(reverse('collection:delete', args=(self.person.pk,)))
         assert response.context['form_save_button_label'] == 'Delete this person'
         assert 'Delete this person' in response.content.decode(response.charset)
 
 
 @pytest.mark.django_db
 class TestFormsetView:
-
     def setup(self):
         self.person = PersonFactory.create()
         self.related_persons = RelatedPersonFactory.create_batch(2, person=self.person)
@@ -287,8 +276,7 @@ class TestFormsetView:
         assert response.status_code == 200
         assert response.context['form'].instance == self.person
         instances = [
-            form.instance
-            for form in response.context['formsets']['related_persons'].forms
+            form.instance for form in response.context['formsets']['related_persons'].forms
         ]
         assert self.related_persons[0] in instances
         assert self.related_persons[1] in instances
@@ -312,7 +300,7 @@ class TestFormsetView:
                 'relatedperson_set-0-first_name': 'Sally',
                 'relatedperson_set-0-last_name': 'Mary',
                 'relatedperson_set-0-person': '1',
-            }
+            },
         )
         assert response.status_code == 302
         assert response['Location'] == reverse('formset:list')
@@ -341,7 +329,7 @@ class TestFormsetView:
                 'relatedperson_set-0-first_name': '',
                 'relatedperson_set-0-last_name': '',
                 'relatedperson_set-0-person': '1',
-            }
+            },
         )
         assert response.status_code == 200
         assert response.context['form'].is_valid() is True
@@ -366,7 +354,7 @@ class TestFormsetView:
                 'relatedperson_set-0-first_name': 'Sally',
                 'relatedperson_set-0-last_name': 'Mary',
                 'relatedperson_set-0-person': '1',
-            }
+            },
         )
         assert response.status_code == 200
         assert response.context['form'].is_valid() is False
@@ -374,17 +362,16 @@ class TestFormsetView:
 
 
 class TestChangePasswordView:
-
     def test_get(self, admin_client):
         response = admin_client.get(reverse('change-password'))
         assert response.status_code == 200
         assert list(response.context['form'].fields) == ['new_password1', 'new_password2']
 
     def test_post_invalid(self, admin_user, admin_client):
-        response = admin_client.post(reverse('change-password'), data={
-            'new_password1': 'Secret',
-            'new_password2': 'Secret2'
-        })
+        response = admin_client.post(
+            reverse('change-password'),
+            data={'new_password1': 'Secret', 'new_password2': 'Secret2'},
+        )
         assert response.status_code == 200
         assert response.context['form'].is_valid() is False
 
@@ -392,10 +379,10 @@ class TestChangePasswordView:
         assert admin_user.check_password('password') is True
 
     def test_post_valid(self, admin_user, admin_client):
-        response = admin_client.post(reverse('change-password'), data={
-            'new_password1': 'Secret',
-            'new_password2': 'Secret'
-        })
+        response = admin_client.post(
+            reverse('change-password'),
+            data={'new_password1': 'Secret', 'new_password2': 'Secret'},
+        )
         assert response.status_code == 302
         assert response['Location'] == reverse('change-password')
 

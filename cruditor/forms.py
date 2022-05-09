@@ -10,6 +10,7 @@ class CruditorTapeformMixin(BootstrapTapeformMixin):
     """
     Cruditor mixin for all forms (relies on django-tapeforms).
     """
+
     pass
 
 
@@ -19,6 +20,7 @@ class CruditorFormsetMixin(object):
     of Cruditor's formset support, mainly translations but also all other stuff
     which might be needed.
     """
+
     js_formset_options = None
 
     @cached_property
@@ -34,7 +36,7 @@ class CruditorFormsetMixin(object):
 
     def get_template_context(self):
         """
-        This method builds a context which is used by the `template_contex` property to
+        This method builds a context which is used by the `template_context` property to
         return additional context when rendering the formset. Some defaults are already set
         and might be overwritten.
         """
@@ -61,8 +63,7 @@ class CruditorFormsetMixin(object):
             'add-button-label': gettext('Add another'),
             'add-title': gettext('New item'),
             'delete-button-label': gettext('Delete item'),
-            'delete-confirm-text': gettext(
-                'Are you sure? Item will be deleted after saving.')
+            'delete-confirm-text': gettext('Are you sure? Item will be deleted after saving.'),
         }
         options.update(self.js_formset_options or {})
         return options
@@ -80,8 +81,7 @@ class CruditorFormsetFormMixin(CruditorTapeformMixin):
         is not considered when returning the list of visible fields.
         """
         return [
-            field for field in super().visible_fields()
-            if field.name != DELETION_FIELD_NAME
+            field for field in super().visible_fields() if field.name != DELETION_FIELD_NAME
         ]
 
     def hidden_fields(self):
@@ -90,16 +90,14 @@ class CruditorFormsetFormMixin(CruditorTapeformMixin):
         is not considered when returning the list of hidden fields.
         Cruditor template renders the field manually.
         """
-        return [
-            field for field in super().hidden_fields()
-            if field.name != DELETION_FIELD_NAME
-        ]
+        return [field for field in super().hidden_fields() if field.name != DELETION_FIELD_NAME]
 
 
 class LoginForm(CruditorTapeformMixin, AuthenticationForm):
     """
     Tapeform-enabled version of the Django AuthenticationForm.
     """
+
     pass
 
 
@@ -107,4 +105,5 @@ class ChangePasswordForm(CruditorTapeformMixin, SetPasswordForm):
     """
     Tapeform-enabled version of the Django SetPasswordForm.
     """
+
     pass

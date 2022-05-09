@@ -1,7 +1,12 @@
 from django.conf.urls import url
 
 from .views import (
-    PersonAddView, PersonChangeView, PersonDeleteView, PersonFilterView, PersonListView)
+    PersonAddView,
+    PersonChangeView,
+    PersonDeleteView,
+    PersonFilterView,
+    PersonListView,
+)
 
 
 app_name = 'collection'
