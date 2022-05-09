@@ -31,10 +31,12 @@ class JsOptionsDummyFormset(DummyFormset):
 class TemplateContextDummyFormset(DummyFormset):
     def get_template_context(self):
         context = super().get_template_context()
-        context.update({
-            'form_headline_new_instance': 'New instance',
-            'foo': 'bar',
-        })
+        context.update(
+            {
+                'form_headline_new_instance': 'New instance',
+                'foo': 'bar',
+            }
+        )
         return context
 
 

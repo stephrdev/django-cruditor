@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.0.0 - 2022-05-09
+------------------
+
+* Drop support for Django < 2.2
+* Add template_context property for formsets
+
+
 1.4.0 - 2019-09-26
 ------------------
 
