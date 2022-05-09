@@ -1,4 +1,7 @@
-import requests
+try:
+    import requests
+except ImportError:
+    requests = None
 
 
 BASE_TAG = {'id': 0, 'name': 'cruditor'}
