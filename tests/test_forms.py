@@ -29,11 +29,14 @@ class JsOptionsDummyFormset(DummyFormset):
         'add-title': 'New one'
     }
 
+
 class TemplateContextDummyFormset(DummyFormset):
     def get_template_context(self):
         context = super().get_template_context()
-        context.update({'foo': 'bar'})
-
+        context.update({
+            'form_headline_new_instance': 'New instance',
+            'foo': 'bar',
+        })
         return context
 
 
@@ -74,9 +77,12 @@ def test_formset_js_options_override():
 
 def test_formset_template_context():
     formset = DummyFormset()
-    assert formset.template_context == {}
+    assert formset.template_context == {'form_headline_new_instance': 'New item'}
 
 
 def test_formset_template_context_with_content():
     formset = TemplateContextDummyFormset()
-    assert formset.template_context == {'foo': 'bar'}
+    assert formset.template_context == {
+        'form_headline_new_instance': 'New instance',
+        'foo': 'bar',
+    }
