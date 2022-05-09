@@ -4,11 +4,27 @@
     "browser": true,
     "es6": true
   },
-  "extends": [
-    "@moccu/eslint-config"
-  ],
+  "extends": "airbnb-base",
   "rules": {
-    "no-alert": "off"
+    "class-methods-use-this": 0,
+    "semi": ["error", "never"],
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/extensions": [1, "never", {
+      "js": "never",
+      "json": "always"
+    }],
+    "no-debugger": "off",
+    "no-underscore-dangle": "off",
+    "global-require": "off",
+    "import/prefer-default-export": "off",
+    "no-new": "off",
+    "max-classes-per-file": "off",
+    "no-alert": "off",
+    "no-param-reassign": "off"
   },
-  "parser": "babel-eslint"
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false
+  }
 }
