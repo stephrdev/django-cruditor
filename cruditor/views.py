@@ -248,12 +248,7 @@ class CruditorDeleteView(CruditorMixin, DeleteView):
                     linked_objects=self.format_linked_objects(e.protected_objects)
                 )
             )
-        messages.success(
-            self.request,
-            self.success_message.format(
-                model=self.get_model_verbose_name(), object=self.object
-            ),
-        )
+        messages.success(self.request, self.get_success_message())
         return HttpResponseRedirect(self.get_success_url())
 
     def get_title(self):
