@@ -275,6 +275,8 @@ class TestFormsetView:
         response = admin_client.get(reverse('formset:change', args=(self.person.pk,)))
         assert response.status_code == 200
         assert response.context['form'].instance == self.person
+        assert response.context['formsets']['related_persons'].extra_kwarg == 'extra'
+
         instances = [
             form.instance for form in response.context['formsets']['related_persons'].forms
         ]
@@ -358,6 +360,7 @@ class TestFormsetView:
         )
         assert response.status_code == 200
         assert response.context['form'].is_valid() is False
+        assert response.context['formsets']['related_persons'].extra_kwarg is False
         assert response.context['formsets']['related_persons'].is_valid() is True
 
 

@@ -231,6 +231,13 @@ class FormViewMixin(object):
         """
         return self.formset_classes or {}
 
+    def get_formset_kwargs(self, formset_class):
+        """
+        This method returns additional kwargs to initialize a formset.
+        The `formset_class` is provided to ensure the method can return proper kwargs.
+        """
+        return None
+
     def get(self, request, *args, **kwargs):
         """
         Extended get-method to render to form and all formsets properly initialized.
@@ -239,7 +246,12 @@ class FormViewMixin(object):
 
         formsets = OrderedDict(
             [
-                (formset_name, formset_class(instance=self.object))
+                (
+                    formset_name,
+                    formset_class(
+                        instance=self.object, **(self.get_formset_kwargs(formset_class) or {})
+                    ),
+                )
                 for formset_name, formset_class in self.get_formset_classes().items()
             ]
         )
@@ -268,7 +280,12 @@ class FormViewMixin(object):
             [
                 (
                     formset_name,
-                    formset_class(request.POST, files=request.FILES, instance=self.object),
+                    formset_class(
+                        request.POST,
+                        files=request.FILES,
+                        instance=self.object,
+                        **(self.get_formset_kwargs(formset_class) or {})
+                    ),
                 )
                 for formset_name, formset_class in self.get_formset_classes().items()
             ]

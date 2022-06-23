@@ -35,3 +35,8 @@ class PersonChangeView(PersonViewMixin, CruditorChangeView):
     formset_classes = {
         'related_persons': RelatedPersonFormset,
     }
+
+    def get_formset_kwargs(self, formset_class):
+        if formset_class is RelatedPersonFormset and self.request.method == 'GET':
+            return {'extra_kwarg': 'extra'}
+        return None

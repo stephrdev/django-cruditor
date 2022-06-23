@@ -23,4 +23,6 @@ class RelatedPersonFormset(
     CruditorFormsetMixin,
     inlineformset_factory(Person, RelatedPerson, extra=1, form=RelatedPersonForm),
 ):
-    pass
+    def __init__(self, *args, **kwargs):
+        self.extra_kwarg = kwargs.pop('extra_kwarg', False)
+        super().__init__(*args, **kwargs)
