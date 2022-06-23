@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.1.0 - 2022-06-23
+------------------
+
+* Add get_formset_kwargs method to FormViewMixin
+
+
 2.0.0 - 2022-05-09
 ------------------
 
