@@ -11,7 +11,7 @@
     "validate-scss": "sass-lint --verbose --no-exit",
     "validate-spaces": "lintspaces --editorconfig .editorconfig --maxnewlines 2 --ignores js-comments ./*.js ./*.json ./*.yml ./client/js/*.js ./client/js/**/*.js ./client/scss/*.scss ./client/scss/**/*.scss ./templates/*.html ./templates/**/*.html",
     "develop": "webpack --watch --config webpack/webpack.config.js",
-    "build": "webpack --env production --config webpack/webpack.config.js"
+    "build": "webpack --env production --config webpack/webpack.config.js && rm -fr ./cruditor/client && cp -r client ./cruditor/client"
   },
   "dependencies": {
     "bootstrap": "^4.6.1",

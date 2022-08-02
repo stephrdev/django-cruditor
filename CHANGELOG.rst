@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.2.0 - 2022-08-02
+------------------
+
+* Ship scss and js files with source distribution
+* Add extra blocks for title section for better customization
+
+
 2.1.0 - 2022-06-23
 ------------------
 
