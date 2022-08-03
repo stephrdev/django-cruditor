@@ -7,10 +7,3 @@ form {
 		}
 	}
 }
-
-.btn-xs-danger {
-	@extend .btn-sm;
-	@extend .btn-danger;
-	font-size: 0.8em;
-	line-height: 1;
-}
