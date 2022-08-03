@@ -11,7 +11,7 @@ const
     deleteContainer: '.formset-delete-container',
     deleteButtonCreator: undefined,
     deleteButtonLabel: 'Delete item',
-    deleteButtonCssClass: 'btn btn-xs-danger',
+    deleteButtonCssClass: 'btn btn-sm btn-danger',
     deleteConfirmText: 'Are you sure? Item will be deleted after saving.',
     deleteCallback: undefined,
   }

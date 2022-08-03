@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2.3.0 - 2022-08-03
+------------------
+
+* Fix issue with small buttons
+* Fix spacing issue with title buttons
+* Add support for target in title buttons.
+
+
 2.2.0 - 2022-08-02
 ------------------
 
