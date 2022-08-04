@@ -393,15 +393,21 @@ class TestChangePasswordView:
         assert admin_user.check_password('Secret') is True
 
 
-def test_logout_view(admin_client):
-    response = admin_client.get(reverse('minimal:demo'))
-    assert response.status_code == 200
-    assert response.template_name[0] == 'minimal/demo.html'
+class TestLogoutView:
+    def test_logout(self, admin_client):
+        response = admin_client.get(reverse('minimal:demo'))
+        assert response.status_code == 200
+        assert response.template_name[0] == 'minimal/demo.html'
 
-    response = admin_client.get(reverse('logout'))
-    assert response.status_code == 200
-    assert response.template_name[0] == 'cruditor/logout.html'
+        response = admin_client.get(reverse('logout'))
+        assert response.status_code == 200
+        assert response.template_name[0] == 'cruditor/logout.html'
 
-    response = admin_client.get(reverse('minimal:demo'))
-    assert response.status_code == 200
-    assert response.template_name[0] == 'cruditor/login.html'
+        response = admin_client.get(reverse('minimal:demo'))
+        assert response.status_code == 200
+        assert response.template_name[0] == 'cruditor/login.html'
+
+    def test_logout_already_logged_out(self, client):
+        response = client.get(reverse('logout'))
+        assert response.status_code == 200
+        assert response.template_name[0] == 'cruditor/logout.html'

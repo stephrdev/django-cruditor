@@ -333,6 +333,9 @@ class CruditorLogoutView(CruditorMixin, LogoutView):
     #: Template used to display the info that the user was logged out.
     template_name = 'cruditor/logout.html'
 
+    def ensure_logged_in(self, *args, **kwargs):
+        return True
+
     def get_context_data(self, **kwargs):
         return super().get_context_data(
             cruditor=self.get_cruditor_context(alternative_title='Logout'), **kwargs
