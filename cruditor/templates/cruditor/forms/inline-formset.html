@@ -2,6 +2,7 @@
 {% load tapeforms %}
 
 
+{% block formset %}
 <div
 	class="cruditor-formset formset-{{ formset.prefix }}"
 	{% for key, value in formset.get_js_formset_options.items %}
@@ -36,5 +37,8 @@
 			</div>
 		</div>
 	{% endfor %}
-	<div class="formset-add-container"></div>
+	{% block add_container %}
+		<div class="formset-add-container"></div>
+	{% endblock %}
 </div>
+{% endblock %}

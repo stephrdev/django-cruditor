@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.3.2 - 2022-09-08
+------------------
+
+* Expose newForm in formset add callback.
+* Add more template blocks for formset template.
+
+
 2.3.1 - 2022-08-04
 ------------------
 
