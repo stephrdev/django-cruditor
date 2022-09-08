@@ -259,7 +259,7 @@ class Formset {
     this.ensureAddButtonVisibility()
 
     if (this.options.addCallback) {
-      this.options.addCallback.call(this)
+      this.options.addCallback.call(this, newForm)
     }
 
     return true
