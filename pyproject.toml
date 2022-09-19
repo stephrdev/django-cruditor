@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-cruditor"
-version = "2.3.2"
+version = "2.3.3"
 description = "A set of class based views and mixins to generate CRUD interfaces."
 authors = [
 	"Stephan Jaekel <steph@rdev.info>",

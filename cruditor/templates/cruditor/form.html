@@ -14,11 +14,16 @@
 	<form action="." method="post" enctype="multipart/form-data" novalidate{% block form_attributes %}{% endblock %}>
 		{% csrf_token %}
 
-		{% if form.errors or formset_errors %}
-			<div class="alert alert-error">
-				{% trans 'Please correct the errors below.' %}
-			</div>
-		{% endif %}
+		{% block form_errors %}
+			{% if form.errors or formset_errors %}
+				<div class="alert alert-error">
+					{% trans 'Please correct the errors below.' %}
+				</div>
+			{% endif %}
+		{% endblock %}
+
+		{% block form_actions_top %}
+		{% endblock %}
 
 		{% block form %}
 			{% form form %}
