@@ -23,6 +23,8 @@ jobs:
       - name: "Install dependencies"
         run: |
           set -xe
+          python -m venv .venv
+          . .venv/bin/activate
           python -m pip install --upgrade pip setuptools
           python -m pip install --upgrade poetry tox tox-gh-actions coverage
 
