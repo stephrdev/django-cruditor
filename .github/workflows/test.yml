@@ -29,7 +29,7 @@ jobs:
           pip install --upgrade poetry tox tox-gh-actions coverage
 
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python tox"
+        run: "tox"
 
       - name: "Upload coverage to Codecov"
         uses: "codecov/codecov-action@v2"
