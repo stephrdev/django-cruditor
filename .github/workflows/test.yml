@@ -25,11 +25,11 @@ jobs:
           set -xe
           python -m venv .venv
           . .venv/bin/activate
-          python -m pip install --upgrade pip setuptools
-          python -m pip install --upgrade poetry tox tox-gh-actions coverage
+          pip install --upgrade pip setuptools
+          pip install --upgrade poetry tox tox-gh-actions coverage
 
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python -m tox"
+        run: "python tox"
 
       - name: "Upload coverage to Codecov"
         uses: "codecov/codecov-action@v2"
