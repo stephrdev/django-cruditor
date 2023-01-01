@@ -20,11 +20,11 @@ class CollectionViewMixin(object):
 
     def get_title(self):
         """
-        The method returns the ``collection_list_title`` when the view is a list view.
+        The method calls the ``get_collection_list_title`` method when the view is a list view.
         All other views rely on the default behavior of cruditor.
         """
         if issubclass(self.__class__, CruditorListView):
-            return self.collection_list_title
+            return self.get_collection_list_title()
         return super().get_title()
 
     def get_breadcrumb_title(self):
@@ -107,7 +107,7 @@ class CollectionViewMixin(object):
     def get_collection_list_title(self):
         """
         Helper method to override the used collection list title.
-        By default, just returns the class property.
+        By default, just returns the class ``collection_list_title`` property.
         """
         return self.collection_list_title
 

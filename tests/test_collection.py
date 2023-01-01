@@ -24,6 +24,13 @@ class TestListView:
     def test_title(self):
         assert PersonListView().get_title() == 'Persons'
 
+    def test_title_from_get_collection_list_title(self):
+        class OtherListView(PersonListView):
+            def get_collection_list_title(self):
+                return 'Other title'
+
+        assert OtherListView().get_title() == 'Other title'
+
     def test_breadcrumb(self):
         assert PersonListView().get_breadcrumb() == []
 
