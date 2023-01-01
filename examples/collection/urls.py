@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import (
     PersonAddView,
@@ -11,9 +11,9 @@ from .views import (
 
 app_name = 'collection'
 urlpatterns = [
-    url(r'^$', PersonListView.as_view(), name='list'),
-    url(r'^filter/$', PersonFilterView.as_view(), name='filter'),
-    url(r'^add/$', PersonAddView.as_view(), name='add'),
-    url(r'^(?P<pk>\d+)/$', PersonChangeView.as_view(), name='change'),
-    url(r'^(?P<pk>\d+)/delete/$', PersonDeleteView.as_view(), name='delete'),
+    path('', PersonListView.as_view(), name='list'),
+    path('filter/', PersonFilterView.as_view(), name='filter'),
+    path('add/', PersonAddView.as_view(), name='add'),
+    path('<int:pk>/', PersonChangeView.as_view(), name='change'),
+    path('<int:pk>/delete/', PersonDeleteView.as_view(), name='delete'),
 ]
