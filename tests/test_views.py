@@ -15,7 +15,7 @@ from .factories import PersonFactory, RelatedPersonFactory
 @pytest.mark.django_db
 class TestBasicView:
     @pytest.fixture(autouse=True)
-    def setup(self, rf, admin_user):
+    def setup_method(self, rf, admin_user):
         self.request = rf.get('/')
         self.request.user = admin_user
         self.view = DemoView()
@@ -93,7 +93,7 @@ def test_forbidden_view(rf):
 
 @pytest.mark.django_db
 class TestListView:
-    def setup(self):
+    def setup_method(self):
         self.person1 = PersonFactory.create(approved=True)
         self.person2 = PersonFactory.create(approved=False)
 
@@ -187,7 +187,7 @@ class TestAddView:
 
 @pytest.mark.django_db
 class TestChangeView:
-    def setup(self):
+    def setup_method(self):
         self.person = PersonFactory.create(first_name='Sally')
 
     def test_get(self, admin_client):
@@ -228,7 +228,7 @@ class TestChangeView:
 
 @pytest.mark.django_db
 class TestDeleteView:
-    def setup(self):
+    def setup_method(self):
         self.person = PersonFactory.create(first_name='Sally')
 
     def test_get(self, admin_client):
@@ -267,7 +267,7 @@ class TestDeleteView:
 
 @pytest.mark.django_db
 class TestFormsetView:
-    def setup(self):
+    def setup_method(self):
         self.person = PersonFactory.create()
         self.related_persons = RelatedPersonFactory.create_batch(2, person=self.person)
 

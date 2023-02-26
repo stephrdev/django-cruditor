@@ -50,7 +50,7 @@ class TestListView:
 
 
 class TestAddView:
-    def setup(self):
+    def setup_method(self):
         self.view = PersonAddView()
         self.view.object = None
 
@@ -63,7 +63,7 @@ class TestAddView:
 
 @pytest.mark.django_db
 class TestChangeView:
-    def setup(self):
+    def setup_method(self):
         self.view = PersonChangeView()
         self.view.object = PersonFactory.create(first_name='John')
 
@@ -79,7 +79,7 @@ class TestChangeView:
 
 @pytest.mark.django_db
 class TestDeleteView:
-    def setup(self):
+    def setup_method(self):
         self.view = PersonDeleteView()
         self.view.object = PersonFactory.create(first_name='John')
 
@@ -98,7 +98,7 @@ class TestDeleteView:
 
 @pytest.mark.django_db
 class TestDetailView:
-    def setup(self):
+    def setup_method(self):
         self.view = PersonDetailView()
         self.view.object = PersonFactory.create(first_name='John')
 

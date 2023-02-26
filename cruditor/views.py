@@ -233,7 +233,10 @@ class CruditorDeleteView(CruditorMixin, DeleteView):
     #: Template used to render the confirmation form view.
     template_name = 'cruditor/delete.html'
 
-    def delete(self, request, *args, **kwargs):
+    def delete(self, *args, **kwargs):
+        return self.form_valid(*args, **kwargs)
+
+    def form_valid(self, request, *args, **kwargs):
         """
         Call ``perform_delete`` method and redirect to the success URL with a
         nice success message. If there are protected related objects, an error
