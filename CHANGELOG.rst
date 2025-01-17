@@ -15,7 +15,8 @@ Changelog
   * Add default `get_success_url` for add, change and delete views
   * Add methods to control reverse-args when building collection related URLs
 * Allow logging out only via POST instead of GET
-* Updated supported Django versions (4.2 - 5.1)
+* Update supported Django versions (4.2 - 5.1)
+* Update supported Python versions (3.10 - 3.13+)
 * Update to Bootstrap 5 and build frontend components using Parcel
 * Update templates for Bootstrap 5
 * Render forms using tapeforms's fieldsets by default
