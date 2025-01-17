@@ -1,6 +1,26 @@
 Changelog
 =========
 
+3.0.0 - UNRELEASED
+------------------
+
+* Title buttons are now a dataclass instead of dicts
+* Breadcrumb items are now a dataclass instead of dicts
+* Add `form_save_button_label` property to views for easier overriding
+* Add properties for easier overriding of js translations in `CruditorFormsetFormMixin`
+* Fix DateRangeWidget (from django-filters) input types
+* Improve collection mixin
+  * Add `collection_delete_urlname`, renders delete link in change views
+  * Add `collection_add_urlname`, renders add titlebutton in list views
+  * Add default `get_success_url` for add, change and delete views
+  * Add methods to control reverse-args when building collection related URLs
+* Allow logging out only via POST instead of GET
+* Updated supported Django versions (4.2 - 5.1)
+* Update to Bootstrap 5 and build frontend components using Parcel
+* Update templates for Bootstrap 5
+* Render forms using tapeforms's fieldsets by default
+
+
 2.4.0 - 2023-02-26
 ------------------
 

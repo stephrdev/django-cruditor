@@ -10,7 +10,6 @@ insert_final_newline = true
 [*.py]
 indent_style = space
 indent_size = 4
-
 lines_after_imports = 2
 multi_line_output = 3
 include_trailing_comma = True
@@ -22,15 +21,11 @@ line_length = 96
 indent_style = space
 indent_size = 4
 
-[*.md]
+[*.toml]
 indent_style = space
 indent_size = 4
 
 [*.yml]
-indent_style = space
-indent_size = 2
-
-[*.json]
 indent_style = space
 indent_size = 2
 

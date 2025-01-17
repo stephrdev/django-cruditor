@@ -1,14 +1,9 @@
-[tool.poetry]
+[project]
 name = "django-cruditor"
-version = "2.4.0"
+version = "3.0.0"
 description = "A set of class based views and mixins to generate CRUD interfaces."
-authors = [
-	"Stephan Jaekel <steph@rdev.info>",
-]
-license = "MIT"
-readme = "README.rst"
-homepage = 'https://github.com/stephrdev/django-cruditor'
-repository = 'https://github.com/stephrdev/django-cruditor'
+authors = [{ name = "Stephan Jaekel", email = "steph@rdev.info" }]
+requires-python = ">=3.8,<4"
 classifiers = [
 	"Development Status :: 5 - Production/Stable",
 	"License :: OSI Approved :: MIT License",
@@ -19,62 +14,77 @@ classifiers = [
 	"Programming Language :: Python",
 	"Programming Language :: Python :: 3",
 ]
-packages = [{ include = "cruditor" }]
-include = ["LICENSE.rst"]
+readme = "README.rst"
+dependencies = [
+    "Django>=4.2",
+    "django-tapeforms>=2.2"
+]
 
-[tool.poetry.dependencies]
-python = ">=3.8,<4"
+[project.optional-dependencies]
+tables = ["django-tables2>=2.6"]
+filters = ["django-filter>=24.3"]
 
-Django = ">=2.2"
-Sphinx = {version = ">=3.5", optional = true}
-django-tapeforms = {version = ">=1.1.0", optional = true}
-django-tables2 = {version = ">=2.4.1", optional = true}
-django-filter = {version = ">=21.1", optional = true}
+[project.urls]
+Homepage = 'https://github.com/stephrdev/django-cruditor'
+Repository = 'https://github.com/stephrdev/django-cruditor'
+Documentation = "https://django-cruditor.readthedocs.io"
 
-[tool.poetry.dev-dependencies]
-django-tapeforms = ">=1.1.0"
-django-tables2 = ">=2.4.1"
-django-filter = ">=21.1"
-factory-boy = ">=3.2.1"
-requests = ">=2.27.1"
-pytest = ">=6.2"
-pytest-cov = ">=2.11"
-pytest-django = ">=4.2"
-pytest-flake8 = ">=1.0"
-pytest-isort = ">=2.0"
-pytest-black = ">=0.3"
-pytest-snapshot = ">=0.6"
-coverage = {version = ">=5.5", extras = ["toml"]}
-flake8 = "<5"
-tox = "3.25.0"
-typing_extensions = { version = ">=3.10", python = "<3.10" }
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=5.0",
+    "pytest-django>=4.9",
+    "pytest-snapshot>=0.9",
+    "coverage[toml]>=7.6",
+    "ruff",
+    "django-tables2>=2.6",
+    "django-filter>=24.3",
+    "requests>=2.32",
+    "factory-boy>=3.3.1",
+]
 
-[tool.poetry.extras]
-docs = ["Sphinx", "django-tapeforms", "django-tables2", "django-filter"]
+[tool.ruff]
+line-length = 96
+indent-width = 4
+src = ["cruditor"]
+target-version = "py38"
 
-[build-system]
-requires = ["poetry>=1.1"]
-build-backend = "poetry.masonry.api"
+[tool.ruff.lint]
+ignore = ["E501", "E203"]
+select = [
+  # pyupgrade
+  "UP",
+  # pycodestyle error
+  "E",
+  # Pyflakes
+  "F",
+  # isort
+  "I",
+  # pycodestyle warning
+  "W"
+]
 
 [tool.pytest.ini_options]
-addopts = "-v --tb=short --nomigrations"
-testpaths = ["cruditor", "tests"]
-flake8-max-line-length = 96
-flake8-ignore = ["E203", "E266", "E501", "W503"]
-flake8-max-complexity = 18
+addopts = "--verbose --tb=short --nomigrations"
+testpaths = ["tests"]
 DJANGO_SETTINGS_MODULE = "tests.settings"
-
-[tool.black]
-line-length = 96
-skip-string-normalization = true
-skip-numeric-underscore-normalization = true
-include = "\\.pyi?$"
-exclude = "/(\\.git|\\.tox|build|dist)/"
 
 [tool.coverage.run]
 branch = true
 source = ["cruditor"]
-omit = ["*/__init__.py"]
+omit = ["*/__init__.py", "*/tests/*"]
 
 [tool.coverage.report]
-exclude_lines = ["raise NotImplementedError"]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError"
+]
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["cruditor", "tests", "examples"]
+packages = ["cruditor"]
+license-files = []

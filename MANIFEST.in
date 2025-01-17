@@ -1,0 +1,6 @@
+recursive-include cruditor/templates *
+recursive-include cruditor/static *
+recursive-include cruditor/locale *
+recursive-include cruditor/client *
+prune tests
+prune examples

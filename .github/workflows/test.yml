@@ -5,7 +5,6 @@ on:
   push:
     branches: ["main"]
   pull_request:
-    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -13,23 +12,24 @@ jobs:
     name: "Python ${{ matrix.python-version }}"
     runs-on: "ubuntu-latest"
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-python@v2"
+      - uses: "actions/checkout@v4"
+      - uses: "astral-sh/setup-uv@v5"
         with:
-          python-version: "${{ matrix.python-version }}"
-      - name: "Install dependencies"
-        run: |
-          set -xe
-          python -m pip install --upgrade pip setuptools
-          python -m pip install --upgrade poetry tox tox-gh-actions coverage
+          python-version: ${{ matrix.python-version }}
+
+      - name: "Install tox"
+        run: "uv tool install tox --with tox-uv,tox-gh-actions,coverage"
 
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python -m tox"
+        run: "tox run"
 
       - name: "Upload coverage to Codecov"
-        uses: "codecov/codecov-action@v2"
+        uses: "codecov/codecov-action@v4"
+        if: ${{ github.repository_owner == 'stephrdev' }}
         with:
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}

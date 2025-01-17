@@ -31,24 +31,23 @@ your customized CRUD interface.
 Requirements
 ------------
 
-django-cruditor supports Python 3 only and requires at least Django 2.2.
-Optional dependencies are django-tapeforms, django-tables2 and django-filter.
+django-cruditor supports Python 3 only and requires at least Django 4.2 and django-tapeforms.
+Optional dependencies are django-tables2 and django-filter.
 
 
 Prepare for development
 -----------------------
 
-A Python 3 interpreter is required in addition to poetry.
+The project uses `uv` to manage dependencies and the python environment.
+
+To run the tests, use:
 
 .. code-block:: shell
 
-    $ poetry install
-    # If you want to build docs, execute this in addition
-    $ poetry install -E docs
+   $ make tests
 
-
-Now you're ready to start the example project to experiment with cruditor.
+To start the example project to experiment with cruditor, run:
 
 .. code-block:: shell
 
-    $ poetry run python examples/manage.py runserver
+    $ uv run python examples/manage.py runserver

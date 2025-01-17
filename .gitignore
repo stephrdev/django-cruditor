@@ -6,13 +6,12 @@ dist/
 *.py[cod]
 __pycache__/
 *~
-.parcel-cache/
 
 .cache
 .coverage
+.parcel-cache
 coverage.xml
 .pytest_cache
-.eslintcache
 *.sqlite3
 
 node_modules
