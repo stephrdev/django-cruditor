@@ -6,10 +6,11 @@ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.urls import reverse
 
 from cruditor.views import Cruditor403View, Cruditor404View, CruditorListView
+from cruditor.datastructures import Breadcrumb
 from examples.minimal.views import DemoView
 from examples.store.models import Person
 
-from .factories import PersonFactory, RelatedPersonFactory
+from tests.factories import PersonFactory, RelatedPersonFactory
 
 
 @pytest.mark.django_db
@@ -48,9 +49,9 @@ class TestBasicView:
     def test_cruditor_context(self):
         assert self.view.get_cruditor_context() == {
             'breadcrumb': [
-                {'title': 'Additional breadcrumb', 'url': '/'},
-                {'title': 'Disabled item'},
-                {'title': 'Demo view', 'url': None},
+                Breadcrumb(title='Additional breadcrumb', url='/'),
+                Breadcrumb(title='Disabled item'),
+                Breadcrumb(title='Demo view'),
             ],
             'constants': {
                 'change_password_url': '/change-password/',
@@ -61,7 +62,8 @@ class TestBasicView:
                 'menu_title': 'Examples Demo',
             },
             'title': 'Demo view',
-            'titlebuttons': None,
+            'titlebuttons': [],
+            'form_save_button_label': 'Save',
         }
 
     def test_title(self):
@@ -237,6 +239,16 @@ class TestDeleteView:
 
         assert Person.objects.exists() is True
 
+    def test_delete(self, admin_client):
+        response = admin_client.delete(reverse('collection:delete', args=(self.person.pk,)))
+        assert response.status_code == 302
+
+        messages = list(get_messages(response.wsgi_request))
+        assert len(messages) == 1
+        assert messages[0].level == SUCCESS_LEVEL
+
+        assert Person.objects.exists() is False
+
     def test_post(self, admin_client):
         response = admin_client.post(reverse('collection:delete', args=(self.person.pk,)))
         assert response.status_code == 302
@@ -261,7 +273,7 @@ class TestDeleteView:
 
     def test_custom_button_label(self, admin_client):
         response = admin_client.get(reverse('collection:delete', args=(self.person.pk,)))
-        assert response.context['form_save_button_label'] == 'Delete this person'
+        assert response.context['cruditor']['form_save_button_label'] == 'Delete this person'
         assert 'Delete this person' in response.content.decode(response.charset)
 
 
@@ -399,7 +411,7 @@ class TestLogoutView:
         assert response.status_code == 200
         assert response.template_name[0] == 'minimal/demo.html'
 
-        response = admin_client.get(reverse('logout'))
+        response = admin_client.post(reverse('logout'))
         assert response.status_code == 200
         assert response.template_name[0] == 'cruditor/logout.html'
 
@@ -408,6 +420,10 @@ class TestLogoutView:
         assert response.template_name[0] == 'cruditor/login.html'
 
     def test_logout_already_logged_out(self, client):
-        response = client.get(reverse('logout'))
+        response = client.post(reverse('logout'))
         assert response.status_code == 200
         assert response.template_name[0] == 'cruditor/logout.html'
+
+    def test_logout_get(self, client):
+        response = client.get(reverse('logout'))
+        assert response.status_code == 405

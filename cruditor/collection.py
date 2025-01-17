@@ -2,7 +2,8 @@ import django_tables2 as tables
 from django.urls import reverse
 from django.utils.translation import gettext
 
-from .views import CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView
+from cruditor.views import CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView
+from cruditor.datastructures import Breadcrumb, TitleButton
 
 
 class CollectionViewMixin(object):
@@ -15,8 +16,12 @@ class CollectionViewMixin(object):
     collection_list_title = 'Collection'
     #: URL name to use when linking to the list view (e.g. in breadcrumb)
     collection_list_urlname = None
+    #: URL name to use when linking to the add view (e.g. in title buttons)
+    collection_add_urlname = None
     #: URL name when linking to a detail page of a item (e.g. in list table or breadcrumb)
     collection_detail_urlname = None
+    #: URL name when linking to the delete page of a item (e.g. in change view)
+    collection_delete_urlname = None
 
     def get_title(self):
         """
@@ -26,6 +31,20 @@ class CollectionViewMixin(object):
         if issubclass(self.__class__, CruditorListView):
             return self.get_collection_list_title()
         return super().get_title()
+
+    def get_success_url(self):
+        if issubclass(self.__class__, (CruditorAddView, CruditorChangeView)) and self.collection_detail_urlname:
+            return self.get_collection_object_success_url()
+
+        if issubclass(self.__class__, CruditorDeleteView) and self.collection_list_urlname:
+            return self.get_collection_list_url()
+
+        return super().get_success_url()
+
+    def get_delete_url(self):
+        if self.collection_delete_urlname:
+            return self.get_collection_delete_url()
+        return None
 
     def get_breadcrumb_title(self):
         """
@@ -49,21 +68,29 @@ class CollectionViewMixin(object):
 
         if self.collection_include_list_crumb():
             breadcrumb.append(
-                {
-                    'title': self.get_collection_list_title(),
-                    'url': self.get_collection_list_url(),
-                }
+                Breadcrumb(
+                    title=self.get_collection_list_title(),
+                    url=self.get_collection_list_url()
+                )
             )
 
         if self.collection_include_detail_crumb():
             breadcrumb.append(
-                {
-                    'title': self.get_collection_detail_title(),
-                    'url': self.get_collection_detail_url(),
-                }
+                Breadcrumb(
+                    title=self.get_collection_detail_title(),
+                    url=self.get_collection_detail_url()
+                )
             )
 
         return breadcrumb
+
+    def get_titlebuttons(self):
+        buttons = super().get_titlebuttons()
+
+        if self.collection_include_add_titlebutton():
+            buttons.append(TitleButton(url=self.get_collection_add_url(), label=self.get_collection_add_titlebutton_label()))
+
+        return buttons
 
     def get_table_class(self):
         """
@@ -88,6 +115,13 @@ class CollectionViewMixin(object):
 
         return self._table_class
 
+    def collection_include_add_titlebutton(self):
+        """
+        If this method returns true, the an "Add model verbose name" button should be
+        included in the list view.
+        """
+        return issubclass(self.__class__, CruditorListView) and self.collection_add_urlname
+
     def collection_include_list_crumb(self):
         """
         If this method returns true, the list view should be included in the breadcrumb.
@@ -100,9 +134,25 @@ class CollectionViewMixin(object):
         """
         return (
             self.collection_include_list_crumb()
-            and hasattr(self, 'object')
             and not issubclass(self.__class__, (CruditorAddView, CruditorChangeView))
+            and hasattr(self, 'object')
         )
+
+    def get_collection_url_args(self):
+        """
+        This helper method returns the args that are used to reverse urls for
+        list and add views (views that don't refer to a object/instance).
+        By default, returns an empty tuple.
+        """
+        return ()
+
+    def get_collection_object_url_args(self):
+        """
+        This helper method returns the args that are used to reverse urls for
+        views that refer to a detail page (object/instance related views).
+        By default returns the object PK.
+        """
+        return (self.object.pk,)
 
     def get_collection_list_title(self):
         """
@@ -116,7 +166,7 @@ class CollectionViewMixin(object):
         Helper method to generate the collection list url.
         By default, just calls reverse with the ``collection_list_urlname`` property.
         """
-        return reverse(self.collection_list_urlname)
+        return reverse(self.collection_list_urlname, args=self.get_collection_url_args())
 
     def get_collection_detail_title(self):
         """
@@ -131,4 +181,33 @@ class CollectionViewMixin(object):
         By default, calls reverse with the ``collection_detail_urlname`` property
         and passes the object pk to the function call.
         """
-        return reverse(self.collection_detail_urlname, args=(self.object.pk,))
+        return reverse(self.collection_detail_urlname, args=self.get_collection_object_url_args())
+
+    def get_collection_add_titlebutton_label(self):
+        """
+        Helper method to override the used button label for the "Add" title button.
+        By default, returns "Add <model verbose name>".
+        """
+        return gettext('Add {0}').format(self.get_model_verbose_name())
+
+    def get_collection_add_url(self):
+        """
+        Helper method to generate the collection add url.
+        By default, just calls reverse with the ``collection_add_urlname`` property.
+        """
+        return reverse(self.collection_add_urlname, args=self.get_collection_url_args())
+
+    def get_collection_delete_url(self):
+        """
+        Helper method to generate the collection delete url for the current object.
+        By default, calls reverse with the ``collection_delete_urlname`` property
+        and passes the object pk to the function call.
+        """
+        return reverse(self.collection_delete_urlname, args=self.get_collection_object_url_args())
+
+    def get_collection_object_success_url(self):
+        """
+        Helper method to generate the success url after obejct related redirects (e.g. add, change).
+        By default, calls reverse with the ``get_collection_list_url`` method.
+        """
+        return self.get_collection_list_url()

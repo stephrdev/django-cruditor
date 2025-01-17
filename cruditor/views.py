@@ -12,8 +12,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.generic import CreateView, DeleteView, FormView, TemplateView, UpdateView
 
-from .forms import ChangePasswordForm
-from .mixins import CruditorMixin, FormViewMixin
+from cruditor.forms import ChangePasswordForm
+from cruditor.mixins import CruditorMixin, FormViewMixin
 
 
 try:
@@ -230,6 +230,9 @@ class CruditorDeleteView(CruditorMixin, DeleteView):
     #: Message used when a item was deleted.
     success_message = _('The {model} "{object}" was successfully deleted.')
 
+    #: Label used for the submit button in the confirmation dialog.
+    form_save_button_label = _("Confirm deletion")
+
     #: Template used to render the confirmation form view.
     template_name = 'cruditor/delete.html'
 
@@ -299,6 +302,9 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
     #: Form used to change the password.
     form_class = ChangePasswordForm
 
+    #: Submit button label for change password form
+    form_save_button_label = _("Set new password")
+
     def get_form_kwargs(self):
         """
         The current user is passed to the provided ``form_class`` when initializing
@@ -318,20 +324,14 @@ class CruditorChangePasswordView(CruditorMixin, FormView):
         messages.success(self.request, gettext('Password changed successfully.'))
         return redirect(self.request.path)
 
-    def get_context_data(self, **kwargs):
-        """
-        Set ``form_save_button_label`` context variable to change the button
-        label for the change password form.
-        """
-        return super().get_context_data(
-            form_save_button_label=gettext('Set new password'), **kwargs
-        )
-
 
 class CruditorLogoutView(CruditorMixin, LogoutView):
     """
     View to log out the current user. After logging out, a info is displayed.
     """
+
+    #: Ensure we don't allow logging out via GET request.
+    http_method_names = ["post", "options"]
 
     #: Template used to display the info that the user was logged out.
     template_name = 'cruditor/logout.html'

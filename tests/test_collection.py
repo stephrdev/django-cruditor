@@ -3,6 +3,7 @@ import pytest
 from django.views.generic import DetailView
 
 from cruditor.mixins import CruditorMixin
+from cruditor.datastructures import Breadcrumb
 from examples.collection.tables import PersonTable
 from examples.collection.views import (
     PersonAddView,
@@ -13,7 +14,7 @@ from examples.collection.views import (
     PersonViewMixin,
 )
 
-from .factories import PersonFactory
+from tests.factories import PersonFactory
 
 
 class PersonDetailView(PersonViewMixin, CruditorMixin, DetailView):
@@ -58,7 +59,7 @@ class TestAddView:
         assert self.view.get_title() == 'Add Person'
 
     def test_breadcrumb(self):
-        assert self.view.get_breadcrumb() == [{'title': 'Persons', 'url': '/collection/'}]
+        assert self.view.get_breadcrumb() == [Breadcrumb(title='Persons', url='/collection/')]
 
 
 @pytest.mark.django_db
@@ -74,7 +75,7 @@ class TestChangeView:
         assert self.view.get_breadcrumb_title() == 'Change: John'
 
     def test_breadcrumb(self):
-        assert self.view.get_breadcrumb() == [{'title': 'Persons', 'url': '/collection/'}]
+        assert self.view.get_breadcrumb() == [Breadcrumb(title='Persons', url='/collection/')]
 
 
 @pytest.mark.django_db
@@ -91,8 +92,8 @@ class TestDeleteView:
 
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
-            {'title': 'Persons', 'url': '/collection/'},
-            {'title': 'John', 'url': '/collection/{}/'.format(self.view.object.pk)},
+            Breadcrumb(title='Persons', url='/collection/'),
+            Breadcrumb(title='John', url='/collection/{}/'.format(self.view.object.pk)),
         ]
 
 
@@ -105,11 +106,11 @@ class TestDetailView:
     def test_breadcrumb_no_object(self):
         del self.view.object
         assert self.view.get_breadcrumb() == [
-            {'title': 'Persons', 'url': '/collection/'},
+            Breadcrumb(title='Persons', url='/collection/'),
         ]
 
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
-            {'title': 'Persons', 'url': '/collection/'},
-            {'title': 'John', 'url': '/collection/1/'},
+            Breadcrumb(title='Persons', url='/collection/'),
+            Breadcrumb(title='John', url='/collection/{}/'.format(self.view.object.pk)),
         ]

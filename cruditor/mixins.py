@@ -5,9 +5,11 @@ from django.contrib.auth.views import REDIRECT_FIELD_NAME, LoginView
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext
 from django.views.decorators.cache import never_cache
 
-from .forms import LoginForm
+from cruditor.datastructures import Breadcrumb
+from cruditor.forms import LoginForm
 
 
 class CruditorMixin(object):
@@ -94,8 +96,9 @@ class CruditorMixin(object):
         return {
             'title': alternative_title or self.get_title(),
             'breadcrumb': self.get_breadcrumb()
-            + [{'title': alternative_title or self.get_breadcrumb_title(), 'url': None}],
+            + [Breadcrumb(title=alternative_title or self.get_breadcrumb_title())],
             'titlebuttons': self.get_titlebuttons(),
+            'form_save_button_label': self.get_form_save_button_label(),
             'constants': constants,
         }
 
@@ -115,11 +118,11 @@ class CruditorMixin(object):
 
     def get_breadcrumb(self):
         """
-        This method is expected to return a list of breadcrumb elements as a list.
+        This method is expected to return a list of ``Breadcrumb`` obejcts as a list.
 
-        Every breadcrumb element is a dict or object with at least
-        a ``title`` property/key. If a ``url`` key/property is provided, the item
-        is linked.
+        Every breadcrumb element is a ``Breadcrumb`` instance or a similar object
+        with at least a ``title`` property/key. If a ``url`` key/property is provided,
+        the item is linked.
         """
         return []
 
@@ -128,12 +131,19 @@ class CruditorMixin(object):
         This method is expected to return None or a list of buttons to display in
         the title row of the page.
 
-        Every button element is a dict or object with at least a ``label`` and
-        ``url`` property/key. In addition, one can provide an alternative
-        ``button_class`` which is used as a css class - pefixed with "btn-".
-        Default ``button_class`` is "light".
+        Every button element should be a ``TitleButton`` instance or a similar object
+        with at least a ``label``, ``url`` and  ``button_class`` property/key. The
+        ``button_class`` is used as a css class - pefixed with "btn-".
         """
-        return None
+        return []
+
+    def get_form_save_button_label(self):
+        """
+        This method returns the label for the save button in templates that render
+        a cruditor form. The default is "Save". To ease overriding this value, the
+        method also checks for a view class property named ``form_save_button_label``.
+        """
+        return getattr(self, "form_save_button_label", gettext("Save"))
 
     def get_model_verbose_name(self):
         """
