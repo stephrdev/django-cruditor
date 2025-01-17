@@ -9,6 +9,7 @@ year = datetime.datetime.now().strftime("%Y")
 sys.path.insert(0, os.path.abspath(".."))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
+
 import django
 
 django.setup()
@@ -40,16 +41,10 @@ def linkcode_resolve(domain, info):
     for piece in info["fullname"].split("."):
         item = getattr(item, piece)
         try:
-            lineno = "#L%d" % inspect.getsourcelines(item)[1]
-        except (TypeError, IOError):
+            lineno = f"#L{inspect.getsourcelines(item)[1]}"
+        except (OSError, TypeError):
             pass
-    return "https://github.com/%s/%s/blob/%s/%s.py%s" % (
-        github_user,
-        project,
-        head,
-        filename,
-        lineno,
-    )
+    return f"https://github.com/{github_user}/{project}/blob/{head}/{filename}.py{lineno}"
 
 
 intersphinx_mapping = {
@@ -67,7 +62,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 project = "django-cruditor"
-copyright = "%s, Stephan Jaekel" % year
+copyright = f"{year}, Stephan Jaekel"
 
 exclude_patterns = ["_build"]
 

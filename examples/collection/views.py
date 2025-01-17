@@ -5,8 +5,6 @@ from cruditor.views import (
     CruditorDeleteView,
     CruditorListView,
 )
-from django.core.exceptions import PermissionDenied
-from django.urls import reverse, reverse_lazy
 
 from examples.mixins import ExamplesMixin
 from examples.store.models import Person

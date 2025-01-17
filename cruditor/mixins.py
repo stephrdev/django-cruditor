@@ -12,7 +12,7 @@ from cruditor.datastructures import Breadcrumb
 from cruditor.forms import LoginForm
 
 
-class CruditorMixin(object):
+class CruditorMixin:
     """
     Base mixin for all Cruditor views. Provides common functionality for all views.
 
@@ -225,7 +225,7 @@ class CruditorMixin(object):
         return context
 
 
-class FormViewMixin(object):
+class FormViewMixin:
     """
     Mixin to add formset support to Django FormViews. To use formsets,
     you have to provide a set of formsets as a dict (or OrderedDict if you have

@@ -61,7 +61,7 @@ class Pet:
 
     @classmethod
     def get(cls, pk):
-        return Pet(requests.get("http://petstore.swagger.io/v2/pet/{}".format(pk)).json())
+        return Pet(requests.get(f"http://petstore.swagger.io/v2/pet/{pk}").json())
 
     @classmethod
     def create(cls, form):

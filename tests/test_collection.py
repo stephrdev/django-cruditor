@@ -92,7 +92,7 @@ class TestDeleteView:
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
             Breadcrumb(title="Persons", url="/collection/"),
-            Breadcrumb(title="John", url="/collection/{}/".format(self.view.object.pk)),
+            Breadcrumb(title="John", url=f"/collection/{self.view.object.pk}/"),
         ]
 
 
@@ -111,5 +111,5 @@ class TestDetailView:
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
             Breadcrumb(title="Persons", url="/collection/"),
-            Breadcrumb(title="John", url="/collection/{}/".format(self.view.object.pk)),
+            Breadcrumb(title="John", url=f"/collection/{self.view.object.pk}/"),
         ]

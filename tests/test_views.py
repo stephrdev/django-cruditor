@@ -265,7 +265,7 @@ class TestDeleteView:
         response = admin_client.post(reverse("collection:delete", args=(self.person.pk,)))
         assert response.status_code == 200
         assert response.context["linked_objects"] == [
-            "Related person: {}".format(str(related)),
+            f"Related person: {str(related)}",
         ]
 
         assert Person.objects.exists() is True

@@ -32,7 +32,7 @@ class CruditorTapeformMixin(Bootstrap5TapeformMixin, TapeformFieldsetsMixin):
         return super().apply_widget_options(field_name)
 
 
-class CruditorFormsetMixin(object):
+class CruditorFormsetMixin:
     """
     Helper mixin to provide some additional configuration to the javascript part
     of Cruditor's formset support, mainly translations but also all other stuff

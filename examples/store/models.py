@@ -20,7 +20,7 @@ class Person(models.Model):
 
     def __str__(self):
         if self.last_name:
-            return "{} {}".format(self.first_name, self.last_name)
+            return f"{self.first_name} {self.last_name}"
         return self.first_name
 
 
@@ -37,4 +37,4 @@ class RelatedPerson(models.Model):
         verbose_name_plural = "Related persons"
 
     def __str__(self):
-        return "{} ({})".format(self.first_name, self.person)
+        return f"{self.first_name} ({self.person})"

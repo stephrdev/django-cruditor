@@ -11,7 +11,7 @@ from cruditor.views import (
 )
 
 
-class CollectionViewMixin(object):
+class CollectionViewMixin:
     """
     Mixin to provide some extra default functionality to Cruditor views to make
     building views for a collection of data (like a Django model) even easier.
