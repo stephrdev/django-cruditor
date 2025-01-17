@@ -9,6 +9,7 @@ from cruditor.views import (
 )
 from examples.mixins import ExamplesMixin
 from examples.store.models import Person
+from django.core.exceptions import PermissionDenied
 
 from .filters import PersonFilter
 from .forms import PersonForm
@@ -19,14 +20,13 @@ class PersonViewMixin(ExamplesMixin, CollectionViewMixin):
     model = Person
     collection_list_title = 'Persons'
     collection_list_urlname = 'collection:list'
+    collection_add_urlname = 'collection:add'
     collection_detail_urlname = 'collection:change'
+    collection_delete_urlname = 'collection:delete'
 
 
 class PersonListView(PersonViewMixin, CruditorListView):
     title = 'Persons'
-
-    def get_titlebuttons(self):
-        return [{'url': reverse('collection:add'), 'label': 'Add person'}]
 
 
 class PersonFilterView(PersonListView):
@@ -35,25 +35,15 @@ class PersonFilterView(PersonListView):
 
 
 class PersonAddView(PersonViewMixin, CruditorAddView):
-    success_url = reverse_lazy('collection:list')
     form_class = PersonForm
 
 
 class PersonChangeView(PersonViewMixin, CruditorChangeView):
-    success_url = reverse_lazy('collection:list')
     form_class = PersonForm
-
-    def get_delete_url(self):
-        return reverse('collection:delete', args=(self.object.pk,))
 
     def get_success_message(self):
         return None
 
 
 class PersonDeleteView(PersonViewMixin, CruditorDeleteView):
-    success_url = reverse_lazy('collection:list')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form_save_button_label'] = 'Delete this person'
-        return context
+    form_save_button_label = 'Delete this person'

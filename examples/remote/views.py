@@ -17,6 +17,7 @@ class PetMixin(ExamplesMixin, CollectionViewMixin):
     collection_list_title = 'Pets'
     collection_list_urlname = 'remote:list'
     collection_detail_urlname = 'remote:change'
+    collection_delete_urlname = 'remote:delete'
     model_verbose_name = 'Pet'
 
 
@@ -41,9 +42,6 @@ class PetChangeView(PetMixin, CruditorChangeView):
 
     def get_object(self):
         return Pet.get(self.kwargs['pk'])
-
-    def get_delete_url(self):
-        return reverse('remote:delete', args=(self.object.pk,))
 
 
 class PetDeleteView(PetMixin, CruditorDeleteView):

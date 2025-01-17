@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 
 from cruditor.mixins import CruditorMixin
 from examples.mixins import ExamplesMixin
+from cruditor.datastructures import Breadcrumb
 
 
 class DemoView(ExamplesMixin, CruditorMixin, TemplateView):
@@ -10,11 +11,6 @@ class DemoView(ExamplesMixin, CruditorMixin, TemplateView):
 
     def get_breadcrumb(self):
         return super().get_breadcrumb() + [
-            {
-                'url': '/',
-                'title': 'Additional breadcrumb',
-            },
-            {
-                'title': 'Disabled item',
-            },
+            Breadcrumb(url='/', title='Additional breadcrumb'),
+            Breadcrumb(title='Disabled item'),
         ]
