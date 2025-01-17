@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-11 15:29+0100\n"
+"POT-Creation-Date: 2025-01-17 13:58+0100\n"
 "PO-Revision-Date: 2017-09-01 12:35+0200\n"
 "Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
 "Language-Team: \n"
@@ -18,141 +18,182 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.8\n"
 
-#: collection.py:14 views.py:103
-#, python-brace-format
-msgid "Change: {0}"
-msgstr "{0} ändern"
+#: cruditor/collection.py:63 cruditor/templates/cruditor/form.html:48
+msgid "Delete"
+msgstr "Löschen"
 
-#: collection.py:16 views.py:124
-#, python-brace-format
-msgid "Delete: {0}"
-msgstr "{0} löschen"
-
-#: collection.py:18 views.py:95
+#: cruditor/collection.py:205 cruditor/views.py:188
 #, python-brace-format
 msgid "Add {0}"
 msgstr "{0} hinzufügen"
 
-#: filters.py:12
+#: cruditor/filters.py:16
 msgid "Any choice"
 msgstr "Alles auswählen"
 
-#: forms.py:64
-msgid "Are you sure you want to delete this item?"
-msgstr "Möchten Sie den Eintrag wirklich löschen?"
+#: cruditor/forms.py:42 cruditor/forms.py:67
+msgid "New item"
+msgstr "Neu"
 
-#: templates/cruditor/403.html:11
+#: cruditor/forms.py:43
+msgid "Add item"
+msgstr "Hinzufügen"
+
+#: cruditor/forms.py:44
+msgid "Delete item"
+msgstr "Löschen"
+
+#: cruditor/forms.py:45
+msgid "Are you sure? Item will be deleted after saving."
+msgstr "Sind Sie sicher? Der Datensatz wird nach dem Speichern gelöscht."
+
+#: cruditor/mixins.py:146
+msgid "Save"
+msgstr "Speichern"
+
+#: cruditor/templates/cruditor/403.html:9
 msgid "No access"
 msgstr "Kein Zugriff"
 
-#: templates/cruditor/403.html:12
+#: cruditor/templates/cruditor/403.html:10
 msgid "Permission to access requested item denied"
 msgstr "Zugriff auf die angeforderte Seite verweigert"
 
-#: templates/cruditor/403.html:15 templates/cruditor/404.html:15
+#: cruditor/templates/cruditor/403.html:14
+#: cruditor/templates/cruditor/404.html:14
 msgid "Take me to the index page"
 msgstr "Zurück zur Übersicht"
 
-#: templates/cruditor/404.html:11
+#: cruditor/templates/cruditor/404.html:9
 msgid "Not found"
 msgstr "Nicht gefunden"
 
-#: templates/cruditor/404.html:12
+#: cruditor/templates/cruditor/404.html:10
 msgid "The requested item could not be found"
 msgstr "Die angeforderte Seite wurde nicht gefunden"
 
-#: templates/cruditor/form.html:19
+#: cruditor/templates/cruditor/delete.html:7
+msgid "Unable to delete this item."
+msgstr "Der Datensatz kann nicht gelöscht werden."
+
+#: cruditor/templates/cruditor/delete.html:10
+msgid ""
+"<p> This item is currently referenced by other objects, and cannot be delete "
+"without jeopardising data integrity. </p> <p> To delete it successfully, "
+"first remove references from the following objects, then try again: </p>"
+msgstr ""
+"<p> Der Datensatz wird von anderen Datensätzen referenziert und kann nicht "
+"gelöscht werden, ohne die Konsistenz der Daten zu gefährden. </p> <p> Um den "
+"Datensatz zu löschen, müssen erst alle referenzierenden Datensätze gelöscht werden: </p>"
+
+#: cruditor/templates/cruditor/delete.html:33
+msgid "Are you sure you want to delete this item?"
+msgstr "Möchten Sie den Eintrag wirklich löschen?"
+
+#: cruditor/templates/cruditor/form.html:20
 msgid "Please correct the errors below."
 msgstr "Bitte korrigieren Sie die angezeigten Fehler"
 
-#: templates/cruditor/form.html:35
-msgid "Delete"
-msgstr "Löschen"
-
-#: templates/cruditor/form.html:43
-msgid "Save form"
-msgstr "Speichern"
-
-#: templates/cruditor/forms/inline-formset.html:10
-msgid "New"
-msgstr "Neu"
-
-#: templates/cruditor/forms/inline-formset.html:48
-msgid "Add another"
-msgstr "Hinzufügen"
-
-#: templates/cruditor/forms/inline-formset.html:51
-msgid "Remove"
-msgstr "Entfernen"
-
-#: templates/cruditor/forms/inline-formset.html:52
-msgid "Are you sure? Item will be removed after saving."
-msgstr "Sind Sie sicher? Der Datensatz wird nach dem Speichern gelöscht."
-
-#: templates/cruditor/includes/filter-form.html:5
+#: cruditor/templates/cruditor/includes/filter-form.html:5
 msgid "Filters"
 msgstr "Filter"
 
-#: templates/cruditor/includes/filter-form.html:10
+#: cruditor/templates/cruditor/includes/filter-form.html:10
 msgid "Filter"
 msgstr "Filter"
 
-#: templates/cruditor/includes/navigation.html:18
+#: cruditor/templates/cruditor/includes/navigation.html:25
 msgid "Signed in as"
 msgstr "Angemeldet als"
 
-#: templates/cruditor/includes/navigation.html:24 views.py:139
+#: cruditor/templates/cruditor/includes/navigation.html:32
+#: cruditor/views.py:299
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: templates/cruditor/includes/navigation.html:26
+#: cruditor/templates/cruditor/includes/navigation.html:39
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/cruditor/includes/table-pagination.html:12
+#: cruditor/templates/cruditor/includes/table-pagination.html:12
+#: cruditor/templates/cruditor/includes/table-pagination.html:16
 msgid "Previous page"
 msgstr "Vorherige Seite"
 
-#: templates/cruditor/includes/table-pagination.html:20
+#: cruditor/templates/cruditor/includes/table-pagination.html:12
+#: cruditor/templates/cruditor/includes/table-pagination.html:16
+msgid "Previous"
+msgstr "Zurück"
+
+#: cruditor/templates/cruditor/includes/table-pagination.html:23
 #, python-format
 msgid "Page %(current)s of %(total)s"
 msgstr "Seite %(current)s von %(total)s"
 
-#: templates/cruditor/includes/table-pagination.html:29
+#: cruditor/templates/cruditor/includes/table-pagination.html:30
+#: cruditor/templates/cruditor/includes/table-pagination.html:34
 msgid "Next page"
 msgstr "Nächste Seite"
 
-#: templates/cruditor/login.html:20
+#: cruditor/templates/cruditor/includes/table-pagination.html:30
+#: cruditor/templates/cruditor/includes/table-pagination.html:34
+msgid "Next"
+msgstr "Weiter"
+
+#: cruditor/templates/cruditor/includes/table.html:47
+msgid "No data available."
+msgstr "Keine Daten verfügbar."
+
+#: cruditor/templates/cruditor/login.html:23
 msgid "Login"
 msgstr "Anmelden"
 
-#: templates/cruditor/logout.html:6
+#: cruditor/templates/cruditor/logout.html:6
 msgid "You have been logged out."
 msgstr "Sie haben sich abgemeldet."
 
-#: views.py:88
+#: cruditor/templates/cruditor/logout.html:8
+msgid "Start over"
+msgstr "Neustarten"
+
+#: cruditor/views.py:172
 #, python-brace-format
 msgid "The {model} \"{object}\" was successfully added."
 msgstr "{model} \"{object}\" wurde hinzugefügt."
 
-#: views.py:99
+#: cruditor/views.py:197
 #, python-brace-format
 msgid "The {model} \"{object}\" was successfully changed."
 msgstr "{model} \"{object}\" wurde gespeichert."
 
-#: views.py:114
+#: cruditor/views.py:207
+#, python-brace-format
+msgid "Change: {0}"
+msgstr "{0} ändern"
+
+#: cruditor/views.py:230
 #, python-brace-format
 msgid "The {model} \"{object}\" was successfully deleted."
 msgstr "{model} \"{object}\" wurde gelöscht."
 
-#: views.py:134
+#: cruditor/views.py:233
 msgid "Confirm deletion"
 msgstr "Löschen bestätigen"
 
-#: views.py:150
-msgid "Password changed successfully."
-msgstr "Passwort wurde geändert."
+#: cruditor/views.py:269
+#, python-brace-format
+msgid "Delete: {0}"
+msgstr "{0} löschen"
 
-#: views.py:155
+#: cruditor/views.py:283
+#, python-brace-format
+msgid "{model}: {object}"
+msgstr "{model}: {object}"
+
+#: cruditor/views.py:305
 msgid "Set new password"
 msgstr "Neues Passwort übernehmen"
+
+#: cruditor/views.py:323
+msgid "Password changed successfully."
+msgstr "Passwort wurde geändert."
