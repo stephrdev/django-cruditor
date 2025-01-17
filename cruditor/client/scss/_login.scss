@@ -6,7 +6,7 @@
 
 	> div {
 		@extend .col-auto;
-		@extend .ml-auto;
-		@extend .mr-auto;
+		@extend .ms-auto;
+		@extend .me-auto;
 	}
 }

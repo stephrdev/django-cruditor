@@ -1,8 +1,0 @@
-client/js/lib/
-coverage/
-node_modules/
-static/
-build/
-web/
-htmlcov/
-docs/
