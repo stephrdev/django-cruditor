@@ -1,12 +1,11 @@
 import pytest
+from cruditor.datastructures import Breadcrumb
+from cruditor.views import Cruditor403View, Cruditor404View, CruditorListView
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages import SUCCESS as SUCCESS_LEVEL
 from django.contrib.messages import get_messages
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.urls import reverse
-
-from cruditor.views import Cruditor403View, Cruditor404View, CruditorListView
-from cruditor.datastructures import Breadcrumb
 from examples.minimal.views import DemoView
 from examples.store.models import Person
 
@@ -17,17 +16,17 @@ from tests.factories import PersonFactory, RelatedPersonFactory
 class TestBasicView:
     @pytest.fixture(autouse=True)
     def setup_method(self, rf, admin_user):
-        self.request = rf.get('/')
+        self.request = rf.get("/")
         self.request.user = admin_user
         self.view = DemoView()
         self.view.request = self.request
-        self.view.required_permission = 'accounts.some_permission'
+        self.view.required_permission = "accounts.some_permission"
 
     def test_not_logged_in(self, rf):
         self.request.user = AnonymousUser()
         response = self.view.dispatch(self.request)
         assert response.status_code == 200
-        assert 'breadcrumb' not in response.context_data['cruditor']
+        assert "breadcrumb" not in response.context_data["cruditor"]
         assert response.template_name[0] == DemoView.login_template_name
 
     def test_no_permission(self, admin_user):
@@ -44,53 +43,53 @@ class TestBasicView:
     def test_permission_granted(self, admin_user):
         response = self.view.dispatch(self.request)
         assert response.status_code == 200
-        assert response.template_name[0] == 'minimal/demo.html'
+        assert response.template_name[0] == "minimal/demo.html"
 
     def test_cruditor_context(self):
         assert self.view.get_cruditor_context() == {
-            'breadcrumb': [
-                Breadcrumb(title='Additional breadcrumb', url='/'),
-                Breadcrumb(title='Disabled item'),
-                Breadcrumb(title='Demo view'),
+            "breadcrumb": [
+                Breadcrumb(title="Additional breadcrumb", url="/"),
+                Breadcrumb(title="Disabled item"),
+                Breadcrumb(title="Demo view"),
             ],
-            'constants': {
-                'change_password_url': '/change-password/',
-                'extrahead_template_name': 'cruditor/includes/extrahead.html',
-                'index_url': '/',
-                'logout_url': '/logout/',
-                'menu_template_name': 'menu.html',
-                'menu_title': 'Examples Demo',
+            "constants": {
+                "change_password_url": "/change-password/",
+                "extrahead_template_name": "cruditor/includes/extrahead.html",
+                "index_url": "/",
+                "logout_url": "/logout/",
+                "menu_template_name": "menu.html",
+                "menu_title": "Examples Demo",
             },
-            'title': 'Demo view',
-            'titlebuttons': [],
-            'form_save_button_label': 'Save',
+            "title": "Demo view",
+            "titlebuttons": [],
+            "form_save_button_label": "Save",
         }
 
     def test_title(self):
-        assert self.view.get_title() == 'Demo view'
+        assert self.view.get_title() == "Demo view"
 
     def test_model_verbose_name_explicit(self):
-        self.view.model_verbose_name = 'Foo'
-        assert self.view.get_model_verbose_name() == 'Foo'
+        self.view.model_verbose_name = "Foo"
+        assert self.view.get_model_verbose_name() == "Foo"
 
     def test_model_verbose_name_from_meta(self):
         self.view.model = Person
-        assert self.view.get_model_verbose_name() == 'Person'
+        assert self.view.get_model_verbose_name() == "Person"
 
     def test_model_verbose_name_fallback(self):
-        assert self.view.get_model_verbose_name() == 'Item'
+        assert self.view.get_model_verbose_name() == "Item"
 
 
 def test_not_found_view(rf):
-    response = Cruditor404View.as_view()(rf.get('/'))
+    response = Cruditor404View.as_view()(rf.get("/"))
     assert response.status_code == 404
-    assert response.template_name[0] == 'cruditor/404.html'
+    assert response.template_name[0] == "cruditor/404.html"
 
 
 def test_forbidden_view(rf):
-    response = Cruditor403View.as_view()(rf.get('/'))
+    response = Cruditor403View.as_view()(rf.get("/"))
     assert response.status_code == 403
-    assert response.template_name[0] == 'cruditor/403.html'
+    assert response.template_name[0] == "cruditor/403.html"
 
 
 @pytest.mark.django_db
@@ -100,24 +99,24 @@ class TestListView:
         self.person2 = PersonFactory.create(approved=False)
 
     def test_get_without_filter(self, admin_client):
-        response = admin_client.get(reverse('collection:list'))
+        response = admin_client.get(reverse("collection:list"))
         assert response.status_code == 200
-        assert response.context['table'].data.data.count() == 2
-        assert response.context['filter_form'] is None
+        assert response.context["table"].data.data.count() == 2
+        assert response.context["filter_form"] is None
 
     def test_get_with_filter(self, admin_client):
-        response = admin_client.get(reverse('collection:filter'))
+        response = admin_client.get(reverse("collection:filter"))
         assert response.status_code == 200
-        assert response.context['table'].data.data.count() == 2
-        assert response.context['filter_form'] is not None
-        assert not response.context['filter_form'].data
+        assert response.context["table"].data.data.count() == 2
+        assert response.context["filter_form"] is not None
+        assert not response.context["filter_form"].data
 
     def test_get_with_filter_active(self, admin_client):
-        response = admin_client.get(reverse('collection:filter'), data={'approved': '2'})
+        response = admin_client.get(reverse("collection:filter"), data={"approved": "2"})
         assert response.status_code == 200
-        assert response.context['table'].data.data.count() == 1
-        assert response.context['filter_form'] is not None
-        assert response.context['filter_form'].data
+        assert response.context["table"].data.data.count() == 1
+        assert response.context["filter_form"] is not None
+        assert response.context["filter_form"].data
 
     def test_get_queryset_model(self):
         class DummyListView(CruditorListView):
@@ -154,35 +153,35 @@ class TestListView:
 @pytest.mark.django_db
 class TestAddView:
     def test_get(self, admin_client):
-        response = admin_client.get(reverse('collection:add'))
+        response = admin_client.get(reverse("collection:add"))
         assert response.status_code == 200
-        assert response.context['cruditor']['title'] == 'Add Person'
+        assert response.context["cruditor"]["title"] == "Add Person"
 
     def test_post_valid(self, admin_client):
         response = admin_client.post(
-            reverse('collection:add'),
+            reverse("collection:add"),
             data={
-                'first_name': 'John',
-                'last_name': 'Doe',
-                'country': 'Germany',
-                'reminder_0': '2018-05-25',
-                'reminder_1': '09:00:00',
-                'stars': '2',
+                "first_name": "John",
+                "last_name": "Doe",
+                "country": "Germany",
+                "reminder_0": "2018-05-25",
+                "reminder_1": "09:00:00",
+                "stars": "2",
             },
         )
         assert response.status_code == 302
-        assert response['Location'] == reverse('collection:list')
+        assert response["Location"] == reverse("collection:list")
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
         assert messages[0].level == SUCCESS_LEVEL
 
-        assert Person.objects.get().first_name == 'John'
+        assert Person.objects.get().first_name == "John"
 
     def test_post_invalid(self, admin_client):
-        response = admin_client.post(reverse('collection:add'), data={})
+        response = admin_client.post(reverse("collection:add"), data={})
         assert response.status_code == 200
-        assert response.context['form'].is_valid() is False
+        assert response.context["form"].is_valid() is False
 
         assert Person.objects.exists() is False
 
@@ -190,57 +189,57 @@ class TestAddView:
 @pytest.mark.django_db
 class TestChangeView:
     def setup_method(self):
-        self.person = PersonFactory.create(first_name='Sally')
+        self.person = PersonFactory.create(first_name="Sally")
 
     def test_get(self, admin_client):
-        response = admin_client.get(reverse('collection:change', args=(self.person.pk,)))
+        response = admin_client.get(reverse("collection:change", args=(self.person.pk,)))
         assert response.status_code == 200
-        assert response.context['form'].instance == self.person
+        assert response.context["form"].instance == self.person
 
     def test_post_valid(self, admin_client):
         response = admin_client.post(
-            reverse('collection:change', args=(self.person.pk,)),
+            reverse("collection:change", args=(self.person.pk,)),
             data={
-                'first_name': 'John',
-                'last_name': 'Doe',
-                'country': 'Germany',
-                'reminder_0': '2018-05-25',
-                'reminder_1': '09:00:00',
-                'stars': '2',
+                "first_name": "John",
+                "last_name": "Doe",
+                "country": "Germany",
+                "reminder_0": "2018-05-25",
+                "reminder_1": "09:00:00",
+                "stars": "2",
             },
         )
         assert response.status_code == 302
-        assert response['Location'] == reverse('collection:list')
+        assert response["Location"] == reverse("collection:list")
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 0
 
         self.person.refresh_from_db()
-        assert self.person.first_name == 'John'
+        assert self.person.first_name == "John"
 
     def test_post_invalid(self, admin_client):
         response = admin_client.post(
-            reverse('collection:change', args=(self.person.pk,)), data={}
+            reverse("collection:change", args=(self.person.pk,)), data={}
         )
         assert response.status_code == 200
-        assert response.context['form'].is_valid() is False
+        assert response.context["form"].is_valid() is False
 
-        assert Person.objects.get().first_name == 'Sally'
+        assert Person.objects.get().first_name == "Sally"
 
 
 @pytest.mark.django_db
 class TestDeleteView:
     def setup_method(self):
-        self.person = PersonFactory.create(first_name='Sally')
+        self.person = PersonFactory.create(first_name="Sally")
 
     def test_get(self, admin_client):
-        response = admin_client.get(reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.get(reverse("collection:delete", args=(self.person.pk,)))
         assert response.status_code == 200
 
         assert Person.objects.exists() is True
 
     def test_delete(self, admin_client):
-        response = admin_client.delete(reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.delete(reverse("collection:delete", args=(self.person.pk,)))
         assert response.status_code == 302
 
         messages = list(get_messages(response.wsgi_request))
@@ -250,9 +249,9 @@ class TestDeleteView:
         assert Person.objects.exists() is False
 
     def test_post(self, admin_client):
-        response = admin_client.post(reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.post(reverse("collection:delete", args=(self.person.pk,)))
         assert response.status_code == 302
-        assert response['Location'] == reverse('collection:list')
+        assert response["Location"] == reverse("collection:list")
 
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
@@ -263,18 +262,18 @@ class TestDeleteView:
     def test_post_protected(self, admin_client):
         related = RelatedPersonFactory(person=self.person)
 
-        response = admin_client.post(reverse('collection:delete', args=(self.person.pk,)))
+        response = admin_client.post(reverse("collection:delete", args=(self.person.pk,)))
         assert response.status_code == 200
-        assert response.context['linked_objects'] == [
-            'Related person: {}'.format(str(related)),
+        assert response.context["linked_objects"] == [
+            "Related person: {}".format(str(related)),
         ]
 
         assert Person.objects.exists() is True
 
     def test_custom_button_label(self, admin_client):
-        response = admin_client.get(reverse('collection:delete', args=(self.person.pk,)))
-        assert response.context['cruditor']['form_save_button_label'] == 'Delete this person'
-        assert 'Delete this person' in response.content.decode(response.charset)
+        response = admin_client.get(reverse("collection:delete", args=(self.person.pk,)))
+        assert response.context["cruditor"]["form_save_button_label"] == "Delete this person"
+        assert "Delete this person" in response.content.decode(response.charset)
 
 
 @pytest.mark.django_db
@@ -284,146 +283,146 @@ class TestFormsetView:
         self.related_persons = RelatedPersonFactory.create_batch(2, person=self.person)
 
     def test_get(self, admin_client):
-        response = admin_client.get(reverse('formset:change', args=(self.person.pk,)))
+        response = admin_client.get(reverse("formset:change", args=(self.person.pk,)))
         assert response.status_code == 200
-        assert response.context['form'].instance == self.person
-        assert response.context['formsets']['related_persons'].extra_kwarg == 'extra'
+        assert response.context["form"].instance == self.person
+        assert response.context["formsets"]["related_persons"].extra_kwarg == "extra"
 
         instances = [
-            form.instance for form in response.context['formsets']['related_persons'].forms
+            form.instance for form in response.context["formsets"]["related_persons"].forms
         ]
         assert self.related_persons[0] in instances
         assert self.related_persons[1] in instances
 
     def test_post_valid(self, admin_client):
         response = admin_client.post(
-            reverse('formset:change', args=(self.person.pk,)),
+            reverse("formset:change", args=(self.person.pk,)),
             data={
-                'first_name': 'John',
-                'last_name': 'Doe',
-                'country': 'Germany',
-                'reminder_0': '2018-05-25',
-                'reminder_1': '09:00:00',
-                'stars': '2',
-                'relatedperson_set-INITIAL_FORMS': '1',
-                'relatedperson_set-MAX_NUM_FORMS': '1000',
-                'relatedperson_set-MIN_NUM_FORMS': '0',
-                'relatedperson_set-TOTAL_FORMS': '1',
-                'relatedperson_set-0-DELETE': '',
-                'relatedperson_set-0-id': '1',
-                'relatedperson_set-0-first_name': 'Sally',
-                'relatedperson_set-0-last_name': 'Mary',
-                'relatedperson_set-0-person': '1',
+                "first_name": "John",
+                "last_name": "Doe",
+                "country": "Germany",
+                "reminder_0": "2018-05-25",
+                "reminder_1": "09:00:00",
+                "stars": "2",
+                "relatedperson_set-INITIAL_FORMS": "1",
+                "relatedperson_set-MAX_NUM_FORMS": "1000",
+                "relatedperson_set-MIN_NUM_FORMS": "0",
+                "relatedperson_set-TOTAL_FORMS": "1",
+                "relatedperson_set-0-DELETE": "",
+                "relatedperson_set-0-id": "1",
+                "relatedperson_set-0-first_name": "Sally",
+                "relatedperson_set-0-last_name": "Mary",
+                "relatedperson_set-0-person": "1",
             },
         )
         assert response.status_code == 302
-        assert response['Location'] == reverse('formset:list')
+        assert response["Location"] == reverse("formset:list")
 
         self.person.refresh_from_db()
-        assert self.person.first_name == 'John'
+        assert self.person.first_name == "John"
         self.related_persons[0].refresh_from_db()
-        assert self.related_persons[0].first_name == 'Sally'
+        assert self.related_persons[0].first_name == "Sally"
 
     def test_post_invalid_formset(self, admin_client):
         response = admin_client.post(
-            reverse('formset:change', args=(self.person.pk,)),
+            reverse("formset:change", args=(self.person.pk,)),
             data={
-                'first_name': 'John',
-                'last_name': 'Doe',
-                'country': 'Germany',
-                'reminder_0': '2018-05-25',
-                'reminder_1': '09:00:00',
-                'stars': '2',
-                'relatedperson_set-INITIAL_FORMS': '1',
-                'relatedperson_set-MAX_NUM_FORMS': '1000',
-                'relatedperson_set-MIN_NUM_FORMS': '0',
-                'relatedperson_set-TOTAL_FORMS': '1',
-                'relatedperson_set-0-DELETE': '',
-                'relatedperson_set-0-id': '1',
-                'relatedperson_set-0-first_name': '',
-                'relatedperson_set-0-last_name': '',
-                'relatedperson_set-0-person': '1',
+                "first_name": "John",
+                "last_name": "Doe",
+                "country": "Germany",
+                "reminder_0": "2018-05-25",
+                "reminder_1": "09:00:00",
+                "stars": "2",
+                "relatedperson_set-INITIAL_FORMS": "1",
+                "relatedperson_set-MAX_NUM_FORMS": "1000",
+                "relatedperson_set-MIN_NUM_FORMS": "0",
+                "relatedperson_set-TOTAL_FORMS": "1",
+                "relatedperson_set-0-DELETE": "",
+                "relatedperson_set-0-id": "1",
+                "relatedperson_set-0-first_name": "",
+                "relatedperson_set-0-last_name": "",
+                "relatedperson_set-0-person": "1",
             },
         )
         assert response.status_code == 200
-        assert response.context['form'].is_valid() is True
-        assert response.context['formsets']['related_persons'].is_valid() is False
+        assert response.context["form"].is_valid() is True
+        assert response.context["formsets"]["related_persons"].is_valid() is False
 
     def test_post_invalid_form(self, admin_client):
         response = admin_client.post(
-            reverse('formset:change', args=(self.person.pk,)),
+            reverse("formset:change", args=(self.person.pk,)),
             data={
-                'first_name': '',
-                'last_name': '',
-                'country': 'Germany',
-                'reminder_0': '2018-05-25',
-                'reminder_1': '09:00:00',
-                'stars': '2',
-                'relatedperson_set-INITIAL_FORMS': '1',
-                'relatedperson_set-MAX_NUM_FORMS': '1000',
-                'relatedperson_set-MIN_NUM_FORMS': '0',
-                'relatedperson_set-TOTAL_FORMS': '1',
-                'relatedperson_set-0-DELETE': '',
-                'relatedperson_set-0-id': '1',
-                'relatedperson_set-0-first_name': 'Sally',
-                'relatedperson_set-0-last_name': 'Mary',
-                'relatedperson_set-0-person': '1',
+                "first_name": "",
+                "last_name": "",
+                "country": "Germany",
+                "reminder_0": "2018-05-25",
+                "reminder_1": "09:00:00",
+                "stars": "2",
+                "relatedperson_set-INITIAL_FORMS": "1",
+                "relatedperson_set-MAX_NUM_FORMS": "1000",
+                "relatedperson_set-MIN_NUM_FORMS": "0",
+                "relatedperson_set-TOTAL_FORMS": "1",
+                "relatedperson_set-0-DELETE": "",
+                "relatedperson_set-0-id": "1",
+                "relatedperson_set-0-first_name": "Sally",
+                "relatedperson_set-0-last_name": "Mary",
+                "relatedperson_set-0-person": "1",
             },
         )
         assert response.status_code == 200
-        assert response.context['form'].is_valid() is False
-        assert response.context['formsets']['related_persons'].extra_kwarg is False
-        assert response.context['formsets']['related_persons'].is_valid() is True
+        assert response.context["form"].is_valid() is False
+        assert response.context["formsets"]["related_persons"].extra_kwarg is False
+        assert response.context["formsets"]["related_persons"].is_valid() is True
 
 
 class TestChangePasswordView:
     def test_get(self, admin_client):
-        response = admin_client.get(reverse('change-password'))
+        response = admin_client.get(reverse("change-password"))
         assert response.status_code == 200
-        assert list(response.context['form'].fields) == ['new_password1', 'new_password2']
+        assert list(response.context["form"].fields) == ["new_password1", "new_password2"]
 
     def test_post_invalid(self, admin_user, admin_client):
         response = admin_client.post(
-            reverse('change-password'),
-            data={'new_password1': 'Secret', 'new_password2': 'Secret2'},
+            reverse("change-password"),
+            data={"new_password1": "Secret", "new_password2": "Secret2"},
         )
         assert response.status_code == 200
-        assert response.context['form'].is_valid() is False
+        assert response.context["form"].is_valid() is False
 
         admin_user.refresh_from_db()
-        assert admin_user.check_password('password') is True
+        assert admin_user.check_password("password") is True
 
     def test_post_valid(self, admin_user, admin_client):
         response = admin_client.post(
-            reverse('change-password'),
-            data={'new_password1': 'Secret', 'new_password2': 'Secret'},
+            reverse("change-password"),
+            data={"new_password1": "Secret", "new_password2": "Secret"},
         )
         assert response.status_code == 302
-        assert response['Location'] == reverse('change-password')
+        assert response["Location"] == reverse("change-password")
 
         admin_user.refresh_from_db()
-        assert admin_user.check_password('Secret') is True
+        assert admin_user.check_password("Secret") is True
 
 
 class TestLogoutView:
     def test_logout(self, admin_client):
-        response = admin_client.get(reverse('minimal:demo'))
+        response = admin_client.get(reverse("minimal:demo"))
         assert response.status_code == 200
-        assert response.template_name[0] == 'minimal/demo.html'
+        assert response.template_name[0] == "minimal/demo.html"
 
-        response = admin_client.post(reverse('logout'))
+        response = admin_client.post(reverse("logout"))
         assert response.status_code == 200
-        assert response.template_name[0] == 'cruditor/logout.html'
+        assert response.template_name[0] == "cruditor/logout.html"
 
-        response = admin_client.get(reverse('minimal:demo'))
+        response = admin_client.get(reverse("minimal:demo"))
         assert response.status_code == 200
-        assert response.template_name[0] == 'cruditor/login.html'
+        assert response.template_name[0] == "cruditor/login.html"
 
     def test_logout_already_logged_out(self, client):
-        response = client.post(reverse('logout'))
+        response = client.post(reverse("logout"))
         assert response.status_code == 200
-        assert response.template_name[0] == 'cruditor/logout.html'
+        assert response.template_name[0] == "cruditor/logout.html"
 
     def test_logout_get(self, client):
-        response = client.get(reverse('logout'))
+        response = client.get(reverse("logout"))
         assert response.status_code == 405

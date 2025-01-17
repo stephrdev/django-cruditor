@@ -13,9 +13,9 @@ class AnyChoiceFilter(ChoiceFilter):
     """
 
     def __init__(self, *args, **kwargs):
-        empty_label = kwargs.pop('empty_label', gettext('Any choice'))
+        empty_label = kwargs.pop("empty_label", gettext("Any choice"))
         super().__init__(*args, **kwargs)
-        self.extra['empty_label'] = empty_label
+        self.extra["empty_label"] = empty_label
 
 
 class MultiCharFilter(CharFilter):
@@ -40,11 +40,11 @@ class MultiCharFilter(CharFilter):
     Based on some ideas from https://gist.github.com/nkryptic/4727865
     """
 
-    default_lookup_type = 'icontains'
+    default_lookup_type = "icontains"
     lookup_types = [
-        ('^', 'istartswith'),
-        ('=', 'iexact'),
-        ('@', 'search'),
+        ("^", "istartswith"),
+        ("=", "iexact"),
+        ("@", "search"),
     ]
 
     def __init__(self, fields, *args, **kwargs):
@@ -63,5 +63,5 @@ class MultiCharFilter(CharFilter):
     def _get_lookup(self, field_name):
         for key, lookup_type in self.lookup_types:
             if field_name.startswith(key):
-                return '{0}__{1}'.format(field_name[len(key) :], lookup_type)
-        return '{0}__{1}'.format(field_name, self.default_lookup_type)
+                return "{0}__{1}".format(field_name[len(key) :], lookup_type)
+        return "{0}__{1}".format(field_name, self.default_lookup_type)

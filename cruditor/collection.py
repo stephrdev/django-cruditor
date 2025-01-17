@@ -2,8 +2,13 @@ import django_tables2 as tables
 from django.urls import reverse
 from django.utils.translation import gettext
 
-from cruditor.views import CruditorAddView, CruditorChangeView, CruditorDeleteView, CruditorListView
 from cruditor.datastructures import Breadcrumb, TitleButton
+from cruditor.views import (
+    CruditorAddView,
+    CruditorChangeView,
+    CruditorDeleteView,
+    CruditorListView,
+)
 
 
 class CollectionViewMixin(object):
@@ -13,7 +18,7 @@ class CollectionViewMixin(object):
     """
 
     #: Title for collection list view
-    collection_list_title = 'Collection'
+    collection_list_title = "Collection"
     #: URL name to use when linking to the list view (e.g. in breadcrumb)
     collection_list_urlname = None
     #: URL name to use when linking to the add view (e.g. in title buttons)
@@ -33,7 +38,10 @@ class CollectionViewMixin(object):
         return super().get_title()
 
     def get_success_url(self):
-        if issubclass(self.__class__, (CruditorAddView, CruditorChangeView)) and self.collection_detail_urlname:
+        if (
+            issubclass(self.__class__, (CruditorAddView, CruditorChangeView))
+            and self.collection_detail_urlname
+        ):
             return self.get_collection_object_success_url()
 
         if issubclass(self.__class__, CruditorDeleteView) and self.collection_list_urlname:
@@ -52,7 +60,7 @@ class CollectionViewMixin(object):
         for all other views.
         """
         if issubclass(self.__class__, CruditorDeleteView):
-            return gettext('Delete')
+            return gettext("Delete")
         return super().get_breadcrumb_title()
 
     def get_breadcrumb(self):
@@ -69,8 +77,7 @@ class CollectionViewMixin(object):
         if self.collection_include_list_crumb():
             breadcrumb.append(
                 Breadcrumb(
-                    title=self.get_collection_list_title(),
-                    url=self.get_collection_list_url()
+                    title=self.get_collection_list_title(), url=self.get_collection_list_url()
                 )
             )
 
@@ -78,7 +85,7 @@ class CollectionViewMixin(object):
             breadcrumb.append(
                 Breadcrumb(
                     title=self.get_collection_detail_title(),
-                    url=self.get_collection_detail_url()
+                    url=self.get_collection_detail_url(),
                 )
             )
 
@@ -88,7 +95,12 @@ class CollectionViewMixin(object):
         buttons = super().get_titlebuttons()
 
         if self.collection_include_add_titlebutton():
-            buttons.append(TitleButton(url=self.get_collection_add_url(), label=self.get_collection_add_titlebutton_label()))
+            buttons.append(
+                TitleButton(
+                    url=self.get_collection_add_url(),
+                    label=self.get_collection_add_titlebutton_label(),
+                )
+            )
 
         return buttons
 
@@ -100,15 +112,15 @@ class CollectionViewMixin(object):
         if self.table_class:
             return self.table_class
 
-        if not hasattr(self, '_table_class'):
+        if not hasattr(self, "_table_class"):
 
             class CollectionTable(tables.Table):
                 item = tables.LinkColumn(
                     self.collection_detail_urlname,
-                    args=(tables.A('pk'),),
+                    args=(tables.A("pk"),),
                     verbose_name=self.get_model_verbose_name(),
                     text=lambda obj: str(obj),
-                    accessor=tables.A('pk'),
+                    accessor=tables.A("pk"),
                 )
 
             self._table_class = CollectionTable
@@ -135,7 +147,7 @@ class CollectionViewMixin(object):
         return (
             self.collection_include_list_crumb()
             and not issubclass(self.__class__, (CruditorAddView, CruditorChangeView))
-            and hasattr(self, 'object')
+            and hasattr(self, "object")
         )
 
     def get_collection_url_args(self):
@@ -181,14 +193,16 @@ class CollectionViewMixin(object):
         By default, calls reverse with the ``collection_detail_urlname`` property
         and passes the object pk to the function call.
         """
-        return reverse(self.collection_detail_urlname, args=self.get_collection_object_url_args())
+        return reverse(
+            self.collection_detail_urlname, args=self.get_collection_object_url_args()
+        )
 
     def get_collection_add_titlebutton_label(self):
         """
         Helper method to override the used button label for the "Add" title button.
         By default, returns "Add <model verbose name>".
         """
-        return gettext('Add {0}').format(self.get_model_verbose_name())
+        return gettext("Add {0}").format(self.get_model_verbose_name())
 
     def get_collection_add_url(self):
         """
@@ -203,7 +217,9 @@ class CollectionViewMixin(object):
         By default, calls reverse with the ``collection_delete_urlname`` property
         and passes the object pk to the function call.
         """
-        return reverse(self.collection_delete_urlname, args=self.get_collection_object_url_args())
+        return reverse(
+            self.collection_delete_urlname, args=self.get_collection_object_url_args()
+        )
 
     def get_collection_object_success_url(self):
         """

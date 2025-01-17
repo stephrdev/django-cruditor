@@ -6,6 +6,7 @@ from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from tapeforms.contrib.bootstrap import Bootstrap5TapeformMixin
 from tapeforms.fieldsets import TapeformFieldsetsMixin
+
 try:
     from django_filters.widgets import DateRangeWidget
 except ImportError:
@@ -25,8 +26,8 @@ class CruditorTapeformMixin(Bootstrap5TapeformMixin, TapeformFieldsetsMixin):
         widget = self.fields[field_name].widget
 
         if DateRangeWidget is not None and isinstance(widget, DateRangeWidget):
-            widget.widgets[0].input_type = 'date'
-            widget.widgets[1].input_type = 'date'
+            widget.widgets[0].input_type = "date"
+            widget.widgets[1].input_type = "date"
 
         return super().apply_widget_options(field_name)
 
@@ -41,7 +42,7 @@ class CruditorFormsetMixin(object):
     js_add_title = _("New item")
     js_add_button_label = _("Add item")
     js_delete_button_label = _("Delete item")
-    js_delete_confirm_text = _('Are you sure? Item will be deleted after saving.')
+    js_delete_confirm_text = _("Are you sure? Item will be deleted after saving.")
 
     js_formset_options = None
 
@@ -63,7 +64,7 @@ class CruditorFormsetMixin(object):
         and might be overwritten.
         """
         return {
-            'form_headline_new_instance': gettext('New item'),
+            "form_headline_new_instance": gettext("New item"),
         }
 
     def add_fields(self, form, index):
@@ -81,11 +82,11 @@ class CruditorFormsetMixin(object):
         are merged with `js_formset_options` property.
         """
         options = {
-            'prefix': self.prefix,
-            'add-title': self.js_add_title,
-            'add-button-label': self.js_add_button_label,
-            'delete-button-label': self.js_delete_button_label,
-            'delete-confirm-text': self.js_delete_confirm_text,
+            "prefix": self.prefix,
+            "add-title": self.js_add_title,
+            "add-button-label": self.js_add_button_label,
+            "delete-button-label": self.js_delete_button_label,
+            "delete-confirm-text": self.js_delete_confirm_text,
         }
         options.update(self.js_formset_options or {})
         return options

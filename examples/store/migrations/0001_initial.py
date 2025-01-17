@@ -11,74 +11,74 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Person',
+            name="Person",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
                     ),
                 ),
-                ('first_name', models.CharField(max_length=64, verbose_name='First name')),
+                ("first_name", models.CharField(max_length=64, verbose_name="First name")),
                 (
-                    'last_name',
-                    models.CharField(blank=True, max_length=64, verbose_name='Last name'),
+                    "last_name",
+                    models.CharField(blank=True, max_length=64, verbose_name="Last name"),
                 ),
                 (
-                    'country',
+                    "country",
                     models.CharField(
                         choices=[
-                            ('Germany', 'Germany'),
-                            ('France', 'France'),
-                            ('Italy', 'Italy'),
+                            ("Germany", "Germany"),
+                            ("France", "France"),
+                            ("Italy", "Italy"),
                         ],
                         max_length=32,
-                        verbose_name='Country',
+                        verbose_name="Country",
                     ),
                 ),
                 (
-                    'birthdate',
-                    models.DateField(blank=True, null=True, verbose_name='Birthdate'),
+                    "birthdate",
+                    models.DateField(blank=True, null=True, verbose_name="Birthdate"),
                 ),
-                ('reminder', models.DateTimeField(verbose_name='Next reminder')),
-                ('approved', models.BooleanField(verbose_name='Is approved')),
+                ("reminder", models.DateTimeField(verbose_name="Next reminder")),
+                ("approved", models.BooleanField(verbose_name="Is approved")),
                 (
-                    'stars',
+                    "stars",
                     models.IntegerField(
-                        choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)], verbose_name='Stars'
+                        choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)], verbose_name="Stars"
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'Person',
-                'verbose_name_plural': 'Persons',
+                "verbose_name": "Person",
+                "verbose_name_plural": "Persons",
             },
         ),
         migrations.CreateModel(
-            name='RelatedPerson',
+            name="RelatedPerson",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
-                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
                     ),
                 ),
-                ('first_name', models.CharField(max_length=64, verbose_name='First name')),
+                ("first_name", models.CharField(max_length=64, verbose_name="First name")),
                 (
-                    'last_name',
-                    models.CharField(blank=True, max_length=64, verbose_name='Last name'),
+                    "last_name",
+                    models.CharField(blank=True, max_length=64, verbose_name="Last name"),
                 ),
-                ('is_child', models.BooleanField(verbose_name='Is child')),
+                ("is_child", models.BooleanField(verbose_name="Is child")),
                 (
-                    'person',
+                    "person",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to='store.Person'
+                        on_delete=django.db.models.deletion.CASCADE, to="store.Person"
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'Related person',
-                'verbose_name_plural': 'Related persons',
+                "verbose_name": "Related person",
+                "verbose_name_plural": "Related persons",
             },
         ),
     ]

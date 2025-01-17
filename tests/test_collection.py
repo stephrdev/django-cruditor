@@ -1,9 +1,8 @@
 import django_tables2
 import pytest
-from django.views.generic import DetailView
-
-from cruditor.mixins import CruditorMixin
 from cruditor.datastructures import Breadcrumb
+from cruditor.mixins import CruditorMixin
+from django.views.generic import DetailView
 from examples.collection.tables import PersonTable
 from examples.collection.views import (
     PersonAddView,
@@ -23,14 +22,14 @@ class PersonDetailView(PersonViewMixin, CruditorMixin, DetailView):
 
 class TestListView:
     def test_title(self):
-        assert PersonListView().get_title() == 'Persons'
+        assert PersonListView().get_title() == "Persons"
 
     def test_title_from_get_collection_list_title(self):
         class OtherListView(PersonListView):
             def get_collection_list_title(self):
-                return 'Other title'
+                return "Other title"
 
-        assert OtherListView().get_title() == 'Other title'
+        assert OtherListView().get_title() == "Other title"
 
     def test_breadcrumb(self):
         assert PersonListView().get_breadcrumb() == []
@@ -56,44 +55,44 @@ class TestAddView:
         self.view.object = None
 
     def test_title(self):
-        assert self.view.get_title() == 'Add Person'
+        assert self.view.get_title() == "Add Person"
 
     def test_breadcrumb(self):
-        assert self.view.get_breadcrumb() == [Breadcrumb(title='Persons', url='/collection/')]
+        assert self.view.get_breadcrumb() == [Breadcrumb(title="Persons", url="/collection/")]
 
 
 @pytest.mark.django_db
 class TestChangeView:
     def setup_method(self):
         self.view = PersonChangeView()
-        self.view.object = PersonFactory.create(first_name='John')
+        self.view.object = PersonFactory.create(first_name="John")
 
     def test_title(self):
-        assert self.view.get_title() == 'Change: John'
+        assert self.view.get_title() == "Change: John"
 
     def test_breadcrumb_title(self):
-        assert self.view.get_breadcrumb_title() == 'Change: John'
+        assert self.view.get_breadcrumb_title() == "Change: John"
 
     def test_breadcrumb(self):
-        assert self.view.get_breadcrumb() == [Breadcrumb(title='Persons', url='/collection/')]
+        assert self.view.get_breadcrumb() == [Breadcrumb(title="Persons", url="/collection/")]
 
 
 @pytest.mark.django_db
 class TestDeleteView:
     def setup_method(self):
         self.view = PersonDeleteView()
-        self.view.object = PersonFactory.create(first_name='John')
+        self.view.object = PersonFactory.create(first_name="John")
 
     def test_title(self):
-        assert self.view.get_title() == 'Delete: John'
+        assert self.view.get_title() == "Delete: John"
 
     def test_breadcrumb_title(self):
-        assert self.view.get_breadcrumb_title() == 'Delete'
+        assert self.view.get_breadcrumb_title() == "Delete"
 
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
-            Breadcrumb(title='Persons', url='/collection/'),
-            Breadcrumb(title='John', url='/collection/{}/'.format(self.view.object.pk)),
+            Breadcrumb(title="Persons", url="/collection/"),
+            Breadcrumb(title="John", url="/collection/{}/".format(self.view.object.pk)),
         ]
 
 
@@ -101,16 +100,16 @@ class TestDeleteView:
 class TestDetailView:
     def setup_method(self):
         self.view = PersonDetailView()
-        self.view.object = PersonFactory.create(first_name='John')
+        self.view.object = PersonFactory.create(first_name="John")
 
     def test_breadcrumb_no_object(self):
         del self.view.object
         assert self.view.get_breadcrumb() == [
-            Breadcrumb(title='Persons', url='/collection/'),
+            Breadcrumb(title="Persons", url="/collection/"),
         ]
 
     def test_breadcrumb(self):
         assert self.view.get_breadcrumb() == [
-            Breadcrumb(title='Persons', url='/collection/'),
-            Breadcrumb(title='John', url='/collection/{}/'.format(self.view.object.pk)),
+            Breadcrumb(title="Persons", url="/collection/"),
+            Breadcrumb(title="John", url="/collection/{}/".format(self.view.object.pk)),
         ]

@@ -23,25 +23,25 @@ class CruditorMixin(object):
     """
 
     #: Title to use in templates / menu bar
-    menu_title = 'CRUDitor'
+    menu_title = "CRUDitor"
 
     #: URL to use in the linked menu_title
-    index_url = '#'
+    index_url = "#"
 
     #: URL to use when providing a logout link to the user.
-    logout_url = '#'
+    logout_url = "#"
 
     #: URL to the change password view, if available.
     change_password_url = None
 
     #: Template name which is included to render the menu.
-    menu_template_name = 'cruditor/includes/menu.html'
+    menu_template_name = "cruditor/includes/menu.html"
 
     #: Template used to include extra head stuff.
-    extrahead_template_name = 'cruditor/includes/extrahead.html'
+    extrahead_template_name = "cruditor/includes/extrahead.html"
 
     #: Page template for the login view.
-    login_template_name = 'cruditor/login.html'
+    login_template_name = "cruditor/login.html"
 
     #: Form class which is used in the login view.
     login_form_class = LoginForm
@@ -79,27 +79,27 @@ class CruditorMixin(object):
         the default title from ``get_title`` method.
         """
         constants = {
-            'menu_title': self.menu_title,
-            'menu_template_name': self.menu_template_name,
-            'extrahead_template_name': self.extrahead_template_name,
-            'index_url': self.index_url,
-            'logout_url': self.logout_url,
-            'change_password_url': self.change_password_url,
+            "menu_title": self.menu_title,
+            "menu_template_name": self.menu_template_name,
+            "extrahead_template_name": self.extrahead_template_name,
+            "index_url": self.index_url,
+            "logout_url": self.logout_url,
+            "change_password_url": self.change_password_url,
         }
 
         if login_context:
             return {
-                'title': 'Login',
-                'constants': constants,
+                "title": "Login",
+                "constants": constants,
             }
 
         return {
-            'title': alternative_title or self.get_title(),
-            'breadcrumb': self.get_breadcrumb()
+            "title": alternative_title or self.get_title(),
+            "breadcrumb": self.get_breadcrumb()
             + [Breadcrumb(title=alternative_title or self.get_breadcrumb_title())],
-            'titlebuttons': self.get_titlebuttons(),
-            'form_save_button_label': self.get_form_save_button_label(),
-            'constants': constants,
+            "titlebuttons": self.get_titlebuttons(),
+            "form_save_button_label": self.get_form_save_button_label(),
+            "constants": constants,
         }
 
     def get_title(self):
@@ -107,7 +107,7 @@ class CruditorMixin(object):
         Returns the title of the page. Uses view's ``title`` property. If not set
         falls back to ``menu_title``.
         """
-        return getattr(self, 'title', self.menu_title)
+        return getattr(self, "title", self.menu_title)
 
     def get_breadcrumb_title(self):
         """
@@ -155,9 +155,9 @@ class CruditorMixin(object):
         """
         if self.model_verbose_name:
             return self.model_verbose_name
-        if getattr(self, 'model', None):
+        if getattr(self, "model", None):
             return self.model._meta.verbose_name
-        return 'Item'
+        return "Item"
 
     def ensure_logged_in(self, request, *args, **kwargs):
         """
@@ -184,10 +184,10 @@ class CruditorMixin(object):
             form_class=self.login_form_class,
             redirect_authenticated_user=False,
             extra_context={
-                'app_path': request.get_full_path(),
-                'next_field': REDIRECT_FIELD_NAME,
-                'next_value': request.get_full_path(),
-                'cruditor': self.get_cruditor_context(login_context=True),
+                "app_path": request.get_full_path(),
+                "next_field": REDIRECT_FIELD_NAME,
+                "next_value": request.get_full_path(),
+                "cruditor": self.get_cruditor_context(login_context=True),
             },
         )(request)
 
@@ -221,7 +221,7 @@ class CruditorMixin(object):
         from ``get_cruditor_context`` method.
         """
         context = super().get_context_data(**kwargs)
-        context['cruditor'] = self.get_cruditor_context()
+        context["cruditor"] = self.get_cruditor_context()
         return context
 
 
@@ -294,7 +294,7 @@ class FormViewMixin(object):
                         request.POST,
                         files=request.FILES,
                         instance=self.object,
-                        **(self.get_formset_kwargs(formset_class) or {})
+                        **(self.get_formset_kwargs(formset_class) or {}),
                     ),
                 )
                 for formset_name, formset_class in self.get_formset_classes().items()

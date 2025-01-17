@@ -1,5 +1,3 @@
-from django.urls import reverse, reverse_lazy
-
 from cruditor.collection import CollectionViewMixin
 from cruditor.views import (
     CruditorAddView,
@@ -7,9 +5,11 @@ from cruditor.views import (
     CruditorDeleteView,
     CruditorListView,
 )
+from django.core.exceptions import PermissionDenied
+from django.urls import reverse, reverse_lazy
+
 from examples.mixins import ExamplesMixin
 from examples.store.models import Person
-from django.core.exceptions import PermissionDenied
 
 from .filters import PersonFilter
 from .forms import PersonForm
@@ -18,15 +18,15 @@ from .tables import PersonTable
 
 class PersonViewMixin(ExamplesMixin, CollectionViewMixin):
     model = Person
-    collection_list_title = 'Persons'
-    collection_list_urlname = 'collection:list'
-    collection_add_urlname = 'collection:add'
-    collection_detail_urlname = 'collection:change'
-    collection_delete_urlname = 'collection:delete'
+    collection_list_title = "Persons"
+    collection_list_urlname = "collection:list"
+    collection_add_urlname = "collection:add"
+    collection_detail_urlname = "collection:change"
+    collection_delete_urlname = "collection:delete"
 
 
 class PersonListView(PersonViewMixin, CruditorListView):
-    title = 'Persons'
+    title = "Persons"
 
 
 class PersonFilterView(PersonListView):
@@ -46,4 +46,4 @@ class PersonChangeView(PersonViewMixin, CruditorChangeView):
 
 
 class PersonDeleteView(PersonViewMixin, CruditorDeleteView):
-    form_save_button_label = 'Delete this person'
+    form_save_button_label = "Delete this person"
