@@ -4,4 +4,7 @@
 
 {% block content %}
 	<p>{% trans 'You have been logged out.' %}</p>
+	<div class="text-end">
+		<a class="btn btn-primary" href="{{ cruditor.constants.index_url }}">{% trans 'Start over' %}</a>
+	</div>
 {% endblock %}

@@ -2,8 +2,7 @@
 {% load django_tables2 %}
 
 
-{% with table.page.paginator.count as total %}
-{% with table.page.object_list|length as count %}
+{% with total=table.page.paginator.count count=table.page.object_list|length %}
 {% block pagination %}
 	<nav aria-label="Pagination">
 		<ul class="pagination">
@@ -39,5 +38,4 @@
 		</ul>
 	</nav>
 {% endblock %}
-{% endwith %}
 {% endwith %}

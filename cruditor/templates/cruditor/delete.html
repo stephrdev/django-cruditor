@@ -1,42 +1,36 @@
-{% extends 'cruditor/base.html' %}
+{% extends 'cruditor/form.html' %}
 {% load i18n %}
 
 
 {% block content %}
 	{% if linked_objects %}
 		<div class="alert alert-danger">{% trans "Unable to delete this item." %}</div>
-		<p>{% blocktrans %}This item is currently referenced by other objects, and cannot be deleted without jeopardising data integrity. To delete it successfully, first remove references from the following objects, then try again:{% endblocktrans %}</p>
-		<ul>
-			{% for obj in linked_objects %}
-				<li>{{ obj }}</li>
-			{% endfor %}
-		</ul>
+		<div class="card mb-3">
+			<div class="card-body">
+			{% blocktrans %}
+				<p>
+					This item is currently referenced by other objects, and cannot be delete
+					without jeopardising data integrity.
+				</p>
+				<p>
+					To delete it successfully, first remove references from the following
+					objects, then try again:
+				</p>
+			{% endblocktrans %}
+			<ul>
+				{% for obj in linked_objects %}
+					<li>{{ obj }}</li>
+				{% endfor %}
+			</ul>
 	{% else %}
-		<div class="cruditor-form">
-			<form action="." method="post">
-				{% csrf_token %}
-
-				{% block form %}
-					<p>{% trans 'Are you sure you want to delete this item?' %}</p>
-				{% endblock %}
-
-				{% block form_actions %}
-					<div class="row form-actions">
-						<div class="col-auto mr-auto">
-							{% block form_actions_left %}
-							{% endblock %}
-						</div>
-						<div class="col-auto">
-							{% block form_actions_right %}
-								<button class="btn btn-primary" type="submit" name="save">
-									{% trans 'Confirm deletion' as default_form_save_button_label %}
-									{{ form_save_button_label|default:default_form_save_button_label }}
-								</button>
-							{% endblock %}
-						</div>
-					</div>
-				{% endblock %}
-			</form>
-		</div>
+		{{ block.super }}
 	{% endif %}
+{% endblock %}
+
+{% block form %}
+	<div class="card mb-3">
+		<div class="card-body">
+			<p class="mb-0">{% trans 'Are you sure you want to delete this item?' %}</p>
+		</div>
+	</div>
 {% endblock %}

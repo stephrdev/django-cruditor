@@ -16,7 +16,7 @@
 
 		{% block form_errors %}
 			{% if form.errors or formset_errors %}
-				<div class="alert alert-error">
+				<div class="alert alert-danger">
 					{% trans 'Please correct the errors below.' %}
 				</div>
 			{% endif %}
@@ -26,7 +26,9 @@
 		{% endblock %}
 
 		{% block form %}
-			{% form form %}
+			{% for fieldset in form.get_fieldsets %}
+				{% form fieldset %}
+			{% endfor %}
 		{% endblock %}
 
 		{% block form_extra %}
@@ -40,7 +42,7 @@
 
 		{% block form_actions %}
 			<div class="row form-actions">
-				<div class="col-auto mr-auto">
+				<div class="col-auto me-auto">
 					{% block form_actions_left %}
 						{% if object_delete_url %}
 							<a class="btn btn-danger" href="{{ object_delete_url }}">{% trans 'Delete' %}</a>
@@ -50,8 +52,7 @@
 				<div class="col-auto">
 					{% block form_actions_right %}
 						<button class="btn btn-primary" type="submit" name="save">
-							{% trans 'Save form' as default_form_save_button_label %}
-							{{ form_save_button_label|default:default_form_save_button_label }}
+							{{ cruditor.form_save_button_label }}
 						</button>
 					{% endblock %}
 				</div>

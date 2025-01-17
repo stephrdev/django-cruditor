@@ -24,7 +24,7 @@
 
 				{% block delete_button %}
 					{% if formset.can_delete %}
-						<div class="formset-delete-container float-right">
+						<div class="formset-delete-container float-end">
 							{{ form.DELETE }}
 						</div>
 					{% endif %}
@@ -32,7 +32,9 @@
 			</div>
 			<div class="card-body">
 				{% block form %}
-					{% form form %}
+					{% for fieldset in form.get_fieldsets %}
+						{% form fieldset %}
+					{% endfor %}
 				{% endblock %}
 			</div>
 		</div>

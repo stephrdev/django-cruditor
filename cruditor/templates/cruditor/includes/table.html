@@ -4,15 +4,12 @@
 
 <div class="cruditor-table">
 	{% block table.pagination.top %}
-		{% if table.page %}
-			{% include 'cruditor/includes/table-pagination.html' %}
-		{% endif %}
 	{% endblock %}
 	{% block table %}
 		<table {% render_attrs table.attrs class="table" %}>
 		{% block table.thead %}
 			{% if table.show_header %}
-				<thead {% render_attrs table.attrs.thead class="thead-light" %}>
+				<thead {% render_attrs table.attrs.thead class="table-light" %}>
 					<tr>
 						{% for column in table.columns %}
 							{% if column.orderable %}

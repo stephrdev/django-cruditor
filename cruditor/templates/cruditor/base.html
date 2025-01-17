@@ -21,37 +21,39 @@
 			{% include 'cruditor/includes/navigation.html' %}
 		{% endblock %}
 
-		<div class="container">
-			{% block breadcrumb %}
-				{% include 'cruditor/includes/breadcrumb.html' %}
-			{% endblock %}
-
-			{% block messages %}
-				{% include 'cruditor/includes/messages.html' %}
-			{% endblock %}
-
-			{% block container %}
-				{% block title %}
-					<div class="cruditor-title row">
-						{% block title_column %}
-							<div class="col-auto mr-auto">
-								<h2>{{ cruditor.title }}</h2>
-							</div>
-						{% endblock %}
-						{% block title_buttons_column %}
-							<div class="col-auto">
-								{% block title_buttons %}
-									{% include 'cruditor/includes/titlebuttons.html' %}
-								{% endblock %}
-							</div>
-						{% endblock %}
-					</div>
+		{% block container %}
+			<div class="container mb-3">
+				{% block breadcrumb %}
+					{% include 'cruditor/includes/breadcrumb.html' %}
 				{% endblock %}
 
-				{% block content %}
+				{% block messages %}
+					{% include 'cruditor/includes/messages.html' %}
 				{% endblock %}
-			{% endblock %}
-		</div>
+
+				{% block container %}
+					{% block title %}
+						<div class="cruditor-title row">
+							{% block title_column %}
+								<div class="col-auto me-auto">
+									<h2>{{ cruditor.title }}</h2>
+								</div>
+							{% endblock %}
+							{% block title_buttons_column %}
+								<div class="col-auto">
+									{% block title_buttons %}
+										{% include 'cruditor/includes/titlebuttons.html' %}
+									{% endblock %}
+								</div>
+							{% endblock %}
+						</div>
+					{% endblock %}
+
+					{% block content %}
+					{% endblock %}
+				{% endblock %}
+			</div>
+		{% endblock %}
 
 		{% block scripts %}
 			<script src="{% static 'cruditor/js/cruditor.js' %}" async defer></script>
