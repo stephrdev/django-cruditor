@@ -46,7 +46,11 @@ class TestBasicView:
         assert response.template_name[0] == "minimal/demo.html"
 
     def test_cruditor_context(self):
-        assert self.view.get_cruditor_context() == {
+        context = self.view.get_cruditor_context()
+
+        assert len(context.pop("navigation")) == 4
+
+        assert context == {
             "breadcrumb": [
                 Breadcrumb(title="Additional breadcrumb", url="/"),
                 Breadcrumb(title="Disabled item"),
@@ -57,7 +61,7 @@ class TestBasicView:
                 "extrahead_template_name": "cruditor/includes/extrahead.html",
                 "index_url": "/",
                 "logout_url": "/logout/",
-                "menu_template_name": "menu.html",
+                "menu_template_name": "cruditor/includes/menu.html",
                 "menu_title": "Examples Demo",
             },
             "title": "Demo view",

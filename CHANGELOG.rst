@@ -21,6 +21,7 @@ Changelog
 * Update templates for Bootstrap 5
 * Render forms using tapeforms's fieldsets by default
 * Add helper to generate urls for urlpatterns
+* Provide some datastructues to build a navigation
 
 
 2.4.0 - 2023-02-26

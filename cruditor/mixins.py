@@ -98,6 +98,7 @@ class CruditorMixin:
             "breadcrumb": self.get_breadcrumb()
             + [Breadcrumb(title=alternative_title or self.get_breadcrumb_title())],
             "titlebuttons": self.get_titlebuttons(),
+            "navigation": self.get_navigation(),
             "form_save_button_label": self.get_form_save_button_label(),
             "constants": constants,
         }
@@ -135,6 +136,9 @@ class CruditorMixin:
         with at least a ``label``, ``url`` and  ``button_class`` property/key. The
         ``button_class`` is used as a css class - pefixed with "btn-".
         """
+        return []
+
+    def get_navigation(self):
         return []
 
     def get_form_save_button_label(self):

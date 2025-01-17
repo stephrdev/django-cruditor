@@ -1,1 +1,24 @@
-<!-- No menu. -->
+{% if cruditor.navigation %}
+<ul class="navbar-nav">
+	{% for item in cruditor.navigation %}
+		{% if item.items %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{{ item.name }}</a>
+				<div class="dropdown-menu">
+					{% for subitem in item.items %}
+						{% if subitem.url %}
+							<a class="dropdown-item" href="{{ subitem.url }}"{% if subitem.help_text %} title="{{ subitem.help_text }}"{% endif %}>{{ subitem.name }}</a>
+						{% else %}
+							<div class="dropdown-divider"></div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</li>
+		{% elif item.url %}
+			<li class="nav-item">
+				<a class="nav-link" href="{{ item.url }}"{% if item.help_text %} title="{{ item.help_text }}"{% endif %}>{{ item.name }}</a>
+			</li>
+		{% endif %}
+	{% endfor %}
+</ul>
+{% endif %}
