@@ -1,3 +1,4 @@
+from cruditor.collection import generate_urls
 from django.urls import path
 
 from .views import (
@@ -9,10 +10,8 @@ from .views import (
 )
 
 app_name = "collection"
-urlpatterns = [
-    path("", PersonListView.as_view(), name="list"),
+urlpatterns = generate_urls(
+    "", "", PersonListView, PersonAddView, PersonChangeView, PersonDeleteView
+) + [
     path("filter/", PersonFilterView.as_view(), name="filter"),
-    path("add/", PersonAddView.as_view(), name="add"),
-    path("<int:pk>/", PersonChangeView.as_view(), name="change"),
-    path("<int:pk>/delete/", PersonDeleteView.as_view(), name="delete"),
 ]

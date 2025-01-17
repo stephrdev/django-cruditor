@@ -20,6 +20,7 @@ Changelog
 * Update to Bootstrap 5 and build frontend components using Parcel
 * Update templates for Bootstrap 5
 * Render forms using tapeforms's fieldsets by default
+* Add helper to generate urls for urlpatterns
 
 
 2.4.0 - 2023-02-26

@@ -1,5 +1,6 @@
 import django_tables2
 import pytest
+from cruditor.collection import generate_urls
 from cruditor.datastructures import Breadcrumb
 from cruditor.mixins import CruditorMixin
 from django.views.generic import DetailView
@@ -113,3 +114,38 @@ class TestDetailView:
             Breadcrumb(title="Persons", url="/collection/"),
             Breadcrumb(title="John", url=f"/collection/{self.view.object.pk}/"),
         ]
+
+
+class TestGenerateUrls:
+    def test_basic(self):
+        urls = generate_urls("", "", PersonListView, PersonAddView, PersonChangeView)
+        assert len(urls) == 3
+        assert urls[0].name == "list"
+        assert urls[0].callback.view_class is PersonListView
+        assert urls[0].pattern._route == ""
+        assert urls[1].name == "add"
+        assert urls[1].callback.view_class is PersonAddView
+        assert urls[1].pattern._route == "add/"
+        assert urls[2].name == "change"
+        assert urls[2].callback.view_class is PersonChangeView
+        assert urls[2].pattern._route == "<int:pk>/"
+
+    def test_extra_no_slashes(self, settings):
+        settings.APPEND_SLASH = False
+        urls = generate_urls(
+            "",
+            "",
+            PersonListView,
+            change_view=PersonChangeView,
+            extra_detail_views={"removal": PersonDeleteView},
+        )
+        assert len(urls) == 3
+        assert urls[0].name == "list"
+        assert urls[0].callback.view_class is PersonListView
+        assert urls[0].pattern._route == ""
+        assert urls[1].name == "change"
+        assert urls[1].callback.view_class is PersonChangeView
+        assert urls[1].pattern._route == "<int:pk>"
+        assert urls[2].name == "removal"
+        assert urls[2].callback.view_class is PersonDeleteView
+        assert urls[2].pattern._route == "<int:pk>/removal"

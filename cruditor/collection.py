@@ -1,5 +1,6 @@
 import django_tables2 as tables
-from django.urls import reverse
+from django.conf import settings
+from django.urls import path, reverse
 from django.utils.translation import gettext
 
 from cruditor.datastructures import Breadcrumb, TitleButton
@@ -227,3 +228,64 @@ class CollectionViewMixin:
         By default, calls reverse with the ``get_collection_list_url`` method.
         """
         return self.get_collection_list_url()
+
+
+def generate_urls(
+    path_prefix,
+    name_prefix,
+    list_view=None,
+    add_view=None,
+    change_view=None,
+    delete_view=None,
+    extra_detail_views=None,
+    detail_path="<int:pk>",
+):
+    """
+    This helper allows creating urls for urlpatterns in urls.py in a fast way by just providing
+    the view classes and some url and name prefix. In addition, one can add extra detail views.
+    """
+    if path_prefix and path_prefix[-1] != "/":
+        path_prefix = f"{path_prefix}/"
+
+    detail_path = detail_path.strip("/")
+
+    def build_path(path):
+        new_path = f"{path_prefix}{path}"
+        if not settings.APPEND_SLASH:
+            new_path = new_path.strip("/")
+        elif new_path and new_path[-1] != "/":
+            new_path = f"{new_path}/"
+
+        return new_path
+
+    def build_name(name):
+        return f"{name_prefix}{name}"
+
+    urls = []
+
+    if list_view:
+        urls.append(path(build_path(""), list_view.as_view(), name=build_name("list")))
+
+    if add_view:
+        urls.append(path(build_path("add"), add_view.as_view(), name=build_name("add")))
+
+    if change_view:
+        urls.append(
+            path(build_path(detail_path), change_view.as_view(), name=build_name("change"))
+        )
+
+    if delete_view:
+        urls.append(
+            path(
+                build_path(f"{detail_path}/delete"),
+                delete_view.as_view(),
+                name=build_name("delete"),
+            )
+        )
+
+    for name, view in (extra_detail_views or {}).items():
+        urls.append(
+            path(build_path(f"{detail_path}/{name}"), view.as_view(), name=build_name(name))
+        )
+
+    return urls
