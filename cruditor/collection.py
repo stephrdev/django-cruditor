@@ -130,7 +130,7 @@ class CollectionViewMixin:
 
     def collection_include_add_titlebutton(self):
         """
-        If this method returns true, the an "Add model verbose name" button should be
+        If this method returns true, an "Add model verbose name" button should be
         included in the list view.
         """
         return issubclass(self.__class__, CruditorListView) and self.collection_add_urlname

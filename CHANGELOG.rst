@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.0 - UNRELEASED
+3.0.0 - 2025-01-20
 ------------------
 
 * Title buttons are now a dataclass instead of dicts
