@@ -19,28 +19,30 @@
 			{% block menu_right %}
 				{% if request.user.is_authenticated %}
 					<ul class="navbar-nav ms-auto">
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-								{% block greeting %}
-									{% trans 'Signed in as' %}
-									{{ request.user.get_full_name|default:request.user }}
-								{% endblock %}
-							</a>
-							<div class="dropdown-menu">
-								{% block loginmenu %}
-									{% if cruditor.constants.change_password_url %}
-										<a class="dropdown-item" href="{{ cruditor.constants.change_password_url }}">{% trans 'Change password' %}</a>
-									{% endif %}
-								{% endblock %}
-								<div class="dropdown-divider"></div>
-								{% block logoutform %}
-									<form id="logout-form" method="post" action="{{ cruditor.constants.logout_url }}">
-										{% csrf_token %}
-										<button type="submit" class="dropdown-item">{% trans 'Logout' %}</button>
-									</form>
-								{% endblock %}
-							</div>
-						</li>
+						{% block menu_right_nav_items %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+									{% block greeting %}
+										{% trans 'Signed in as' %}
+										{{ request.user.get_full_name|default:request.user }}
+									{% endblock %}
+								</a>
+								<div class="dropdown-menu">
+									{% block loginmenu %}
+										{% if cruditor.constants.change_password_url %}
+											<a class="dropdown-item" href="{{ cruditor.constants.change_password_url }}">{% trans 'Change password' %}</a>
+										{% endif %}
+									{% endblock %}
+									<div class="dropdown-divider"></div>
+									{% block logoutform %}
+										<form id="logout-form" method="post" action="{{ cruditor.constants.logout_url }}">
+											{% csrf_token %}
+											<button type="submit" class="dropdown-item">{% trans 'Logout' %}</button>
+										</form>
+									{% endblock %}
+								</div>
+							</li>
+						{% endblock %}
 					</ul>
 				{% endif %}
 			{% endblock %}
