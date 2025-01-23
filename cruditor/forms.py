@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.forms.formsets import DELETION_FIELD_NAME
 from django.utils.functional import cached_property
-from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from tapeforms.contrib.bootstrap import Bootstrap5TapeformMixin
 from tapeforms.fieldsets import TapeformFieldsetsMixin
@@ -39,10 +38,10 @@ class CruditorFormsetMixin:
     which might be needed.
     """
 
-    js_add_title = _("New item")
-    js_add_button_label = _("Add item")
-    js_delete_button_label = _("Delete item")
-    js_delete_confirm_text = _("Are you sure? Item will be deleted after saving.")
+    add_title = _("New item")
+    add_button_label = _("Add item")
+    delete_button_label = _("Delete item")
+    delete_confirm_text = _("Are you sure? Item will be deleted after saving.")
 
     js_formset_options = None
 
@@ -63,9 +62,7 @@ class CruditorFormsetMixin:
         return additional context when rendering the formset. Some defaults are already set
         and might be overwritten.
         """
-        return {
-            "form_headline_new_instance": gettext("New item"),
-        }
+        return {"form_headline_new_instance": self.add_title}
 
     def add_fields(self, form, index):
         """
@@ -83,10 +80,10 @@ class CruditorFormsetMixin:
         """
         options = {
             "prefix": self.prefix,
-            "add-title": self.js_add_title,
-            "add-button-label": self.js_add_button_label,
-            "delete-button-label": self.js_delete_button_label,
-            "delete-confirm-text": self.js_delete_confirm_text,
+            "add-title": self.add_title,
+            "add-button-label": self.add_button_label,
+            "delete-button-label": self.delete_button_label,
+            "delete-confirm-text": self.delete_confirm_text,
         }
         options.update(self.js_formset_options or {})
         return options
