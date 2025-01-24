@@ -1,6 +1,13 @@
 Changelog
 =========
 
+3.1.0 - 2025-01-24
+------------------
+
+* Improve navigation template
+* Improve translation strings / properties in formset mixin
+
+
 3.0.0 - 2025-01-20
 ------------------
 

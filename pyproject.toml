@@ -1,6 +1,6 @@
 [project]
 name = "django-cruditor"
-version = "3.0.0"
+version = "3.1.0"
 description = "A set of class based views and mixins to generate CRUD interfaces."
 authors = [{ name = "Stephan Jaekel", email = "steph@rdev.info" }]
 requires-python = ">=3.10,<4"
