@@ -2,14 +2,14 @@
 {% load django_tables2 %}
 
 
-{% with total=table.page.paginator.count count=table.page.object_list|length %}
+{% with total=table.page.paginator.count count=table.page.object_list|length prefixed_page_field=table.prefixed_page_field %}
 {% block pagination %}
 	<nav aria-label="Pagination">
 		<ul class="pagination">
 			{% block pagination.previous %}
 				{% if table.page.has_previous %}
 					<li class="page-item">
-						<a class="page-link" href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}" title="{% trans 'Previous page' %}">{% trans 'Previous' %}</a>
+						<a class="page-link" href="{% querystring prefixed_page_field=table.page.previous_page_number %}" title="{% trans 'Previous page' %}">{% trans 'Previous' %}</a>
 					</li>
 				{% else %}
 					<li class="page-item disabled">
@@ -27,7 +27,7 @@
 			{% block pagination.next %}
 				{% if table.page.has_next %}
 					<li class="page-item">
-						<a class="page-link" href="{% querystring table.prefixed_page_field=table.page.next_page_number %}" title="{% trans 'Next page' %}">{% trans 'Next' %}</a>
+						<a class="page-link" href="{% querystring prefixed_page_field=table.page.next_page_number %}" title="{% trans 'Next page' %}">{% trans 'Next' %}</a>
 					</li>
 				{% else %}
 					<li class="page-item disabled">
