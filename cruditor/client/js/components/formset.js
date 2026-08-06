@@ -58,6 +58,7 @@ class FormsetForm {
 
   createDeleteButton() {
     const button = document.createElement('button')
+    button.type = 'button'
     button.innerText = this.formset.options.deleteButtonLabel
     if (this.formset.options.deleteButtonCssClass) {
       button.setAttribute('class', this.formset.options.deleteButtonCssClass)
@@ -216,6 +217,7 @@ class Formset {
 
   createAddButton() {
     const button = document.createElement('button')
+    button.type = 'button'
     button.innerText = this.options.addButtonLabel
     if (this.options.addButtonCssClass) {
       button.setAttribute('class', this.options.addButtonCssClass)

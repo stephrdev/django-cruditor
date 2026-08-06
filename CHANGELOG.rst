@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.2.0 - 2026-08-06
+------------------
+
+* Fix JavaScript issues with formset buttons having no type set.
+
+
 3.1.0 - 2025-01-24
 ------------------
 
