@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.2.1 - 2026-08-06
+------------------
+
+* Fix template bug with newer queryset template tag.
+
+
 3.2.0 - 2026-08-06
 ------------------
 
