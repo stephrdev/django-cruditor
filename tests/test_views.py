@@ -122,6 +122,21 @@ class TestListView:
         assert response.context["filter_form"] is not None
         assert response.context["filter_form"].data
 
+    def test_pagination_links_use_actual_page_field(self, admin_client):
+        PersonFactory.create_batch(30)
+        response = admin_client.get(reverse("collection:list"))
+        assert response.status_code == 200
+        assert response.context["table"].page.has_next()
+        content = response.content.decode()
+        assert 'href="?page=2"' in content
+        assert "prefixed_page_field" not in content
+
+    def test_pagination_next_page_returns_remaining_rows(self, admin_client):
+        PersonFactory.create_batch(30)
+        response = admin_client.get(reverse("collection:list"), data={"page": 2})
+        assert response.status_code == 200
+        assert len(response.context["table"].page.object_list) == 7
+
     def test_get_queryset_model(self):
         class DummyListView(CruditorListView):
             model = Person

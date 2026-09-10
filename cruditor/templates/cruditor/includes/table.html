@@ -13,9 +13,7 @@
 					<tr>
 						{% for column in table.columns %}
 							{% if column.orderable %}
-								{% with table.prefixed_order_by_field as order_by_field %}
-									<th {{ column.attrs.th.as_html }} scope="col"><a href="{% querystring order_by_field=column.order_by_alias.next %}">{{ column.header }}</a></th>
-								{% endwith %}
+								<th {{ column.attrs.th.as_html }} scope="col"><a href="{% querystring_replace table.prefixed_order_by_field=column.order_by_alias.next %}">{{ column.header }}</a></th>
 							{% else %}
 								<th {{ column.attrs.th.as_html }} scope="col">{{ column.header }}</th>
 							{% endif %}
